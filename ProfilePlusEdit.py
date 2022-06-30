@@ -213,64 +213,6 @@ def changeToStandardQuality():
                 MetaData_quality_type = container.getMetaDataEntry('quality_type')
                 Logger.log("d", "New MetaData_quality_type : %s for %s", str(MetaData_quality_type), container.getId() )
 
-
-# name header et Type
-def containersOfTypeHtmlPage(name, type_ ,machine_id_):
-    html = getHtmlHeader(name)
-    
-    
-    html += '<div class="menu">\n'
-    html += '<ul>'
-    
-    # find Instance Containers according to type=type_  (quality_changes)  and definition
-    containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id_, type=type_)
-    
-    # Sort containers Order
-    containers.sort(key=lambda x: x.getId())
-    containers.reverse()
-    containers.sort(key=lambda x: x.getName())
-    
-    # Menu creation
-    for container in containers:
-        # type to detect Extruder or Global container analyse getMetaDataEntry('position')
-        extruder_position = container.getMetaDataEntry('position')
-        if extruder_position is not None:
-            html += '<ul>\n'
-            
-        # Logger.log("d", "containersOfTypeHtmlPage : " + str(container) )
-        if container.getName() == "empty" :
-            html += '<li><a href="#'+ str(id(container)) + '">'+encode(container.getId())+'</a></li>\n'
-        else :
-            html += '<li><a href="#'+ str(id(container)) + '">'+encode(container.getName())+'</a></li>\n'
-        
-        if extruder_position is not None:
-            html += '</ul>\n'       
-    html += '</ul>'
-
-    # Java script filter function
-    html += keyFilterWidget()
-    html += '</div>'
-
-    html += '<div class="contents">'
-    html += formatAllContainersOfType(name, type_, machine_id_)
-    html += '</div>'
-
-    html += htmlFooter
-    return html
-
-def formatAllContainersOfType(name, type_, machine_id_):
-    html = '<h2>' + name + '</h2>\n'
-    
-    # type 'quality_changes' or 'user'
-    containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id_, type=type_)
-
-    containers.sort(key=lambda x: x.getId())
-    containers.reverse()
-    containers.sort(key=lambda x: x.getName())
-    
-    for container in containers:   
-        html += formatContainer(container)
-    return html
     
 def formatContainer(container, name='Container', short_value_properties=False, show_keys=True):
     html = ''
@@ -406,31 +348,6 @@ def formatSettingValue(container, key, properties=None):
                 # value += '  </li>\n'
     #value += '</ul>\n'
     value += '\n'
-
-    return RawHtml(value)
-
-def formatSettingCompareValue(container, key, properties=None):
-    if properties is None:
-        properties = setting_prop_names
-
-    value = ''
-    #value = '<ul class=\'property_list\'>\n'
-    comma = ''
-    properties.sort()
-    for prop_name in properties:
-        prop_value = container.getProperty(key, prop_name)
-        if prop_value is not None:
-            if prop_name=='value' :
-                # repr() function returns a printable representation of the given object
-                print_value = repr(prop_value)
-                if print_value.find('UM.Settings.SettingFunction') > 0 :
-                    strtok_value = print_value.split('=',1)
-                    final_value = '=' + strtok_value[1].replace(' >','')
-                else :
-                    final_value = print_value
-                    
-                value += encode(final_value)
-    #value += '</ul>\n'
 
     return RawHtml(value)
     
@@ -572,155 +489,7 @@ def keyFilterWidget():
     </div>
     '''
     return html
-
-def keyUnselectAllWidget():
-    html = '''
-    <div class="toggle_differences">
-    <input type="checkbox" id="unselect_all" onclick="UnselectAll()"/> Unselect all
-    </div>
-    <br>
-    '''
-    return html
-
-def toggleNullValueWidget():
-    html = '''
-    <div class="toggle_differences">
-    <input type="checkbox" id="toggle_nullvalue" onclick="toggleNullValue()"/> Show only valued parameters
-    </div>
-    
-    '''
-    return html
-    
-def toggleColumnVisibilityJS():
-    return '''
-    function toggleColumnVisibility() {
-      var visibleColumns = [];
-      document.querySelectorAll(".menu li").forEach(function(li) {
-        var chk = li.querySelector("input");
-        if(chk.checked) {
-          visibleColumns.push(parseInt(chk.id.replace("chk_", "")));
-        }
-      });
-
-      document.querySelectorAll("tr").forEach(function(row, ridx) {
-        row.querySelectorAll("th, td").forEach(function(col, cidx) {
-          if(cidx === 0) return;
-          if(visibleColumns.includes(cidx-1)) {
-            col.classList.remove("hidden");
-          } else {
-            col.classList.add("hidden");
-          }
-        });
-      });
-      toggleDifferences();
-    }
-    '''
-
-def toggleDifferencesWidget():
-    html = '''
-    <br>
-    <div class="toggle_differences">
-    <input type="checkbox" id="toggle_differences" onclick="toggleDifferences()"/> Show only differences
-    </div>
-    '''
-    return html
-    
-def toggleUnselectAllJS():
-    html = '''
-    function UnselectAll() {
-      document.querySelectorAll(".menu li").forEach(function(li) {
-        var chk = li.querySelector("input");
-              chk.checked =  !document.getElementById("unselect_all").checked;
-        })
-      toggleColumnVisibility();
-      toggleNullValue();
-    }
-    '''
-    return html
-
-def toggleDifferencesJS():
-    return '''
-    function toggleDifferences() {
-      if(document.getElementById("toggle_differences").checked) {
-        document.getElementById("toggle_nullvalue").checked = false;
-        var visibleColumns = [];
-        document.querySelectorAll(".menu li").forEach(function(li) {
-          var chk = li.querySelector("input");
-          if(chk.checked) {
-            visibleColumns.push(parseInt(chk.id.replace("chk_", "")));
-          }
-        })
-
-        document.querySelectorAll("tr").forEach(function(row, ridx) {
-          if(row.querySelector("th")) return;
-            var currentValue = null;
-          var diff = false;
-          row.querySelectorAll("td").forEach(function(col, cidx) {
-            if(cidx === 0) return;
-            if(!visibleColumns.includes(cidx-1)) return;
-            if(currentValue === null) {
-              currentValue = col.innerText;
-            } else {
-              if(col.innerText != currentValue) {
-                diff = true;
-                return;
-              }
-            }
-          });
-
-          if(diff) {
-            row.classList.remove("hidden");
-          } else {
-            row.classList.add("hidden");
-          }
-        });
-      } else {
-        document.querySelectorAll("tr").forEach(function(row, idx) {
-          row.classList.remove("hidden");
-        });
-      }
-    }
-    '''
-
-def toggleNullValueJS():
-    return '''
-    function toggleNullValue() {
-      if(document.getElementById("toggle_nullvalue").checked) {
-        document.getElementById("toggle_differences").checked = false;
-        var visibleColumns = [];
-        document.querySelectorAll(".menu li").forEach(function(li) {
-          var chk = li.querySelector("input");
-          if(chk.checked) {
-            visibleColumns.push(parseInt(chk.id.replace("chk_", "")));
-          }
-        })
-
-        document.querySelectorAll("tr").forEach(function(row, ridx) {
-          if(row.querySelector("th")) return;
-            var currentValue = null;
-          var diff = false;
-          row.querySelectorAll("td").forEach(function(col, cidx) {
-            if(cidx === 0) return;
-            if(!visibleColumns.includes(cidx-1)) return;
-              if(col.innerText != '-') {
-                diff = true;
-                return;
-              }
-          });
-
-          if(diff) {
-            row.classList.remove("hidden");
-          } else {
-            row.classList.add("hidden");
-          }
-        });
-      } else {
-        document.querySelectorAll("tr").forEach(function(row, idx) {
-          row.classList.remove("hidden");
-        });
-      }
-    } 
-    '''
+   
 
 def has_browser():
     try:
@@ -747,10 +516,6 @@ def getHtmlHeader(page_name='Cura Settings'):
 <title>''' + encode(page_name) + '''</title>
 <script>
 ''' + keyFilterJS() + '''
-''' + toggleUnselectAllJS() + '''
-''' + toggleDifferencesJS() + '''
-''' + toggleNullValueJS() + '''
-''' + toggleColumnVisibilityJS() + '''
 </script>
 <style>
 html {
