@@ -56,26 +56,8 @@ class ProfilePlus(QObject, Extension):
     '''
 
     plugin_version = ""
+    visibility_string = ""
 
-
-    default_logged_settings = {
-        "layer_height",
-        "line_width",
-        "wall_line_count",
-        "top_thickness",
-        "bottom_thickness",
-        "infill_sparse_density",
-        "infill_pattern",
-        "material_print_temperature",
-        "material_bed_temperature",
-        "speed_print",
-        "cool_fan_enabled",
-        "cool_fan_speed",
-        "support_enable",
-        "support_structure",
-        "support_type",
-        "adhesion_type",
-    }
 
     def __init__(self, parent=None):
         QObject.__init__(self, parent)
@@ -94,10 +76,7 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem("View Active Profile", viewProfile)
         self.addMenuItem("View Active Configuration", viewAll)
 
-        self._application.getPreferences().addPreference(
-            "profile_plus/logged_settings",
-            ";".join(self.default_logged_settings)
-        )
+        self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
 
         self._application.engineCreatedSignal.connect(self._onEngineCreated)
 
@@ -110,6 +89,10 @@ class ProfilePlus(QObject, Extension):
         )
 
     def showSettingsDialog(self):
+        self.visibility_string=updateVisibility()
+        Logger.log("d", "Profile Visibility_string : %s", self.visibility_string )  
+        self._application.getPreferences().setValue("profile_plus/profile_settings", self.visibility_string)
+        
         path = None
         if USE_QT5:
             path = os.path.join(os.path.dirname(
@@ -121,7 +104,7 @@ class ProfilePlus(QObject, Extension):
         self._settings_dialog = CuraApplication.getInstance(
         ).createQmlComponent(path, {"manager": self})
         self._settings_dialog.show()
-
+        
 def viewAll():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_settings.html'
     openHtmlPage(HtmlFile, htmlPage())
@@ -129,6 +112,36 @@ def viewAll():
 def viewProfile():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
     openHtmlPage(HtmlFile, htmlBasePage())   
+
+def updateVisibility():
+    visi = ""
+    visi += formatExtruderVisibilityStacks()
+    visi += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack())
+
+    return visi
+
+def formatExtruderVisibilityStacks():
+    visi = ''
+    # machine = Application.getInstance().getMachineManager().activeMachine
+    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
+    position=0
+    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+        visi += formatContainerVisibilityStack(extruder_stack)
+        position += 1
+    return visi
+
+def formatContainerVisibilityStack(Cstack, show_stack_keys=True):
+    visi = ''
+    for container in Cstack.getContainers():
+        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+            keys = list(container.getAllKeys())
+            for key in keys:
+                # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
+                visi += key
+                visi += ";"
+    return visi
+
     
 def htmlPage():
     html = getHtmlHeader()
@@ -195,6 +208,7 @@ def htmlBasePage():
 
     html += htmlFooter
     return html
+    
 # Change the 'quality_type' to 'standard' if 'not_supported'
 def changeToStandardQuality():
     #stack = Application.getInstance().getGlobalContainerStack()

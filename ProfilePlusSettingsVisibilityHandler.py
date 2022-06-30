@@ -14,21 +14,19 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
         self._preferences = Application.getInstance().getPreferences()
         self._preferences.preferenceChanged.connect(self._onPreferencesChanged)
 
-        self._onPreferencesChanged("profile_plus/logged_settings")
+        self._onPreferencesChanged("profile_plus/profile_settings")
         self.visibilityChanged.connect(self._updatePreference)
 
     def _onPreferencesChanged(self, name: str) -> None:
-        if name != "profile_plus/logged_settings":
+        if name != "profile_plus/profile_settings":
             return
 
-        visibility_string = self._preferences.getValue(
-            "profile_plus/logged_settings")
+        visibility_string = self._preferences.getValue("profile_plus/profile_settings")
             
-        Logger.log('d', "Visibility_string : {}".format(visibility_string))
+        Logger.log('d', "New Visibility_string : {}".format(visibility_string))
         
         if not visibility_string:
-            self._preferences.resetProfileSettings(
-                "profile_plus/logged_settings")
+            self._preferences.resetProfileSettings("profile_plus/profile_settings")
             return
 
         profile_plus_settings = set(visibility_string.split(";"))
@@ -37,8 +35,8 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
 
     def _updatePreference(self) -> None:
         visibility_string = ";".join(self.getVisible())
-        self._preferences.setValue(
-            "profile_plus/logged_settings", visibility_string)
+        self._preferences.setValue("profile_plus/profile_settings", visibility_string)
+        Logger.log('d', "UpdatePreference : {}".format(visibility_string))
 
     # Set a single SettingDefinition's visible state
     @pyqtSlot(str, bool)

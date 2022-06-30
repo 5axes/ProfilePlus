@@ -142,7 +142,7 @@ UM.Dialog {
             
             text: catalog.i18nc("@action:button", "Reset To Actual Parameters");
             onClicked: {
-                UM.Preferences.resetProfileSettings("profile_plus/logged_settings")
+                UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
                 
 
                 settingsDialog.visible = false;
