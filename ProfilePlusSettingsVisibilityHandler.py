@@ -3,6 +3,7 @@ from UM.Application import Application
 
 from UM.FlameProfiler import pyqtSlot
 
+from UM.Logger import Logger
 
 class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
     '''Create a custom visibility handler so we can hide/show settings in the dialogs.'''
@@ -22,8 +23,11 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
 
         visibility_string = self._preferences.getValue(
             "profile_plus/logged_settings")
+            
+        Logger.log('d', "Visibility_string : {}".format(visibility_string))
+        
         if not visibility_string:
-            self._preferences.resetPreference(
+            self._preferences.resetProfileSettings(
                 "profile_plus/logged_settings")
             return
 

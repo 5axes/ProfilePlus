@@ -1,4 +1,4 @@
-from . import ProfilePlusUploader
+from . import ProfilePlusEdit
 from . import ProfilePlusSettingDefinitionsModel
 
 USE_QT5 = False
@@ -15,6 +15,6 @@ def getMetaData():
 
 def register(app):
     qmlRegisterType(ProfilePlusSettingDefinitionsModel.ProfilePlusSettingDefinitionsModel,
-                    "ProfilePlusUploader", 1, 0, "ProfilePlusSettingDefinitionsModel")
+                    "ProfilePlusEdit", 1, 0, "ProfilePlusSettingDefinitionsModel")
 
-    return {"extension": ProfilePlusUploader.ProfilePlusUploader()}
+    return {"extension": ProfilePlusEdit.ProfilePlusEdit()}

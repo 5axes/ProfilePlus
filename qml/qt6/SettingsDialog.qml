@@ -8,7 +8,7 @@ import QtQuick.Layouts
 
 import UM  as UM
 import Cura  as Cura
-import ProfilePlusUploader  as ProfilePlusUploader
+import ProfilePlusEdit  as ProfilePlusEdit
 
 UM.Dialog {
     id: settingsDialog
@@ -99,12 +99,12 @@ UM.Dialog {
             ListView
             {
                 id:listview
-                model: ProfilePlusUploader.ProfilePlusSettingDefinitionsModel
+                model: ProfilePlusEdit.ProfilePlusSettingDefinitionsModel
                 {
                     id: definitionsModel;
                     containerId: Cura.MachineManager.activeMachine.definition.id
                     visibilityHandler: Cura.ProfilePlusSettingsVisibilityHandler {}
-                    showAll: true
+                    showAll: false
                     showAncestors: true
                     expanded: [ "*" ]
                     exclude: [ "machine_settings", "command_line_settings" ]
@@ -142,9 +142,9 @@ UM.Dialog {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             
-            text: catalog.i18nc("@action:button", "Reset To Defaults");
+            text: catalog.i18nc("@action:button", "Reset To Actual Parameters");
             onClicked: {
-                UM.Preferences.resetPreference("profile_plus/logged_settings")
+                UM.Preferences.resetProfileSettings("profile_plus/logged_settings")
                 
 
                 settingsDialog.visible = false;
