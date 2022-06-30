@@ -1,21 +1,22 @@
-import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
+// Copyright (c) 2022 5@xes
+// The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
 
-import UM as UM
+import QtQuick 2.1
+import QtQuick.Controls 2.1
+
+import UM 1.5 as UM
 
 UM.TooltipArea
 {
-    x: model.depth * UM.Theme.getSize("default_margin").width;
-    text: model.description;
+    x: model.depth * UM.Theme.getSize("narrow_margin").width
+    text: model.description
 
-    width: childrenRect.width;
-    height: childrenRect.height;
+    width: childrenRect.width
+    height: childrenRect.height
 
-    CheckBox
+    UM.CheckBox
     {
         id: check
-
         text: definition.label
         checked: definition.visible;
 
@@ -25,5 +26,3 @@ UM.TooltipArea
         }
     }
 }
-
-

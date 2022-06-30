@@ -1,3 +1,6 @@
+// Copyright (c) 2022 5@xes
+// The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
+
 import QtQuick 
 import QtQuick.Controls
 import QtQuick.Window 
