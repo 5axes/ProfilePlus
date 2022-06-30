@@ -182,8 +182,6 @@ def htmlBasePage():
 
     html += '</ul>\n'
     
-    # Java script filter function
-    html += keyFilterWidget()
     html += '</div>'
 
     # Contents creation
