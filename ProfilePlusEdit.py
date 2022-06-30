@@ -259,7 +259,7 @@ def formatContainer(container, name='Container', short_value_properties=False, s
         html += tableHeader(name + ': ' + safeCall(container.getId))
     else :
         html += tableHeader(name + ': ' + safeCall(container.getName))
-        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        
         
     html += formatContainerMetaDataRows(container)
 
@@ -374,7 +374,9 @@ def formatContainerBaseStack(Cstack, show_stack_keys=True):
     html = '<div class="container_stack_containers">\n'
     html += '<h3>Containers</h3>\n'
     for container in Cstack.getContainers():
-        html += formatContainer(container, show_keys=show_stack_keys)
+        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+            html += formatContainer(container, show_keys=show_stack_keys)
     html += '</div>\n'
     return html
     
@@ -397,11 +399,12 @@ def formatContainerBaseStackMenu(stack):
     html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
     html += '<ul>\n'
     for container in stack.getContainers():
-        #
-        if container.getName() == "empty" :
-            html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
-        else:
-            html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getName()) + '</a></li>'
+        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+            #
+            if container.getName() == "empty" :
+                html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
+            else:
+                html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getName()) + '</a></li>'
             
     html += '</ul>\n'
     return html
