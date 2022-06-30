@@ -91,6 +91,7 @@ class ProfilePlusEdit(QObject, Extension):
 
         ## Menu    
         self.addMenuItem("Configure Settings", self.showSettingsDialog)
+        self.addMenuItem("View Active Profile", viewProfile)
         self.addMenuItem("View Active Configuration", viewAll)
 
         self._application.getPreferences().addPreference(
@@ -124,7 +125,10 @@ class ProfilePlusEdit(QObject, Extension):
 def viewAll():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_settings.html'
     openHtmlPage(HtmlFile, htmlPage())
-    
+
+def viewProfile():
+    HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
+    openHtmlPage(HtmlFile, htmlBasePage())   
     
 def htmlPage():
     html = getHtmlHeader()
@@ -160,6 +164,39 @@ def htmlPage():
     html += htmlFooter
     return html
 
+def htmlBasePage():
+    html = getHtmlHeader()
+
+    # Menu creation
+    html += '<div class="menu">\n'
+    html += '<ul>'
+ 
+
+    html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
+    html += formatExtruderBaseStacksMenu()
+    html += '</li>\n'
+
+    html += '<li><a href="#global_stack">Global Stack</a>'
+    html += formatContainerBaseStackMenu(Application.getInstance().getGlobalContainerStack())
+    html += '</li>\n'
+
+    html += '</ul>\n'
+    
+    # Java script filter function
+    html += keyFilterWidget()
+    html += '</div>'
+
+    # Contents creation
+    html += '<div class="contents">'
+    html += formatExtruderBaseStacks()
+     
+    html += '<h2 id="global_stack">Global Stack</h2>'
+    html += formatContainerBaseStack(Application.getInstance().getGlobalContainerStack())
+    
+    html += '</div>'
+
+    html += htmlFooter
+    return html
 # Change the 'quality_type' to 'standard' if 'not_supported'
 def changeToStandardQuality():
     #stack = Application.getInstance().getGlobalContainerStack()
@@ -222,7 +259,8 @@ def formatContainer(container, name='Container', short_value_properties=False, s
         html += tableHeader(name + ': ' + safeCall(container.getId))
     else :
         html += tableHeader(name + ': ' + safeCall(container.getName))
-    
+        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        
     html += formatContainerMetaDataRows(container)
 
     if show_keys:
@@ -279,6 +317,18 @@ def formatExtruderStacks():
         position += 1
     return html
 
+def formatExtruderBaseStacks():
+    html = ''
+    html += '<h2 id="extruder_stacks">Extruder Stacks</h2>'
+    # machine = Application.getInstance().getMachineManager().activeMachine
+    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
+    position=0
+    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+        html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
+        html += formatContainerBaseStack(extruder_stack)
+        position += 1
+    return html
+    
 def formatExtruderStacksMenu():
     html = ''
     html += '<ul>'
@@ -294,6 +344,21 @@ def formatExtruderStacksMenu():
     html += '</ul>'
     return html
 
+def formatExtruderBaseStacksMenu():
+    html = ''
+    html += '<ul>'
+    # machine = Application.getInstance().getMachineManager().activeMachine
+    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
+    position=0
+    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+        html += '<li>'
+        html += '<a href="#extruder_index_' + str(position) + '">Index ' + str(position) + '</a>\n'
+        html += formatContainerBaseStackMenu(extruder_stack)
+        html += '</li>'
+        position += 1
+    html += '</ul>'
+    return html
+    
 def formatContainerStack(Cstack, show_stack_keys=True):
     html = '<div class="container_stack">\n'
     html += formatContainer(Cstack, name='Container Stack', short_value_properties=True)
@@ -305,6 +370,14 @@ def formatContainerStack(Cstack, show_stack_keys=True):
     html += '</div>\n'
     return html
 
+def formatContainerBaseStack(Cstack, show_stack_keys=True):
+    html = '<div class="container_stack_containers">\n'
+    html += '<h3>Containers</h3>\n'
+    for container in Cstack.getContainers():
+        html += formatContainer(container, show_keys=show_stack_keys)
+    html += '</div>\n'
+    return html
+    
 def formatContainerStackMenu(stack):
     html = ''
     html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
@@ -319,6 +392,20 @@ def formatContainerStackMenu(stack):
     html += '</ul>\n'
     return html
 
+def formatContainerBaseStackMenu(stack):
+    html = ''
+    html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
+    html += '<ul>\n'
+    for container in stack.getContainers():
+        #
+        if container.getName() == "empty" :
+            html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
+        else:
+            html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getName()) + '</a></li>'
+            
+    html += '</ul>\n'
+    return html
+    
 setting_prop_names = SettingDefinition.getPropertyNames()
 def formatSettingValue(container, key, properties=None):
     if properties is None:
