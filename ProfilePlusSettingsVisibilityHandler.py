@@ -27,9 +27,9 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
                 "profile_plus/logged_settings")
             return
 
-        material_settings = set(visibility_string.split(";"))
-        if material_settings != self.getVisible():
-            self.setVisible(material_settings)
+        profile_plus_settings = set(visibility_string.split(";"))
+        if profile_plus_settings != self.getVisible():
+            self.setVisible(profile_plus_settings)
 
     def _updatePreference(self) -> None:
         visibility_string = ";".join(self.getVisible())
