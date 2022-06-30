@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.1
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
-import ProfilePlusEdit 1.0 as ProfilePlusEdit
+import ProfilePlus 1.0 as ProfilePlus
 
 UM.Dialog {
     id: settingsDialog
@@ -95,7 +95,7 @@ UM.Dialog {
             ListView
             {
                 id:listview
-                model: ProfilePlusEdit.ProfilePlusSettingDefinitionsModel
+                model: ProfilePlus.ProfilePlusSettingDefinitionsModel
                 {
                     id: definitionsModel;
                     containerId: Cura.MachineManager.activeMachine.definition.id

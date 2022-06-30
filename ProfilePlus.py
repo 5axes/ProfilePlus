@@ -51,7 +51,7 @@ i18n_extrud_catalog = i18nCatalog('fdmextruder.def.json')
 encode = html.escape
 
 
-class ProfilePlusEdit(QObject, Extension):
+class ProfilePlus(QObject, Extension):
     '''Modification of the settings
     '''
 
