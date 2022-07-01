@@ -116,7 +116,10 @@ class ProfilePlus(QObject, Extension):
         modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),self.visibility_string)
         # 
         # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
-        Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.POSITIVE).show()        
+        if modi == "" :
+            Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.ERROR).show()
+        else :
+            Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.POSITIVE).show()        
         
 def upDateExtruderStacks(visibility_string):
     modi = ''

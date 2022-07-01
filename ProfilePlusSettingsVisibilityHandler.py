@@ -6,6 +6,11 @@ from UM.FlameProfiler import pyqtSlot
 from UM.Logger import Logger
 from UM.Message import Message
 
+from UM.i18n import i18nCatalog
+i18n_cura_catalog = i18nCatalog('cura')
+
+
+
 class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
     '''Create a custom visibility handler so we can hide/show settings in the dialogs.'''
 
@@ -28,7 +33,7 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
         
         if not visibility_string:
             # self._preferences.resetProfileSettings("profile_plus/profile_settings")
-            Message(text = "Standard settings or Profile without seetings", title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilePlus"), message_type = Message.MessageType.WARNING).show()
+            Message(text = "Standard settings or Profile without settings", title = i18n_cura_catalog.i18nc("@info:title", "Warning ! Profile Plus"), message_type = Message.MessageType.WARNING).show()
             return
 
         profile_plus_settings = set(visibility_string.split(";"))
@@ -36,9 +41,9 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
             self.setVisible(profile_plus_settings)
 
     def _updatePreference(self) -> None:
-        visibility_string = ";".join(self.getVisible())
+        visibility_string = "".join(self.getVisible())
         self._preferences.setValue("profile_plus/profile_settings", visibility_string)
-        Logger.log('d', "UpdatePreference : {}".format(visibility_string))
+        # Logger.log('d', "UpdatePreference : {}".format(visibility_string))
 
     # Set a single SettingDefinition's visible state
     @pyqtSlot(str, bool)

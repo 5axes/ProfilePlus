@@ -1,6 +1,5 @@
 from UM.Settings.Models.SettingDefinitionsModel import SettingDefinitionsModel
 
-
 class ProfilePlusSettingDefinitionsModel(SettingDefinitionsModel):
 
     def __init__(self, parent=None, *args, **kwargs):
