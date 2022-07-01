@@ -1,4 +1,4 @@
-# ProfilePlus
+# Profile Plus
 
 The plugin allows to delete parameters defined in a profile. 
 
