@@ -11,7 +11,6 @@ from UM.i18n import i18nCatalog
 i18n_cura_catalog = i18nCatalog('cura')
 
 
-
 class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
     '''Create a custom visibility handler so we can hide/show settings in the dialogs.'''
 
