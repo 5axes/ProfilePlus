@@ -4,7 +4,7 @@ The plugin allows to delete parameters defined in a profile.
 
 **! Be careful, the deletion is direct without the possibility to cancel the action !**
 
-# Profile Plus
+## Purpose of the plugin
 
 There are often requests for the possibility of defining, for example, a flow rate in the material definition. The problem is that the custom profile settings overwrite this data. The only solution I know is to edit the profile manualy via a text editor and delete the unnecessary parameter.
 
