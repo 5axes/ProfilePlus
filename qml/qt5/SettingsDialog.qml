@@ -140,10 +140,10 @@ UM.Dialog {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             
-            text: catalog.i18nc("@action:button", "Reset To Actual Parameters");
+            text: catalog.i18nc("@action:button", "Set To Selected Parameters");
             onClicked: {
-                UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
-                
+                //UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
+                manager.upDate
 
                 settingsDialog.visible = false;
             }

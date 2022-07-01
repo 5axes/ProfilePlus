@@ -11,10 +11,10 @@ USE_QT5 = False
 try:
     from PyQt6.QtGui import QDesktopServices
     from PyQt6.QtQml import qmlRegisterType
-    from PyQt6.QtCore import QObject, QBuffer, QUrl
+    from PyQt6.QtCore import QObject, QBuffer, QUrl, pyqtProperty, pyqtSignal, pyqtSlot, QUrl
 except ImportError:
     from PyQt5.QtQml import qmlRegisterType
-    from PyQt5.QtCore import QObject, QBuffer, QUrl
+    from PyQt5.QtCore import QObject, QBuffer, QUrl, pyqtProperty, pyqtSignal, pyqtSlot, QUrl
     from PyQt5.QtGui import QDesktopServices
     USE_QT5 = True
 
@@ -52,12 +52,14 @@ encode = html.escape
 
 
 class ProfilePlus(QObject, Extension):
-    '''Modification of the settings
-    '''
+    #Create an api
+    from cura.CuraApplication import CuraApplication
+    api = CuraApplication.getInstance().getCuraAPI()
 
     plugin_version = ""
     visibility_string = ""
 
+    userAction = pyqtSignal()
 
     def __init__(self, parent=None):
         QObject.__init__(self, parent)
@@ -90,7 +92,7 @@ class ProfilePlus(QObject, Extension):
 
     def showSettingsDialog(self):
         self.visibility_string=updateVisibility()
-        Logger.log("d", "Profile Visibility_string : %s", self.visibility_string )  
+        Logger.log("d", "showSettingsDialog Profile Visibility_string : %s", self.visibility_string )  
         self._application.getPreferences().setValue("profile_plus/profile_settings", self.visibility_string)
         
         path = None
@@ -101,10 +103,18 @@ class ProfilePlus(QObject, Extension):
             path = os.path.join(os.path.dirname(
             os.path.abspath(__file__)), "qml", "qt6","SettingsDialog.qml")
 
-        self._settings_dialog = CuraApplication.getInstance(
-        ).createQmlComponent(path, {"manager": self})
+        self._settings_dialog = CuraApplication.getInstance().createQmlComponent(path, {"manager": self})
         self._settings_dialog.show()
+
+
+    @pyqtProperty(str, notify= userAction)
+    def upDate(self)-> None:
+        Logger.log("d", "Update Visibility_string : %s", self.visibility_string )
+        # self.visibility_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
+        # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
+        Message(text = "! Modification ok ", title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.POSITIVE).show()        
         
+    
 def viewAll():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_settings.html'
     openHtmlPage(HtmlFile, htmlPage())

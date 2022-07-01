@@ -101,7 +101,7 @@ UM.Dialog {
                 id:listview
                 model: ProfilePlus.ProfilePlusSettingDefinitionsModel
                 {
-                    id: definitionsModel;
+                    id: definitionsModel
                     containerId: Cura.MachineManager.activeMachine.definition.id
                     visibilityHandler: Cura.ProfilePlusSettingsVisibilityHandler {}
                     showAll: false
@@ -113,7 +113,7 @@ UM.Dialog {
                 {
                     id: loader
 
-                    width: parent.width
+                    width: UM.Theme.getSize("setting_control").width
                     height: model.type != undefined ? UM.Theme.getSize("section").height : 0;
 
                     property var definition: model
@@ -142,12 +142,11 @@ UM.Dialog {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             
-            text: catalog.i18nc("@action:button", "Reset To Actual Parameters");
+            text: catalog.i18nc("@action:button", "Set To Selected Parameters")
             onClicked: {
-                UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
-                
-
-                settingsDialog.visible = false;
+                // UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
+                manager.upDate
+                // settingsDialog.visible = false;
             }
         },
         Item
