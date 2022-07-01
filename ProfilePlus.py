@@ -1,3 +1,12 @@
+#--------------------------------------------------------------------------------------------
+# Initial Copyright(c) FieldofView for the SettingsVisibilityHandler 
+# Copyright (c) 2022 5axes
+#--------------------------------------------------------------------------------------------
+# All modification 5@xes
+# First release  01-07-2022  First proof of concept
+#------------------------------------------------------------------------------------------------------------------
+# 1.0.0 01-07-2022  First release to test the concept
+#------------------------------------------------------------------------------------------------------------------
 import os
 import os.path
 import tempfile
@@ -67,7 +76,6 @@ class ProfilePlus(QObject, Extension):
 
         self._application = CuraApplication.getInstance()
 
-
         ## Load the plugin version
         pluginInfo = json.load(open(os.path.join(os.path.dirname(
             os.path.abspath(__file__)), "plugin.json")))
@@ -117,9 +125,9 @@ class ProfilePlus(QObject, Extension):
         # 
         # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
         if modi == "" :
-            Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.ERROR).show()
+            Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
         else :
-            Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.POSITIVE).show()        
+            Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
         
 def upDateExtruderStacks(visibility_string):
     modi = ''
