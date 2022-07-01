@@ -1,3 +1,4 @@
+# Source origine FiledOfView
 from UM.Settings.Models.SettingVisibilityHandler import SettingVisibilityHandler
 from UM.Application import Application
 
@@ -41,7 +42,7 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
             self.setVisible(profile_plus_settings)
 
     def _updatePreference(self) -> None:
-        visibility_string = "".join(self.getVisible())
+        visibility_string = ";".join(self.getVisible())
         self._preferences.setValue("profile_plus/profile_settings", visibility_string)
         # Logger.log('d', "UpdatePreference : {}".format(visibility_string))
 
