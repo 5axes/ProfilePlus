@@ -4,6 +4,7 @@ from UM.Application import Application
 from UM.FlameProfiler import pyqtSlot
 
 from UM.Logger import Logger
+from UM.Message import Message
 
 class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
     '''Create a custom visibility handler so we can hide/show settings in the dialogs.'''
@@ -20,13 +21,14 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
     def _onPreferencesChanged(self, name: str) -> None:
         if name != "profile_plus/profile_settings":
             return
-
+        
         visibility_string = self._preferences.getValue("profile_plus/profile_settings")
             
-        Logger.log('d', "New Visibility_string : {}".format(visibility_string))
+        # Logger.log('d', "New Visibility_string : {}".format(visibility_string))
         
         if not visibility_string:
-            self._preferences.resetProfileSettings("profile_plus/profile_settings")
+            # self._preferences.resetProfileSettings("profile_plus/profile_settings")
+            Message(text = "Standard settings or Profile without seetings", title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilePlus"), message_type = Message.MessageType.WARNING).show()
             return
 
         profile_plus_settings = set(visibility_string.split(";"))
