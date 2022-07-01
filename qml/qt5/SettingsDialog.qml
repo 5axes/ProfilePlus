@@ -114,7 +114,7 @@ UM.Dialog {
                     width: parent.width
                     height: model.type != undefined ? UM.Theme.getSize("section").height : 0;
 
-                    // property var definition: model
+                    property var definition: model
                     property var settingDefinitionsModel: definitionsModel
 
                     asynchronous: true
