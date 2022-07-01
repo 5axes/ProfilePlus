@@ -109,11 +109,50 @@ class ProfilePlus(QObject, Extension):
 
     @pyqtProperty(str, notify= userAction)
     def upDate(self)-> None:
+        modi = ''
+        self.visibility_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
         Logger.log("d", "Update Visibility_string : %s", self.visibility_string )
-        # self.visibility_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
+        modi += upDateExtruderStacks(self.visibility_string)
+        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),self.visibility_string)
+        # 
         # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
-        Message(text = "! Modification ok ", title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.POSITIVE).show()        
+        Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus"), message_type = Message.MessageType.POSITIVE).show()        
         
+def upDateExtruderStacks(visibility_string):
+    modi = ''
+    # machine = Application.getInstance().getMachineManager().activeMachine
+    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
+    position=0
+    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+        modi += upDateContainerStack(extruder_stack, visibility_string)
+        position += 1
+    return modi
+
+def upDateContainerStack(Cstack, visibility_string):
+    modi = ''
+    Logger.log("d", "upDateContainerStack : %s", visibility_string )
+    profile_plus_settings = visibility_string.split(";")
+    for container in Cstack.getContainers():
+        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+            keys = list(container.getAllKeys())
+            for key in keys:
+                # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
+                # Logger.log("d", "key :|%s|", key )
+                # Naive Method :)
+                delRef = True
+                for iList in profile_plus_settings:
+                    if (iList == key) :
+                        delRef = False
+                        # Logger.log("d", "iList :|%s|", iList )
+                        
+                if delRef == True :
+                    container.removeInstance(key, postpone_emit=True)
+                    modi += key
+                    modi += "\n"
+
+    return modi
+
     
 def viewAll():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_settings.html'
