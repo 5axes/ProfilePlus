@@ -142,7 +142,7 @@ UM.Dialog {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             
-            text: catalog.i18nc("@action:button", "Set To Selected Parameters")
+            text: catalog.i18nc("@action:button", "Update current Profile Parameters")
             onClicked: {
                 // UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
                 manager.upDate

@@ -147,7 +147,8 @@ def upDateContainerStack(Cstack, visibility_string):
                         # Logger.log("d", "iList :|%s|", iList )
                         
                 if delRef == True :
-                    container.removeInstance(key, postpone_emit=True)
+                    # The point of no return, will remove the parameter
+                    container.removeInstance(key, postpone_emit=False)
                     modi += key
                     modi += "\n"
 

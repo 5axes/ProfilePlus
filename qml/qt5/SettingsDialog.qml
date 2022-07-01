@@ -140,12 +140,12 @@ UM.Dialog {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             
-            text: catalog.i18nc("@action:button", "Set To Selected Parameters");
+            text: catalog.i18nc("@action:button", "The point of no return, will remove the parameter");
             onClicked: {
                 //UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
                 manager.upDate
 
-                settingsDialog.visible = false;
+                //settingsDialog.visible = false;
             }
         },
         Item
