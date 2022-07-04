@@ -159,7 +159,8 @@ def upDateContainerStack(Cstack, visibility_string):
                         
                 if delRef == True :
                     # The point of no return, will remove the parameter
-                    container.removeInstance(key, postpone_emit=False)
+                    # https://community.ultimaker.com/topic/40968-container-removeinstance-goal-of-the-option-postpone_emit/
+                    container.removeInstance(key, postpone_emit=True)
                     modi += key
                     modi += "\n"
 

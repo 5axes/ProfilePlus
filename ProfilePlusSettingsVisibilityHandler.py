@@ -19,7 +19,7 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
 
         self._preferences = Application.getInstance().getPreferences()
         self._preferences.preferenceChanged.connect(self._onPreferencesChanged)
-
+        # This settings is more uused as a temporary variable in this plugin
         self._onPreferencesChanged("profile_plus/profile_settings")
         self.visibilityChanged.connect(self._updatePreference)
 
@@ -27,8 +27,7 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
         if name != "profile_plus/profile_settings":
             return
         
-        visibility_string = self._preferences.getValue("profile_plus/profile_settings")
-            
+        visibility_string = self._preferences.getValue("profile_plus/profile_settings")           
         # Logger.log('d', "New Visibility_string : {}".format(visibility_string))
         
         if not visibility_string:
@@ -45,7 +44,7 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
         self._preferences.setValue("profile_plus/profile_settings", visibility_string)
         # Logger.log('d', "UpdatePreference : {}".format(visibility_string))
 
-    # Set a single SettingDefinition's visible state
+    # Set the visible state
     @pyqtSlot(str, bool)
     def setSettingVisibility(self, key: str, visible: bool) -> None:
         visible_settings = self.getVisible()
