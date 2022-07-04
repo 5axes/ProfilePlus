@@ -80,6 +80,7 @@ class ProfilePlus(QObject, Extension):
         pluginInfo = json.load(open(os.path.join(os.path.dirname(
             os.path.abspath(__file__)), "plugin.json")))
         self.plugin_version = pluginInfo['version']
+        Logger.log("d", "Plugin version : %s", self.plugin_version )
 
         ## Menu    
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
