@@ -144,7 +144,7 @@ def upDateContainerStack(Cstack, visibility_string):
     Logger.log("d", "upDateContainerStack : %s", visibility_string )
     profile_plus_settings = visibility_string.split(";")
     for container in Cstack.getContainers():
-        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == "quality_changes" :
             keys = list(container.getAllKeys())
             for key in keys:
@@ -163,7 +163,6 @@ def upDateContainerStack(Cstack, visibility_string):
                     container.removeInstance(key, postpone_emit=True)
                     modi += key
                     modi += "\n"
-
     return modi
 
     
