@@ -82,7 +82,7 @@ class ProfilePlus(QObject, Extension):
         self.plugin_version = pluginInfo['version']
 
         ## Menu    
-        self.addMenuItem("Configure Settings", self.showSettingsDialog)
+        self.addMenuItem("Remove Settings", self.showSettingsDialog)
         self.addMenuItem("View Active Profile", viewProfile)
         self.addMenuItem("View Active Configuration", viewAll)
 
