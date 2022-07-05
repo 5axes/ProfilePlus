@@ -13,15 +13,18 @@ This Plugin allows you to delete in the active profile some parameters already d
 
 
 ## Installation
+
+#### Manually:
 First, make sure your Cura version is  4.4 or newer.
 
-Manual Install Download & extract the repository as ZIP or clone it. Copy the files/plugins/ProfilePlus directory to:
+Download or clone the repository into `[Cura configuration folder]/plugins/ProfilePlus`.
 
-on Windows: [Cura installation folder]/plugins/ProfilePlus
+The configuration folder can be found via **Help** -> **Show Configuration Folder** inside Cura.
 
-on Linux: ~/.local/share/cura/[YOUR CURA VERSION]/plugins/ProfilePlus (e.g. ~/.local/share/cura/4.6/plugins/ProfilePlus)
-
-on Mac: ~/Library/Application Support/cura/[YOUR CURA VERSION]/plugins/ProfilePlus
+This menu opens the following folder:
+* Windows: `%APPDATA%\cura\<Cura version>\`, (usually `C:\Users\<your username>\AppData\Roaming\cura\<Cura version>\`)
+* Mac OS: `$HOME/Library/Application Support/cura/<Cura version>/`
+* Linux: `$HOME/.local/share/cura/<Cura version>/`
 
 
 ## How to use
