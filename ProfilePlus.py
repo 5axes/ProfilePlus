@@ -6,6 +6,7 @@
 # First release  01-07-2022  First proof of concept
 #------------------------------------------------------------------------------------------------------------------
 # 1.0.0 01-07-2022  First release to test the concept
+# 1.0.1 20-08-2022  Test Release of Cura
 #------------------------------------------------------------------------------------------------------------------
 import os
 import os.path
@@ -40,7 +41,7 @@ from UM.Application import Application
 from UM.Settings.ContainerRegistry import ContainerRegistry
 
 from cura.CuraVersion import CuraVersion  # type: ignore
-# from UM.Version import Version
+from UM.Version import Version
 
 from cura.CuraApplication import CuraApplication
 
@@ -82,6 +83,24 @@ class ProfilePlus(QObject, Extension):
         self.plugin_version = pluginInfo['version']
         Logger.log("d", "Plugin version : %s", self.plugin_version )
 
+        self.Major=1
+        self.Minor=0
+
+        # Logger.log('d', "Info Version CuraVersion --> " + str(Version(CuraVersion)))
+        Logger.log('d', "Info CuraVersion --> " + str(CuraVersion))
+        
+        # Test version for Cura Master
+        # https://github.com/smartavionics/Cura
+        if "master" in CuraVersion :
+            self.Major=4
+            self.Minor=20
+        else :
+            try:
+                self.Major = int(CuraVersion.split(".")[0])
+                self.Minor = int(CuraVersion.split(".")[1])
+            except:
+                pass
+                
         ## Menu    
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
         self.addMenuItem("View Active Profile", viewProfile)
@@ -125,11 +144,17 @@ class ProfilePlus(QObject, Extension):
         modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),self.visibility_string)
         # 
         # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
-        if modi == "" :
-            Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+        if self.Major == 4 and self.Minor < 11 : 
+            if modi == "" :
+                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+            else :
+                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
         else :
-            Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
-        
+            if modi == "" :
+                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+            else :
+                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+       
 def upDateExtruderStacks(visibility_string):
     modi = ''
     # machine = Application.getInstance().getMachineManager().activeMachine
@@ -669,8 +694,11 @@ def openHtmlPage(page_name, html_contents):
         
     if not has_browser() :
         Logger.log("d", "openHtmlPage default browser not defined") 
-        Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilAnalyser"), message_type = Message.MessageType.WARNING).show()
-        
+        if self.Major == 4 and self.Minor < 11 :
+            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilAnalyser")).show()
+        else :
+            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilAnalyser"), message_type = Message.MessageType.WARNING).show()
+       
     QDesktopServices.openUrl(QUrl.fromLocalFile(target))
 
 def getHtmlHeader(page_name='Cura Settings'):
