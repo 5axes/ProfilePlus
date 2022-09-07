@@ -36,17 +36,22 @@ First of all you must activate the profile you want to edit.
 
 Then use the function **Remove Settings present in the material profile** to activate the windows where you will have every parameters set in your current profile.
 
-**! Be careful, the deletion is direct without the possibility to cancel the action !**. So it is highly recommende to duplicate your current Profile before to modify it with this plugin.
+The list of the suppressed parameters will be displayed in a Cura message :
+
+![Message](./images/message.png)
+
+**! Be careful, the deletion is direct without the possibility to cancel the action !** So it is highly recommende to duplicate your current Profile before to modify it with this plugin.
 
 ![Duplicate](./images/duplicate.png)
 
 
-## How to use
-Then use the function **Remove Settings** to activate the windows where you will have every parameters set in your current profile.
+### Remove Settings
+
+If you are an expert, you can also use the function **Remove Settings** to activate the windows where you will have every parameters set in your current profile.
 
 ![Reset](./images/reset.png)
 
-Just untick the parameters you want to delete from the Profile and press the Button **Update current Profile parameters**
+Just uncheck the parameters you want to delete from the Profile and press the Button **Update current Profile parameters**
 
 The list of the suppressed parameters will be displayed in a Cura message :
 
