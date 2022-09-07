@@ -175,9 +175,9 @@ class ProfilePlus(QObject, Extension):
     
     def cleanProfile(self):
         modi = ''
-        mat_string=updateMaterial()
+        mat_string=updateVisibility("material")
         Logger.log("d", "Material Parameters : %s", mat_string )
-        profile_string=updateVisibility()
+        profile_string=updateVisibility("quality_changes")
         Logger.log("d", "Profile Parameters : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
@@ -264,17 +264,11 @@ def viewMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_material.html'
     openHtmlPage(HtmlFile, htmlBasePage("material"))   
     
-def updateMaterial():
-    mater = ""
-    mater += formatExtruderVisibilityStacks("material")
-    mater += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack(),"material")
 
-    return mater
-
-def updateVisibility():
+def updateVisibility(stack_keys="quality_changes"):
     visi = ""
-    visi += formatExtruderVisibilityStacks()
-    visi += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack())
+    visi += formatExtruderVisibilityStacks(stack_keys)
+    visi += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack(),stack_keys)
 
     return visi
     
