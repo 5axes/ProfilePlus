@@ -81,7 +81,6 @@ class ProfilePlus(QObject, Extension):
 
     plugin_version = ""
     visibility_string = ""
-    material_string = ""
 
     userAction = pyqtSignal()
 
