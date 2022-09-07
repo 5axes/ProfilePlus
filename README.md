@@ -38,7 +38,7 @@ Then use the function **Remove Settings present in the material profile** to act
 
 The list of the suppressed parameters will be displayed in a Cura message :
 
-![Message](./images/message.png)
+![Message](./images/message_material.png)
 
 **! Be careful, the deletion is direct without the possibility to cancel the action !** So it is highly recommende to duplicate your current Profile before to modify it with this plugin.
 
