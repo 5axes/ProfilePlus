@@ -7,7 +7,20 @@
 #------------------------------------------------------------------------------------------------------------------
 # 1.0.0 01-07-2022  First release to test the concept
 # 1.0.1 20-08-2022  Test Release of Cura
+# 1.0.2 07-09-2022  Add Function to remove settings from material profile
 #------------------------------------------------------------------------------------------------------------------
+#
+# Contanier Type in Cura Stacked Profile System
+#  type : user
+#  type : quality_changes
+#  type : intent
+#  type : quality
+#  type : material
+#  type : variant
+#  type : definition_changes
+#  type : machine
+#------------------------------------------------------------------------------------------------------------------
+
 import os
 import os.path
 import tempfile
@@ -68,6 +81,7 @@ class ProfilePlus(QObject, Extension):
 
     plugin_version = ""
     visibility_string = ""
+    material_string = ""
 
     userAction = pyqtSignal()
 
@@ -103,6 +117,8 @@ class ProfilePlus(QObject, Extension):
                 
         ## Menu    
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
+        self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)
+        self.addMenuItem("", lambda: None)
         self.addMenuItem("View Active Profile", viewProfile)
         self.addMenuItem("View Active Configuration", viewAll)
 
@@ -154,7 +170,50 @@ class ProfilePlus(QObject, Extension):
                 Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
-       
+    
+    def cleanProfile(self):
+        modi = ''
+        mat_string=updateMaterial()
+        Logger.log("d", "Material Visibility_string : %s", mat_string )
+        
+        profile_string=updateVisibility()
+        Logger.log("d", "Profile Visibility_string : %s", profile_string )
+        material_plus_settings = mat_string.split(";")
+        profile_plus_settings = profile_string.split(";")
+        
+        for remove_key in material_plus_settings:
+            Logger.log("d", "Remove_key : %s", remove_key )
+            if remove_key in profile_plus_settings:
+                Logger.log("d", "Remove_key in list : %s", remove_key )
+                profile_plus_settings.remove(remove_key)
+            if "default_" in remove_key:
+                remove_key=remove_key[8:]
+                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                if remove_key in profile_plus_settings:
+                    profile_plus_settings.remove(remove_key)           
+            
+        visi_string = ''
+        for add_key in profile_plus_settings:
+            visi_string += add_key
+            visi_string += ";"      
+        Logger.log("d", "Profile Visibility_string : %s", visi_string )
+
+        modi += upDateExtruderStacks(visi_string)
+        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),visi_string)
+        # 
+        # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
+        if self.Major == 4 and self.Minor < 11 : 
+            if modi == "" :
+                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+            else :
+                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+        else :
+            if modi == "" :
+                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+            else :
+                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+        
+        
 def upDateExtruderStacks(visibility_string):
     modi = ''
     # machine = Application.getInstance().getMachineManager().activeMachine
@@ -200,14 +259,21 @@ def viewProfile():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
     openHtmlPage(HtmlFile, htmlBasePage())   
 
+def updateMaterial():
+    mater = ""
+    mater += formatExtruderMaterialStacks()
+    mater += formatMaterialStack(Application.getInstance().getGlobalContainerStack())
+
+    return mater
+
 def updateVisibility():
     visi = ""
     visi += formatExtruderVisibilityStacks()
     visi += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack())
 
     return visi
-
-def formatExtruderVisibilityStacks():
+    
+def formatExtruderVisibilityStacks(stack_keys="quality_changes"):
     visi = ''
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
@@ -217,11 +283,33 @@ def formatExtruderVisibilityStacks():
         position += 1
     return visi
 
-def formatContainerVisibilityStack(Cstack, show_stack_keys=True):
+def formatExtruderMaterialStacks(stack_keys="material"):
+    visi = ''
+    # machine = Application.getInstance().getMachineManager().activeMachine
+    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
+    position=0
+    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+        visi += formatMaterialStack(extruder_stack)
+        position += 1
+    return visi
+    
+def formatContainerVisibilityStack(Cstack, stack_keys="quality_changes"):
+    visi = ''
+    for container in Cstack.getContainers():
+        # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+            keys = list(container.getAllKeys())
+            for key in keys:
+                # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
+                visi += key
+                visi += ";"
+    return visi
+
+def formatMaterialStack(Cstack, stack_keys="material"):
     visi = ''
     for container in Cstack.getContainers():
         Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
-        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+        if str(container.getMetaDataEntry("type")) == "material" :
             keys = list(container.getAllKeys())
             for key in keys:
                 # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
