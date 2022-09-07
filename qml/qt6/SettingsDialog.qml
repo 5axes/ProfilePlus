@@ -13,7 +13,7 @@ import ProfilePlus  as ProfilePlus
 UM.Dialog {
     id: settingsDialog
 
-    title: catalog.i18nc("@title:window", "Select Settings to Reset")
+    title: catalog.i18nc("@title:window", "Select settings to Delete")
     width: screenScaleFactor * 360
 
     onVisibilityChanged:
@@ -39,7 +39,6 @@ UM.Dialog {
     ColumnLayout
     {
         anchors.fill: parent
-
 
 
         Item

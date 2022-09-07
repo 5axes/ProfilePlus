@@ -1,5 +1,6 @@
 // Copyright (c) 2022 5@xes
 // The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
+
 import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Window 2.2
@@ -12,7 +13,7 @@ import ProfilePlus 1.0 as ProfilePlus
 UM.Dialog {
     id: settingsDialog
 
-    title: catalog.i18nc("@title:window", "Select Settings to Log")
+    title: catalog.i18nc("@title:window", "Select settings to Delete")
     width: screenScaleFactor * 360
 
     onVisibilityChanged:
@@ -99,7 +100,7 @@ UM.Dialog {
                 id:listview
                 model: ProfilePlus.ProfilePlusSettingDefinitionsModel
                 {
-                    id: definitionsModel;
+                    id: definitionsModel
                     containerId: Cura.MachineManager.activeMachine.definition.id
                     visibilityHandler: Cura.ProfilePlusSettingsVisibilityHandler {}
                     showAll: false
@@ -140,12 +141,11 @@ UM.Dialog {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             
-            text: catalog.i18nc("@action:button", "The point of no return, will remove the parameter");
+            text: catalog.i18nc("@action:button", "Update current Profile Parameters");
             onClicked: {
-                //UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
+                // UM.Preferences.resetProfileSettings("profile_plus/profile_settings")
                 manager.upDate
-
-                //settingsDialog.visible = false;
+                // settingsDialog.visible = false;
             }
         },
         Item
