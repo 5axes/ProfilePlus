@@ -56,3 +56,9 @@ Just uncheck the parameters you want to delete from the Profile and press the Bu
 The list of the suppressed parameters will be displayed in a Cura message :
 
 ![Message](./images/message.png)
+
+### Analyse functions
+
+- View Custom Parameters : View the parameters defined by the user.
+- View Active Material : View the parameters defined in the material definition
+- View Active Profile : View the parameters defined in the active profile
