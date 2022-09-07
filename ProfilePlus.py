@@ -115,9 +115,10 @@ class ProfilePlus(QObject, Extension):
             except:
                 pass
                 
-        ## Menu    
+        ## Menu
+        self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)        
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
-        self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)
+        
         self.addMenuItem("", lambda: None)
         self.addMenuItem("View Active Profile", viewProfile)
         self.addMenuItem("View Active Configuration", viewAll)
@@ -174,10 +175,9 @@ class ProfilePlus(QObject, Extension):
     def cleanProfile(self):
         modi = ''
         mat_string=updateMaterial()
-        Logger.log("d", "Material Visibility_string : %s", mat_string )
-        
+        Logger.log("d", "Material Parameters : %s", mat_string )
         profile_string=updateVisibility()
-        Logger.log("d", "Profile Visibility_string : %s", profile_string )
+        Logger.log("d", "Profile Parameters : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         
@@ -196,7 +196,7 @@ class ProfilePlus(QObject, Extension):
         for add_key in profile_plus_settings:
             visi_string += add_key
             visi_string += ";"      
-        Logger.log("d", "Profile Visibility_string : %s", visi_string )
+        Logger.log("d", "Profile Parameters : %s", visi_string )
 
         modi += upDateExtruderStacks(visi_string)
         modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),visi_string)
@@ -261,8 +261,8 @@ def viewProfile():
 
 def updateMaterial():
     mater = ""
-    mater += formatExtruderMaterialStacks()
-    mater += formatMaterialStack(Application.getInstance().getGlobalContainerStack())
+    mater += formatExtruderVisibilityStacks("material")
+    mater += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack(),"material")
 
     return mater
 
@@ -279,37 +279,16 @@ def formatExtruderVisibilityStacks(stack_keys="quality_changes"):
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        visi += formatContainerVisibilityStack(extruder_stack)
+        visi += formatContainerVisibilityStack(extruder_stack,stack_keys)
         position += 1
     return visi
 
-def formatExtruderMaterialStacks(stack_keys="material"):
-    visi = ''
-    # machine = Application.getInstance().getMachineManager().activeMachine
-    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
-    position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        visi += formatMaterialStack(extruder_stack)
-        position += 1
-    return visi
     
 def formatContainerVisibilityStack(Cstack, stack_keys="quality_changes"):
     visi = ''
     for container in Cstack.getContainers():
         # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
-        if str(container.getMetaDataEntry("type")) == "quality_changes" :
-            keys = list(container.getAllKeys())
-            for key in keys:
-                # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
-                visi += key
-                visi += ";"
-    return visi
-
-def formatMaterialStack(Cstack, stack_keys="material"):
-    visi = ''
-    for container in Cstack.getContainers():
-        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
-        if str(container.getMetaDataEntry("type")) == "material" :
+        if str(container.getMetaDataEntry("type")) == stack_keys :
             keys = list(container.getAllKeys())
             for key in keys:
                 # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
