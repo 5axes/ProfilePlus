@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------------------------------------------
 # 1.0.0 01-07-2022  First release to test the concept
 # 1.0.1 20-08-2022  Test Release of Cura
-# 1.0.2 07-09-2022  Add Function to remove settings from material profile
+# 1.0.2 07-09-2022  Add Function to remove settings already existing in the material profile
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -120,9 +120,9 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
         
         self.addMenuItem("", lambda: None)
-        self.addMenuItem("View Active Profile", viewProfile)
+        self.addMenuItem("View Custom Parameters", viewProfile)
         self.addMenuItem("View Active Material", viewMaterial)
-        self.addMenuItem("View Active Configuration", viewAll)
+        self.addMenuItem("View Active Profile", viewAll)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
 
@@ -258,11 +258,11 @@ def viewAll():
 
 def viewProfile():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
-    openHtmlPage(HtmlFile, htmlProfilePage())   
+    openHtmlPage(HtmlFile, htmlBasePage("quality_changes"))   
 
 def viewMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_material.html'
-    openHtmlPage(HtmlFile, htmlMaterialPage())   
+    openHtmlPage(HtmlFile, htmlBasePage("material"))   
     
 def updateMaterial():
     mater = ""
@@ -336,8 +336,8 @@ def htmlPage():
     html += htmlFooter
     return html
 
-def htmlProfilePage():
-    html = getHtmlHeader()
+def htmlBasePage(stack_type="quality_changes"):
+    html = getHtmlHeader(stack_type)
 
     # Menu creation
     html += '<div class="menu">\n'
@@ -345,11 +345,11 @@ def htmlProfilePage():
  
 
     html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
-    html += formatExtruderBaseStacksMenu()
+    html += formatExtruderBaseStacksMenu(stack_type)
     html += '</li>\n'
 
     html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerBaseStackMenu(Application.getInstance().getGlobalContainerStack())
+    html += formatContainerBaseStackMenu(Application.getInstance().getGlobalContainerStack(),stack_type)
     html += '</li>\n'
 
     html += '</ul>\n'
@@ -358,49 +358,19 @@ def htmlProfilePage():
 
     # Contents creation
     html += '<div class="contents">'
-    html += formatExtruderBaseStacks()
+    html += formatExtruderBaseStacks(stack_type)
      
     html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerBaseStack(Application.getInstance().getGlobalContainerStack())
+    html += formatContainerBaseStack(Application.getInstance().getGlobalContainerStack(),True,stack_type)
     
     html += '</div>'
 
     html += htmlFooter
     return html
 
-def htmlMaterialPage():
-    html = getHtmlHeader()
-
-    # Menu creation
-    html += '<div class="menu">\n'
-    html += '<ul>'
- 
-
-    html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
-    html += formatExtruderMaterialStacksMenu()
-    html += '</li>\n'
-
-    html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerMaterialStackMenu(Application.getInstance().getGlobalContainerStack())
-    html += '</li>\n'
-
-    html += '</ul>\n'
-    
-    html += '</div>'
-
-    # Contents creation
-    html += '<div class="contents">'
-    html += formatExtruderMaterialStacks()
-     
-    html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerMaterialStack(Application.getInstance().getGlobalContainerStack())
-    
-    html += '</div>'
-
-    html += htmlFooter
-    return html
     
 # Change the 'quality_type' to 'standard' if 'not_supported'
+# Useless Code but who knows .. one day
 def changeToStandardQuality():
     #stack = Application.getInstance().getGlobalContainerStack()
 
@@ -520,7 +490,7 @@ def formatExtruderStacks():
         position += 1
     return html
 
-def formatExtruderBaseStacks():
+def formatExtruderBaseStacks(stack_keys="quality_changes"):
     html = ''
     html += '<h2 id="extruder_stacks">Extruder Stacks</h2>'
     # machine = Application.getInstance().getMachineManager().activeMachine
@@ -528,21 +498,10 @@ def formatExtruderBaseStacks():
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
-        html += formatContainerBaseStack(extruder_stack)
+        html += formatContainerBaseStack(extruder_stack,True,stack_keys)
         position += 1
     return html
 
-def formatExtruderMaterialStacks():
-    html = ''
-    html += '<h2 id="extruder_stacks">Extruder Stacks</h2>'
-    # machine = Application.getInstance().getMachineManager().activeMachine
-    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
-    position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
-        html += formatContainerMaterialStack(extruder_stack)
-        position += 1
-    return html
     
 def formatExtruderStacksMenu():
     html = ''
@@ -559,7 +518,7 @@ def formatExtruderStacksMenu():
     html += '</ul>'
     return html
 
-def formatExtruderBaseStacksMenu():
+def formatExtruderBaseStacksMenu(stack_keys="quality_changes"):
     html = ''
     html += '<ul>'
     # machine = Application.getInstance().getMachineManager().activeMachine
@@ -568,22 +527,7 @@ def formatExtruderBaseStacksMenu():
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<li>'
         html += '<a href="#extruder_index_' + str(position) + '">Index ' + str(position) + '</a>\n'
-        html += formatContainerBaseStackMenu(extruder_stack)
-        html += '</li>'
-        position += 1
-    html += '</ul>'
-    return html
-    
-def formatExtruderMaterialStacksMenu():
-    html = ''
-    html += '<ul>'
-    # machine = Application.getInstance().getMachineManager().activeMachine
-    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
-    position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        html += '<li>'
-        html += '<a href="#extruder_index_' + str(position) + '">Index ' + str(position) + '</a>\n'
-        html += formatContainerMaterialStackMenu(extruder_stack)
+        html += formatContainerBaseStackMenu(extruder_stack,stack_keys)
         html += '</li>'
         position += 1
     html += '</ul>'
@@ -599,23 +543,13 @@ def formatContainerStack(Cstack, show_stack_keys=True):
     html += '</div>\n'
     html += '</div>\n'
     return html
-
-def formatContainerMaterialStack(Cstack, show_stack_keys=True):
-    html = '<div class="container_stack_containers">\n'
-    html += '<h3>Containers</h3>\n'
-    for container in Cstack.getContainers():
-        Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
-        if str(container.getMetaDataEntry("type")) == "material" :
-            html += formatContainer(container, show_keys=show_stack_keys)
-    html += '</div>\n'
-    return html
     
-def formatContainerBaseStack(Cstack, show_stack_keys=True):
+def formatContainerBaseStack(Cstack, show_stack_keys=True, stack_keys="quality_changes" ):
     html = '<div class="container_stack_containers">\n'
     html += '<h3>Containers</h3>\n'
     for container in Cstack.getContainers():
         Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
-        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+        if str(container.getMetaDataEntry("type")) == stack_keys :
             html += formatContainer(container, show_keys=show_stack_keys)
     html += '</div>\n'
     return html
@@ -634,12 +568,12 @@ def formatContainerStackMenu(stack):
     html += '</ul>\n'
     return html
 
-def formatContainerBaseStackMenu(stack):
+def formatContainerBaseStackMenu(stack, stack_keys="quality_changes"):
     html = ''
     html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
     html += '<ul>\n'
     for container in stack.getContainers():
-        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+        if str(container.getMetaDataEntry("type")) == stack_keys :
             #
             if container.getName() == "empty" :
                 html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
@@ -649,20 +583,6 @@ def formatContainerBaseStackMenu(stack):
     html += '</ul>\n'
     return html
 
-def formatContainerMaterialStackMenu(stack):
-    html = ''
-    html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
-    html += '<ul>\n'
-    for container in stack.getContainers():
-        if str(container.getMetaDataEntry("type")) == "material" :
-            #
-            if container.getName() == "empty" :
-                html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
-            else:
-                html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getName()) + '</a></li>'
-            
-    html += '</ul>\n'
-    return html
     
 setting_prop_names = SettingDefinition.getPropertyNames()
 def formatSettingValue(container, key, properties=None):
