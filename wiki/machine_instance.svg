@@ -1,55 +1,264 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="1010">
-    <defs>
-        <path id="stack-header" d="m0,50 v-30 a20,20 0 0 1 20,-20 h260 a20,20 0 0 1 20,20 v30 z" />
-        <marker id="arrow" refX="2" refY="1.5" markerWidth="3" markerHeight="3" orient="auto-start-reverse">
-            <polygon points="0,0 3,1.5 0,3" />
-        </marker>
-    </defs>
-
-    <g stroke="black" stroke-width="5" fill="silver"> <!-- Stack headers. -->
-        <use href="#stack-header" x="200" y="555" />
-        <use href="#stack-header" x="5" y="5" />
-        <use href="#stack-header" x="395" y="5" />
-    </g>
-    <g stroke="black" stroke-width="10" fill="none"> <!-- Stack outlines. -->
-        <rect x="200" y="555" width="300" height="450" rx="20" /> <!-- Global stack. -->
-        <rect x="5" y="5" width="300" height="450" rx="20" /> <!-- Left extruder. -->
-        <rect x="395" y="5" width="300" height="450" rx="20" /> <!-- Right extruder. -->
-    </g>
-    <g font-family="sans-serif" font-size="25" dominant-baseline="middle" text-anchor="middle">
-        <text x="350" y="582.5">Global stack</text> <!-- Slightly lowered since the top line is thicker than the bottom. -->
-        <text x="350" y="630">User</text>
-        <text x="350" y="680">Custom</text>
-        <text x="350" y="730">Intent</text>
-        <text x="350" y="780">Quality</text>
-        <text x="350" y="830">Material</text>
-        <text x="350" y="880">Variant</text>
-        <text x="350" y="930">Definition changes</text>
-        <text x="350" y="980">Printer</text>
-
-        <text x="155" y="32.5">Left extruder</text> <!-- Slightly lowered again. -->
-        <text x="155" y="80">User</text>
-        <text x="155" y="130">Custom</text>
-        <text x="155" y="180">Intent</text>
-        <text x="155" y="230">Quality</text>
-        <text x="155" y="280">Material</text>
-        <text x="155" y="330">Nozzle</text>
-        <text x="155" y="380">Definition changes</text>
-        <text x="155" y="430">Extruder</text>
-
-        <text x="545" y="32.5">Right extruder</text> <!-- Slightly lowered again. -->
-        <text x="545" y="80">User</text>
-        <text x="545" y="130">Custom</text>
-        <text x="545" y="180">Intent</text>
-        <text x="545" y="230">Quality</text>
-        <text x="545" y="280">Material</text>
-        <text x="545" y="330">Nozzle</text>
-        <text x="545" y="380">Definition changes</text>
-        <text x="545" y="430">Extruder</text>
-    </g>
-    <g stroke="black" stroke-width="5" marker-end="url(#arrow)"> <!-- Arrows. -->
-        <line x1="155" y1="455" x2="345" y2="545" />
-        <line x1="545" y1="455" x2="355" y2="545" />
-    </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="machine_instance.svg"
+   id="svg86"
+   version="1.1"
+   height="1010"
+   width="700">
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:current-layer="svg86"
+     inkscape:window-maximized="1"
+     inkscape:window-y="105"
+     inkscape:window-x="-8"
+     inkscape:cy="428.79619"
+     inkscape:cx="308.54478"
+     inkscape:zoom="0.66336634"
+     showgrid="false"
+     id="namedview88"
+     inkscape:window-height="837"
+     inkscape:window-width="1600"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <defs
+     id="defs6">
+    <path
+       d="m0,50 v-30 a20,20 0 0 1 20,-20 h260 a20,20 0 0 1 20,20 v30 z"
+       id="stack-header" />
+    <marker
+       orient="auto-start-reverse"
+       markerHeight="3"
+       markerWidth="3"
+       refY="1.5"
+       refX="2"
+       id="arrow">
+      <polygon
+         id="polygon3"
+         points="0,0 3,1.5 0,3" />
+    </marker>
+  </defs>
+  <g
+     id="g14"
+     fill="silver"
+     stroke-width="5"
+     stroke="black">
+    <!-- Stack headers. -->
+    <use
+       id="use8"
+       y="555"
+       x="200"
+       href="#stack-header" />
+    <use
+       id="use10"
+       y="5"
+       x="5"
+       href="#stack-header" />
+    <use
+       id="use12"
+       y="5"
+       x="395"
+       href="#stack-header" />
+  </g>
+  <g
+     id="g22"
+     fill="none"
+     stroke-width="10"
+     stroke="#000000">
+    <!-- Stack outlines. -->
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#f50000;stroke-opacity:1"
+       id="rect16"
+       rx="20"
+       height="450"
+       width="300"
+       y="555"
+       x="200" />
+    <!-- Global stack. -->
+    <rect
+       style="stroke:#00f510;stroke-opacity:1"
+       id="rect18"
+       rx="20"
+       height="450"
+       width="300"
+       y="5"
+       x="5" />
+    <!-- Left extruder. -->
+    <rect
+       style="stroke:#0008f5;stroke-opacity:1"
+       id="rect20"
+       rx="20"
+       height="450"
+       width="300"
+       y="5"
+       x="395" />
+    <!-- Right extruder. -->
+  </g>
+  <g
+     id="g78"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     font-size="25px"
+     font-family="sans-serif">
+    <text
+       id="text24"
+       y="582.5"
+       x="350"><tspan
+         id="tspan927"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#f30000;fill-opacity:1">Global stack</tspan></text>
+    <!-- Slightly lowered since the top line is thicker than the bottom. -->
+    <text
+       id="text26"
+       y="630"
+       x="350">User</text>
+    <text
+       id="text28"
+       y="680"
+       x="350">Custom <tspan
+   id="tspan921"
+   style="font-size:16px">(Quality Changes)</tspan></text>
+    <text
+       id="text30"
+       y="730"
+       x="350">Intent</text>
+    <text
+       id="text32"
+       y="780"
+       x="350">Quality</text>
+    <text
+       id="text34"
+       y="830"
+       x="350">Material</text>
+    <text
+       id="text36"
+       y="880"
+       x="350">Variant</text>
+    <text
+       id="text38"
+       y="930"
+       x="350">Definition changes</text>
+    <text
+       id="text40"
+       y="980"
+       x="350">Machine</text>
+    <text
+       id="text42"
+       y="32.5"
+       x="155"><tspan
+         id="tspan931"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#00f300;fill-opacity:1">Left extruder</tspan></text>
+    <!-- Slightly lowered again. -->
+    <text
+       id="text44"
+       y="80"
+       x="155">User</text>
+    <text
+       id="text46"
+       y="130"
+       x="155">Custom <tspan
+   id="tspan923"
+   style="font-size:16px">(Quality Changes)</tspan></text>
+    <text
+       id="text48"
+       y="180"
+       x="155">Intent</text>
+    <text
+       id="text50"
+       y="230"
+       x="155">Quality</text>
+    <text
+       id="text52"
+       y="280"
+       x="155">Material</text>
+    <text
+       id="text54"
+       y="330"
+       x="155">Nozzle</text>
+    <text
+       id="text56"
+       y="380"
+       x="155">Definition changes</text>
+    <text
+       id="text58"
+       y="430"
+       x="155">Extruder</text>
+    <text
+       id="text60"
+       y="32.5"
+       x="545"><tspan
+         id="tspan929"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#0000f3;fill-opacity:1">Right extruder</tspan></text>
+    <!-- Slightly lowered again. -->
+    <text
+       id="text62"
+       y="80"
+       x="545">User</text>
+    <text
+       id="text64"
+       y="130"
+       x="545">Custom <tspan
+   id="tspan925"
+   style="font-size:16px">(Quality Changes)</tspan></text>
+    <text
+       id="text66"
+       y="180"
+       x="545">Intent</text>
+    <text
+       id="text68"
+       y="230"
+       x="545">Quality</text>
+    <text
+       id="text70"
+       y="280"
+       x="545">Material</text>
+    <text
+       id="text72"
+       y="330"
+       x="545">Nozzle</text>
+    <text
+       id="text74"
+       y="380"
+       x="545">Definition changes</text>
+    <text
+       id="text76"
+       y="430"
+       x="545">Extruder</text>
+  </g>
+  <line
+     x1="344.96579"
+     y1="556.1076"
+     x2="162.31242"
+     y2="458.0372"
+     id="line80"
+     style="stroke:#000000;stroke-width:5.11747;marker-end:url(#arrow)" />
+  <line
+     x1="364.43201"
+     y1="556.08997"
+     x2="537.72137"
+     y2="454.95978"
+     id="line82"
+     style="stroke:#000000;stroke-width:5.06172;marker-end:url(#arrow)" />
 </svg>
