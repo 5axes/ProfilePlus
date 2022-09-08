@@ -8,6 +8,7 @@
 # 1.0.0 01-07-2022  First release to test the concept
 # 1.0.1 20-08-2022  Test Release of Cura
 # 1.0.2 07-09-2022  Add Function to remove settings already existing in the material profile
+# 1.0.3 08-09-2022  Test and reduce Code Size
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -252,23 +253,22 @@ def upDateContainerStack(Cstack, visibility_string):
 
     
 def viewAll():
-    HtmlFile = str(CuraVersion).replace('.','-') + '_cura_settings.html'
-    openHtmlPage(HtmlFile, htmlPage())
+    HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
+    openHtmlPage(HtmlFile, htmlPage(True,"Profile"))
 
 def viewProfile():
-    HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
-    openHtmlPage(HtmlFile, htmlBasePage("quality_changes"))   
+    HtmlFile = str(CuraVersion).replace('.','-') + '_cura_quality.html'
+    openHtmlPage(HtmlFile, htmlPage(False,"quality_changes"))   
 
 def viewMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_material.html'
-    openHtmlPage(HtmlFile, htmlBasePage("material"))   
+    openHtmlPage(HtmlFile, htmlPage(False,"material"))   
     
 
 def updateVisibility(stack_keys="quality_changes"):
     visi = ""
     visi += formatExtruderVisibilityStacks(stack_keys)
     visi += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack(),stack_keys)
-
     return visi
     
 def formatExtruderVisibilityStacks(stack_keys="quality_changes"):
@@ -294,67 +294,35 @@ def formatContainerVisibilityStack(Cstack, stack_keys="quality_changes"):
                 visi += ";"
     return visi
 
-    
-def htmlPage():
-    html = getHtmlHeader()
 
-    # Menu creation
-    html += '<div class="menu">\n'
-    html += '<ul>'
- 
-
-    html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
-    html += formatExtruderStacksMenu(True)
-    html += '</li>\n'
-
-    html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack(),True)
-    html += '</li>\n'
-
-    html += '</ul>\n'
-    
-    # Java script filter function
-    html += keyFilterWidget()
-    html += '</div>'
-
-    # Contents creation
-    html += '<div class="contents">'
-    html += formatExtruderStacks()
-     
-    html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerStack(Application.getInstance().getGlobalContainerStack(),True)
-    
-    html += '</div>'
-
-    html += htmlFooter
-    return html
-
-def htmlBasePage(stack_type="quality_changes"):
+def htmlPage(show_all=False,stack_type="quality_changes"):
     html = getHtmlHeader(stack_type)
 
     # Menu creation
     html += '<div class="menu">\n'
     html += '<ul>'
- 
 
     html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
-    html += formatExtruderStacksMenu(False,stack_type)
+    html += formatExtruderStacksMenu(show_all,stack_type)
     html += '</li>\n'
 
     html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack(),False, stack_type)
+    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack(),show_all, stack_type)
     html += '</li>\n'
 
     html += '</ul>\n'
     
+    # Java script filter function
+    if show_all :
+        html += keyFilterWidget()
     html += '</div>'
 
     # Contents creation
     html += '<div class="contents">'
-    html += formatExtruderBaseStacks(stack_type)
+    html += formatExtruderStacks(show_all,stack_type)
      
     html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerStack(Application.getInstance().getGlobalContainerStack(),True,False,stack_type)
+    html += formatContainerStack(Application.getInstance().getGlobalContainerStack(),True,show_all,stack_type)
     
     html += '</div>'
 
@@ -471,19 +439,8 @@ def formatContainerMetaDataRows(def_container):
 
     return html
     
-def formatExtruderStacks():
-    html = ''
-    html += '<h2 id="extruder_stacks">Extruder Stacks</h2>'
-    # machine = Application.getInstance().getMachineManager().activeMachine
-    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
-    position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
-        html += formatContainerStack(extruder_stack,True)
-        position += 1
-    return html
 
-def formatExtruderBaseStacks(stack_keys="quality_changes"):
+def formatExtruderStacks(show_all=False,stack_keys="quality_changes"):
     html = ''
     html += '<h2 id="extruder_stacks">Extruder Stacks</h2>'
     # machine = Application.getInstance().getMachineManager().activeMachine
@@ -491,7 +448,7 @@ def formatExtruderBaseStacks(stack_keys="quality_changes"):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
-        html += formatContainerStack(extruder_stack,True,False,stack_keys)
+        html += formatContainerStack(extruder_stack,True,show_all,stack_keys)
         position += 1
     return html
 
