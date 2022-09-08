@@ -470,12 +470,17 @@ def formatExtruderStacksMenu(show_all=True,stack_keys="quality_changes"):
     
     
 def formatContainerStack(Cstack, show_stack_keys=True, show_all=True, stack_keys="quality_changes" ):
-    html = '<div class="container_stack_containers">\n'
+    html = '<div class="container_stack">\n'
+    if show_all :
+        html += formatContainer(Cstack, name='Container Stack', short_value_properties=True)
+        html += '<div class="container_stack_containers">\n'
     html += '<h3>Containers</h3>\n'
     for container in Cstack.getContainers():
         Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == stack_keys or show_all :
             html += formatContainer(container, show_keys=show_stack_keys)
+    if show_all :
+        html += '</div>\n'
     html += '</div>\n'
     return html
     
