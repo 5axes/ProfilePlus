@@ -304,11 +304,11 @@ def htmlPage():
  
 
     html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
-    html += formatExtruderStacksMenu()
+    html += formatExtruderStacksMenu(True)
     html += '</li>\n'
 
     html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack())
+    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack(),True)
     html += '</li>\n'
 
     html += '</ul>\n'
@@ -322,7 +322,7 @@ def htmlPage():
     html += formatExtruderStacks()
      
     html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerStack(Application.getInstance().getGlobalContainerStack())
+    html += formatContainerStack(Application.getInstance().getGlobalContainerStack(),True)
     
     html += '</div>'
 
@@ -338,11 +338,11 @@ def htmlBasePage(stack_type="quality_changes"):
  
 
     html += '<li><a href="#extruder_stacks">Extruder Stacks</a>\n'
-    html += formatExtruderBaseStacksMenu(stack_type)
+    html += formatExtruderStacksMenu(False,stack_type)
     html += '</li>\n'
 
     html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerBaseStackMenu(Application.getInstance().getGlobalContainerStack(),stack_type)
+    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack(),False, stack_type)
     html += '</li>\n'
 
     html += '</ul>\n'
@@ -354,7 +354,7 @@ def htmlBasePage(stack_type="quality_changes"):
     html += formatExtruderBaseStacks(stack_type)
      
     html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerBaseStack(Application.getInstance().getGlobalContainerStack(),True,stack_type)
+    html += formatContainerStack(Application.getInstance().getGlobalContainerStack(),True,False,stack_type)
     
     html += '</div>'
 
@@ -479,7 +479,7 @@ def formatExtruderStacks():
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
-        html += formatContainerStack(extruder_stack)
+        html += formatContainerStack(extruder_stack,True)
         position += 1
     return html
 
@@ -491,12 +491,12 @@ def formatExtruderBaseStacks(stack_keys="quality_changes"):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
-        html += formatContainerBaseStack(extruder_stack,True,stack_keys)
+        html += formatContainerStack(extruder_stack,True,False,stack_keys)
         position += 1
     return html
 
     
-def formatExtruderStacksMenu():
+def formatExtruderStacksMenu(show_all=True,stack_keys="quality_changes"):
     html = ''
     html += '<ul>'
     # machine = Application.getInstance().getMachineManager().activeMachine
@@ -505,68 +505,30 @@ def formatExtruderStacksMenu():
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<li>'
         html += '<a href="#extruder_index_' + str(position) + '">Index ' + str(position) + '</a>\n'
-        html += formatContainerStackMenu(extruder_stack)
-        html += '</li>'
-        position += 1
-    html += '</ul>'
-    return html
-
-def formatExtruderBaseStacksMenu(stack_keys="quality_changes"):
-    html = ''
-    html += '<ul>'
-    # machine = Application.getInstance().getMachineManager().activeMachine
-    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
-    position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        html += '<li>'
-        html += '<a href="#extruder_index_' + str(position) + '">Index ' + str(position) + '</a>\n'
-        html += formatContainerBaseStackMenu(extruder_stack,stack_keys)
+        html += formatContainerStackMenu(extruder_stack, show_all, stack_keys)
         html += '</li>'
         position += 1
     html += '</ul>'
     return html
     
-def formatContainerStack(Cstack, show_stack_keys=True):
-    html = '<div class="container_stack">\n'
-    html += formatContainer(Cstack, name='Container Stack', short_value_properties=True)
-    html += '<div class="container_stack_containers">\n'
-    html += '<h3>Containers</h3>\n'
-    for container in Cstack.getContainers():
-        html += formatContainer(container, show_keys=show_stack_keys)
-    html += '</div>\n'
-    html += '</div>\n'
-    return html
     
-def formatContainerBaseStack(Cstack, show_stack_keys=True, stack_keys="quality_changes" ):
+def formatContainerStack(Cstack, show_stack_keys=True, show_all=True, stack_keys="quality_changes" ):
     html = '<div class="container_stack_containers">\n'
     html += '<h3>Containers</h3>\n'
     for container in Cstack.getContainers():
         Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
-        if str(container.getMetaDataEntry("type")) == stack_keys :
+        if str(container.getMetaDataEntry("type")) == stack_keys or show_all :
             html += formatContainer(container, show_keys=show_stack_keys)
     html += '</div>\n'
     return html
     
-def formatContainerStackMenu(stack):
-    html = ''
-    html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
-    html += '<ul>\n'
-    for container in stack.getContainers():
-        #
-        if container.getName() == "empty" :
-            html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
-        else:
-            html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getName()) + '</a></li>'
-            
-    html += '</ul>\n'
-    return html
 
-def formatContainerBaseStackMenu(stack, stack_keys="quality_changes"):
+def formatContainerStackMenu(stack, show_all=True, stack_keys="quality_changes"):
     html = ''
     html += '<a href="#' + str(id(stack)) + '"></a><br />\n'
     html += '<ul>\n'
     for container in stack.getContainers():
-        if str(container.getMetaDataEntry("type")) == stack_keys :
+        if str(container.getMetaDataEntry("type")) == stack_keys or show_all:
             #
             if container.getName() == "empty" :
                 html += '<li><a href="#' + str(id(container)) + '">' + encode(container.getId()) + '</a></li>'
