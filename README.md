@@ -8,7 +8,7 @@ The plugin allows to delete parameters defined in a profile (Quality Change).
 
 There are often requests for the possibility of defining, for example, a ***Default printing temperature*** in the material definition and to avoid that the profile parameters overwrite this value. The problem is that the custom profile settings overwrite this data. The only solution I know is to edit the profile manualy via a text editor and delete the unnecessary parameter.
 
-To avoid this issuer, I've designed this Plugin to allows you to delete automaticaly in the active profile the parameters already defined in the material section of Cura. 
+To avoid this issue, I've designed this Plugin to allows you to delete automaticaly in the active profile the parameters already defined in the material section of Cura. 
 
 It also  allows you to delete in the active profile some parameters already defined. 
 
