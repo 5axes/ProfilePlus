@@ -1,6 +1,6 @@
 # Profile Plus
 
-The plugin allows to delete parameters defined in a profile. 
+The plugin allows to delete parameters defined in a profile (Quality Change). 
 
 **! Be careful, the deletion is direct without the possibility to cancel the action !**
 
