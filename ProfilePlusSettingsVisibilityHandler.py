@@ -27,22 +27,22 @@ class ProfilePlusSettingsVisibilityHandler(SettingVisibilityHandler):
         if name != "profile_plus/profile_settings":
             return
         
-        visibility_string = self._preferences.getValue("profile_plus/profile_settings")           
-        # Logger.log('d', "New Visibility_string : {}".format(visibility_string))
+        definition_string = self._preferences.getValue("profile_plus/profile_settings")           
+        # Logger.log('d', "New definition_string : {}".format(definition_string))
         
-        if not visibility_string:
+        if not definition_string:
             # self._preferences.resetProfileSettings("profile_plus/profile_settings")
             Message(text = "Standard settings or Profile without settings", title = i18n_cura_catalog.i18nc("@info:title", "Warning ! Profile Plus"), message_type = Message.MessageType.WARNING).show()
             return
 
-        profile_plus_settings = set(visibility_string.split(";"))
+        profile_plus_settings = set(definition_string.split(";"))
         if profile_plus_settings != self.getVisible():
             self.setVisible(profile_plus_settings)
 
     def _updatePreference(self) -> None:
-        visibility_string = ";".join(self.getVisible())
-        self._preferences.setValue("profile_plus/profile_settings", visibility_string)
-        # Logger.log('d', "UpdatePreference : {}".format(visibility_string))
+        definition_string = ";".join(self.getVisible())
+        self._preferences.setValue("profile_plus/profile_settings", definition_string)
+        # Logger.log('d', "UpdatePreference : {}".format(definition_string))
 
     # Set the visible state
     @pyqtSlot(str, bool)

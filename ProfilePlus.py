@@ -81,7 +81,7 @@ class ProfilePlus(QObject, Extension):
     api = CuraApplication.getInstance().getCuraAPI()
 
     plugin_version = ""
-    visibility_string = ""
+    definition_string = ""
 
     userAction = pyqtSignal()
 
@@ -137,9 +137,9 @@ class ProfilePlus(QObject, Extension):
         )
 
     def showSettingsDialog(self):
-        self.visibility_string=updateVisibility()
-        Logger.log("d", "showSettingsDialog Profile Visibility_string : %s", self.visibility_string )  
-        self._application.getPreferences().setValue("profile_plus/profile_settings", self.visibility_string)
+        self.definition_string=updateDefinition()
+        Logger.log("d", "showSettingsDialog Profile definition_string : %s", self.definition_string )  
+        self._application.getPreferences().setValue("profile_plus/profile_settings", self.definition_string)
         
         path = None
         if USE_QT5:
@@ -156,12 +156,12 @@ class ProfilePlus(QObject, Extension):
     @pyqtProperty(str, notify= userAction)
     def upDate(self)-> None:
         modi = ''
-        self.visibility_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
-        Logger.log("d", "Update Visibility_string : %s", self.visibility_string )
-        modi += upDateExtruderStacks(self.visibility_string)
-        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),self.visibility_string)
+        self.definition_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
+        Logger.log("d", "Update definition_string : %s", self.definition_string )
+        modi += upDateExtruderStacks(self.definition_string)
+        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),self.definition_string)
         # 
-        # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
+        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
                 Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
@@ -175,9 +175,9 @@ class ProfilePlus(QObject, Extension):
     
     def cleanProfile(self):
         modi = ''
-        mat_string=updateVisibility("material")
+        mat_string=updateDefinition("material")
         Logger.log("d", "Material Parameters : %s", mat_string )
-        profile_string=updateVisibility("quality_changes")
+        profile_string=updateDefinition("quality_changes")
         Logger.log("d", "Profile Parameters : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
@@ -202,7 +202,7 @@ class ProfilePlus(QObject, Extension):
         modi += upDateExtruderStacks(visi_string)
         modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),visi_string)
         # 
-        # Logger.log("d", "Update Visibility_string : %s", self.visibility_string ) 
+        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
                 Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
@@ -215,20 +215,20 @@ class ProfilePlus(QObject, Extension):
                 Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
         
         
-def upDateExtruderStacks(visibility_string):
+def upDateExtruderStacks(definition_string):
     modi = ''
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        modi += upDateContainerStack(extruder_stack, visibility_string)
+        modi += upDateContainerStack(extruder_stack, definition_string)
         position += 1
     return modi
 
-def upDateContainerStack(Cstack, visibility_string):
+def upDateContainerStack(Cstack, definition_string):
     modi = ''
-    Logger.log("d", "upDateContainerStack : %s", visibility_string )
-    profile_plus_settings = visibility_string.split(";")
+    Logger.log("d", "upDateContainerStack : %s", definition_string )
+    profile_plus_settings = definition_string.split(";")
     for container in Cstack.getContainers():
         # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == "quality_changes" :
@@ -250,7 +250,6 @@ def upDateContainerStack(Cstack, visibility_string):
                     modi += key
                     modi += "\n"
     return modi
-
     
 def viewAll():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
@@ -263,36 +262,34 @@ def viewProfile():
 def viewMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_material.html'
     openHtmlPage(HtmlFile, htmlPage(False,"material"))   
-    
 
-def updateVisibility(stack_keys="quality_changes"):
-    visi = ""
-    visi += formatExtruderVisibilityStacks(stack_keys)
-    visi += formatContainerVisibilityStack(Application.getInstance().getGlobalContainerStack(),stack_keys)
-    return visi
+def updateDefinition(stack_keys="quality_changes"):
+    def_str = ""
+    def_str += formatExtruderDefinitionStacks(stack_keys)
+    def_str += formatContainerDefinitionStack(Application.getInstance().getGlobalContainerStack(),stack_keys)
+    return def_str
     
-def formatExtruderVisibilityStacks(stack_keys="quality_changes"):
-    visi = ''
+def formatExtruderDefinitionStacks(stack_keys="quality_changes"):
+    def_str = ''
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        visi += formatContainerVisibilityStack(extruder_stack,stack_keys)
+        def_str += formatContainerDefinitionStack(extruder_stack,stack_keys)
         position += 1
-    return visi
+    return def_str
 
-    
-def formatContainerVisibilityStack(Cstack, stack_keys="quality_changes"):
-    visi = ''
+def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes"):
+    def_str = ''
     for container in Cstack.getContainers():
         # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == stack_keys :
             keys = list(container.getAllKeys())
             for key in keys:
-                # visi += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
-                visi += key
-                visi += ";"
-    return visi
+                # def_str += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
+                def_str += key
+                def_str += ";"
+    return def_str
 
 
 def htmlPage(show_all=False,stack_type="quality_changes"):
