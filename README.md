@@ -5,7 +5,7 @@ The plugin allows to delete parameters defined in a profile (Quality Change).
 **! Be careful, the deletion is direct without the possibility to cancel the action !**
 
 
-![Menu](./images/caution.png)
+![CAUTION](./images/caution.png)
 
 ## Purpose of the plugin
 
