@@ -4,6 +4,9 @@ The plugin allows to delete parameters defined in a profile (Quality Change).
 
 **! Be careful, the deletion is direct without the possibility to cancel the action !**
 
+
+![Menu](./images/caution.png)
+
 ## Purpose of the plugin
 
 There are often requests for the possibility of defining, for example, a ***Default printing temperature*** in the material definition and to avoid that the profile parameters overwrite this value. The problem is that the custom profile settings overwrite this data. The only solution I know is to edit the profile manualy via a text editor and delete the unnecessary parameter.
