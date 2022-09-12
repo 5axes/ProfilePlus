@@ -117,7 +117,7 @@ class ProfilePlus(QObject, Extension):
                 
         ## Menu
         self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)
-        self.addMenuItem("Remove Settings present in the Machine Default material profile", self.cleanMachineProfile)         
+        self.addMenuItem("Remove Settings present in the Machine Materials profiles", self.cleanMachineProfile)         
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
         
         self.addMenuItem("", lambda: None)
@@ -185,7 +185,7 @@ class ProfilePlus(QObject, Extension):
         profile_plus_settings = profile_string.split(";")
         
         for remove_key in material_plus_settings:
-            Logger.log("d", "Remove_key : %s", remove_key )
+            # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
                 Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
@@ -218,7 +218,7 @@ class ProfilePlus(QObject, Extension):
 
     def cleanMachineProfile(self):
         modi = ''
-        mat_string=updateDefinition("material")
+        mat_string=updateDefaultDefinition("material")
         Logger.log("d", "Material Parameters : %s", mat_string )
         profile_string=updateDefinition("quality_changes")
         Logger.log("d", "Profile Parameters : %s", profile_string )
@@ -226,7 +226,7 @@ class ProfilePlus(QObject, Extension):
         profile_plus_settings = profile_string.split(";")
         
         for remove_key in material_plus_settings:
-            Logger.log("d", "Remove_key : %s", remove_key )
+            # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
                 Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
@@ -315,6 +315,30 @@ def updateDefinition(stack_keys="quality_changes"):
     def_str += formatExtruderDefinitionStacks(stack_keys)
     def_str += formatContainerDefinitionStack(Application.getInstance().getGlobalContainerStack(),stack_keys)
     return def_str
+
+def updateDefaultDefinition(stack_type="material"):
+    def_str = ""
+    
+    machine_manager = Application.getInstance().getMachineManager()
+    g_stack = machine_manager.activeMachine
+    machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
+
+    # if machine_id == '' or machine_id == 'None':
+    #    machine_quality_changes = machine_manager.activeMachine.qualityChanges
+    #    machine_id=str(machine_quality_changes.getMetaDataEntry('definition'))
+    Logger.log("d", "Machine_id : %s", machine_id )
+    
+    containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=stack_type)
+    
+    for container in containers:
+        keys = list(container.getAllKeys())
+        for key in keys:
+            if not key in def_str:
+                def_str += key
+                def_str += ";"
+            
+    # Logger.log("d", "updateDefaultDefinition : %s", def_str )
+    return def_str
     
 def formatExtruderDefinitionStacks(stack_keys="quality_changes"):
     def_str = ''
@@ -393,6 +417,7 @@ def htmlDefaultPage(show_all = False, name="Materials",stack_type="material"):
         containers = ContainerRegistry.getInstance().findInstanceContainers(type=stack_type)
     else :
         containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=stack_type)
+        
     containers.sort(key=lambda x: x.getId())
     for container in containers:
         html += "<li><a href='#"+ str(id(container)) + "'>"+encode(container.getId())+"</a></li>\n"
