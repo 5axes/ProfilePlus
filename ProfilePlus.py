@@ -116,12 +116,14 @@ class ProfilePlus(QObject, Extension):
                 pass
                 
         ## Menu
-        self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)        
+        self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)
+        self.addMenuItem("Remove Settings present in the Machine Default material profile", self.cleanMachineProfile)         
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
         
         self.addMenuItem("", lambda: None)
         self.addMenuItem("View Custom Parameters", viewProfile)
         self.addMenuItem("View Active Material", viewMaterial)
+        self.addMenuItem("View Default Material", viewDefaultMaterial)
         self.addMenuItem("View Active Profile", viewAll)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
@@ -213,7 +215,48 @@ class ProfilePlus(QObject, Extension):
                 Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+
+    def cleanMachineProfile(self):
+        modi = ''
+        mat_string=updateDefinition("material")
+        Logger.log("d", "Material Parameters : %s", mat_string )
+        profile_string=updateDefinition("quality_changes")
+        Logger.log("d", "Profile Parameters : %s", profile_string )
+        material_plus_settings = mat_string.split(";")
+        profile_plus_settings = profile_string.split(";")
         
+        for remove_key in material_plus_settings:
+            Logger.log("d", "Remove_key : %s", remove_key )
+            if remove_key in profile_plus_settings:
+                Logger.log("d", "Remove_key in list : %s", remove_key )
+                profile_plus_settings.remove(remove_key)
+            if "default_" in remove_key:
+                remove_key=remove_key[8:]
+                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                if remove_key in profile_plus_settings:
+                    profile_plus_settings.remove(remove_key)           
+            
+        visi_string = ''
+        for add_key in profile_plus_settings:
+            visi_string += add_key
+            visi_string += ";"      
+        Logger.log("d", "Profile Parameters : %s", visi_string )
+
+        modi += upDateExtruderStacks(visi_string)
+        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),visi_string)
+        # 
+        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
+        if self.Major == 4 and self.Minor < 11 : 
+            if modi == "" :
+                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+            else :
+                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+        else :
+            if modi == "" :
+                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+            else :
+                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+         
         
 def upDateExtruderStacks(definition_string):
     modi = ''
@@ -263,6 +306,10 @@ def viewMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_material.html'
     openHtmlPage(HtmlFile, htmlPage(False,"material"))   
 
+def viewDefaultMaterial():
+    HtmlFile = str(CuraVersion).replace('.','-') + '_cura_materials.html'
+    openHtmlPage(HtmlFile, htmlDefaultPage(False,"Materials","material"))  
+    
 def updateDefinition(stack_keys="quality_changes"):
     def_str = ""
     def_str += formatExtruderDefinitionStacks(stack_keys)
@@ -324,6 +371,55 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += '</div>'
 
     html += htmlFooter
+    return html
+
+def htmlDefaultPage(show_all = False, name="Materials",stack_type="material"):
+    html = getHtmlHeader(stack_type)
+
+    html += "<div class='menu'>\n"
+    html += "<ul>"
+
+    machine_manager = Application.getInstance().getMachineManager()
+    g_stack = machine_manager.activeMachine
+    machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
+    Logger.log("d", "First Machine_id : %s", machine_id )
+    if machine_id == '' or machine_id == 'None':
+        machine_quality_changes = machine_manager.activeMachine.qualityChanges
+        machine_id=str(machine_quality_changes.getMetaDataEntry('definition'))
+    Logger.log("d", "Machine_id : %s", machine_id )
+    
+           
+    if show_all :
+        containers = ContainerRegistry.getInstance().findInstanceContainers(type=stack_type)
+    else :
+        containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=stack_type)
+    containers.sort(key=lambda x: x.getId())
+    for container in containers:
+        html += "<li><a href='#"+ str(id(container)) + "'>"+encode(container.getId())+"</a></li>\n"
+    html += "</ul>"
+
+    html += keyFilterWidget()
+    html += "</div>"
+
+    html += "<div class='contents'>"
+    html += formatAllContainersOfType(show_all, machine_id , name, stack_type)
+    html += "</div>"
+
+
+    html += htmlFooter
+    return html
+
+def formatAllContainersOfType(show_all, machine_id , name, type_):
+    html = "<h2>" + name + "</h2>\n"
+
+    if show_all :
+        containers = ContainerRegistry.getInstance().findInstanceContainers(type=type_)
+    else :
+        containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=type_)
+
+    containers.sort(key=lambda x: x.getId())
+    for container in containers:
+        html += formatContainer(container)
     return html
 
     
