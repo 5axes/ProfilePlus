@@ -123,7 +123,7 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem("", lambda: None)
         self.addMenuItem("View Custom Parameters", viewProfile)
         self.addMenuItem("View Active Material", viewMaterial)
-        self.addMenuItem("View Default Material", viewDefaultMaterial)
+        self.addMenuItem("View Machine Materials", viewDefaultMaterial)
         self.addMenuItem("View Active Profile", viewAll)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
