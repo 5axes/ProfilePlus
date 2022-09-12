@@ -308,7 +308,7 @@ def viewMaterial():
 
 def viewDefaultMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_materials.html'
-    openHtmlPage(HtmlFile, htmlDefaultPage(False,"Materials","material"))  
+    openHtmlPage(HtmlFile, containersOfTypeHtmlPage(False,"Materials","material"))  
     
 def updateDefinition(stack_keys="quality_changes"):
     def_str = ""
@@ -397,8 +397,8 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += htmlFooter
     return html
 
-def htmlDefaultPage(show_all = False, name="Materials",stack_type="material"):
-    html = getHtmlHeader(stack_type)
+def containersOfTypeHtmlPage(show_all = False, name="Materials",stack_type="material"):
+    html = getHtmlHeader(name)
 
     html += "<div class='menu'>\n"
     html += "<ul>"
@@ -406,10 +406,11 @@ def htmlDefaultPage(show_all = False, name="Materials",stack_type="material"):
     machine_manager = Application.getInstance().getMachineManager()
     g_stack = machine_manager.activeMachine
     machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
-    Logger.log("d", "First Machine_id : %s", machine_id )
+
     if machine_id == '' or machine_id == 'None':
         machine_quality_changes = machine_manager.activeMachine.qualityChanges
         machine_id=str(machine_quality_changes.getMetaDataEntry('definition'))
+    
     Logger.log("d", "Machine_id : %s", machine_id )
     
            
@@ -445,6 +446,7 @@ def formatAllContainersOfType(show_all, machine_id , name, type_):
     containers.sort(key=lambda x: x.getId())
     for container in containers:
         html += formatContainer(container)
+    
     return html
 
     
