@@ -64,4 +64,5 @@ The list of the suppressed parameters will be displayed in a Cura message :
 
 - View Custom Parameters : View the parameters defined by the user.
 - View Active Material : View the parameters defined in the material definition
+- View Machine Materials : View the parameters defined in the default machine materials
 - View Active Profile : View the parameters defined in the active profile
