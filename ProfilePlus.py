@@ -379,8 +379,8 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += '</ul>\n'
     
     # Java script filter function
-    if show_all :
-        html += keyFilterWidget()
+    # if show_all :
+    html += keyFilterWidget()
     html += '</div>'
 
     # Contents creation
