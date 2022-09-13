@@ -319,9 +319,7 @@ def updateDefinition(stack_keys="quality_changes"):
 def updateDefaultDefinition(stack_type="material"):
     def_str = ""
     
-    machine_manager = Application.getInstance().getMachineManager()
-    g_stack = machine_manager.activeMachine
-    machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
+    machine_id = getMachineId()
 
     # if machine_id == '' or machine_id == 'None':
     #    machine_quality_changes = machine_manager.activeMachine.qualityChanges
@@ -397,12 +395,7 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += htmlFooter
     return html
 
-def containersOfTypeHtmlPage(show_all = False, name="Materials",stack_type="material"):
-    html = getHtmlHeader(name)
-
-    html += "<div class='menu'>\n"
-    html += "<ul>"
-
+def getMachineId():
     machine_manager = Application.getInstance().getMachineManager()
     g_stack = machine_manager.activeMachine
     machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
@@ -413,6 +406,16 @@ def containersOfTypeHtmlPage(show_all = False, name="Materials",stack_type="mate
     
     Logger.log("d", "Machine_id : %s", machine_id )
     
+    return machine_id
+
+def containersOfTypeHtmlPage(show_all = False, name="Materials",stack_type="material"):
+    
+    machine_id = getMachineId()
+
+    html = getHtmlHeader(machine_id)
+
+    html += "<div class='menu'>\n"
+    html += "<ul>"
            
     if show_all :
         containers = ContainerRegistry.getInstance().findInstanceContainers(type=stack_type)
@@ -455,13 +458,7 @@ def formatAllContainersOfType(show_all, machine_id , name, type_):
 def changeToStandardQuality():
     #stack = Application.getInstance().getGlobalContainerStack()
 
-    machine_manager = Application.getInstance().getMachineManager()
-    g_stack = machine_manager.activeMachine
-    machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
-    
-    if machine_id == '' or machine_id == 'None':
-        machine_quality_changes = machine_manager.activeMachine.qualityChanges
-        machine_id=str(machine_quality_changes.getMetaDataEntry('definition'))
+    machine_id = getMachineId()
     
     # Logger.log("d", "First Machine_id : %s", machine_id )    
     containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id, type='quality')
