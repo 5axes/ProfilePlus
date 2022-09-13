@@ -30,7 +30,6 @@ import json
 import re
 import webbrowser
   
-
 USE_QT5 = False
 try:
     from PyQt6.QtGui import QDesktopServices
@@ -58,7 +57,6 @@ from cura.CuraVersion import CuraVersion  # type: ignore
 from UM.Version import Version
 
 from cura.CuraApplication import CuraApplication
-
 
 from UM.Logger import Logger
 from UM.Message import Message
@@ -694,7 +692,8 @@ def formatKeyValueTableRow(key, value, extra_class=''):
         formatted_key = encode(str(key))
 
     return '<tr class="' + extra_class + ' ' + clazz + '"><td class="key">' + formatted_key + '</td><td class="value">' + formatted_value + '</td></tr>\n'
-    
+
+# Row with a link on a File    
 def formatKeyValueTableRowFile(key, value, extra_class=''):
     clazz = ''
     if isinstance(value, Exception):
@@ -709,7 +708,7 @@ def formatKeyValueTableRowFile(key, value, extra_class=''):
         formatted_value = encode(value.getId() + ' ' + str(value))
     else:
         formatted_value = encode(str(value))
-
+    
     if isinstance(key, RawHtml):
         formatted_key = key.value
     else:
@@ -733,7 +732,7 @@ def formatSettingsKeyTableRow(key, value):
     else:
         formatted_value = encode(str(value))
         Display_Key = '&#x1F527; '
-
+    
     formatted_key = encode(str(key))
     
     Ckey=str(key)
@@ -805,9 +804,9 @@ def openHtmlPage(page_name, html_contents):
     if not has_browser() :
         Logger.log("d", "openHtmlPage default browser not defined") 
         if self.Major == 4 and self.Minor < 11 :
-            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilAnalyser")).show()
+            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus")).show()
         else :
-            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilAnalyser"), message_type = Message.MessageType.WARNING).show()
+            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus"), message_type = Message.MessageType.WARNING).show()
        
     QDesktopServices.openUrl(QUrl.fromLocalFile(target))
 
