@@ -9,6 +9,7 @@
 # 1.0.1 20-08-2022  Test Release of Cura
 # 1.0.2 07-09-2022  Add Function to remove settings already existing in the material profile
 # 1.0.3 08-09-2022  Test and reduce Code Size
+# 1.0.5 08-09-2022  Add function to link with material Profile
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -57,6 +58,7 @@ from cura.CuraVersion import CuraVersion  # type: ignore
 from UM.Version import Version
 
 from cura.CuraApplication import CuraApplication
+from cura.Settings.ExtruderManager import ExtruderManager
 
 from UM.Logger import Logger
 from UM.Message import Message
@@ -117,8 +119,9 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)
         self.addMenuItem("Remove Settings present in the Machine Materials profiles", self.cleanMachineProfile)         
         self.addMenuItem("Remove Settings", self.showSettingsDialog)
-        
         self.addMenuItem("", lambda: None)
+        self.addMenuItem("Link Settings present in the material profile", self.linkProfile)
+        self.addMenuItem(" ", lambda: None)
         self.addMenuItem("View Custom Parameters", viewProfile)
         self.addMenuItem("View Active Material", viewMaterial)
         self.addMenuItem("View Machine Materials", viewDefaultMaterial)
@@ -193,14 +196,14 @@ class ProfilePlus(QObject, Extension):
                 if remove_key in profile_plus_settings:
                     profile_plus_settings.remove(remove_key)           
             
-        visi_string = ''
+        update_string = ''
         for add_key in profile_plus_settings:
-            visi_string += add_key
-            visi_string += ";"      
-        Logger.log("d", "Profile Parameters : %s", visi_string )
+            update_string += add_key
+            update_string += ";"      
+        Logger.log("d", "Profile Parameters : %s", update_string )
 
-        modi += upDateExtruderStacks(visi_string)
-        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),visi_string)
+        modi += upDateExtruderStacks(update_string)
+        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),update_string)
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
@@ -213,6 +216,47 @@ class ProfilePlus(QObject, Extension):
                 Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+
+    def linkProfile(self):
+        modi = ''
+        mat_string=updateDefinition("material")
+        Logger.log("d", "Material Parameters link : %s", mat_string )
+        profile_string=updateDefinition("quality_changes",True)
+        Logger.log("d", "Profile Parameters link : %s", profile_string )
+        material_plus_settings = mat_string.split(";")
+        profile_plus_settings = profile_string.split(";")
+        
+        for remove_key in material_plus_settings:
+            # Logger.log("d", "Remove_key : %s", remove_key )
+            if remove_key in profile_plus_settings and len(remove_key) > 1 :
+                Logger.log("d", "Remove_key in list : %s", remove_key )
+                profile_plus_settings.remove(remove_key)
+            if "default_" in remove_key:
+                remove_key=remove_key[8:]              
+                if remove_key in profile_plus_settings:
+                    Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                    profile_plus_settings.remove(remove_key)           
+          
+        update_string = ''
+        for add_key in profile_plus_settings:
+            update_string += add_key
+            update_string += ";"      
+        # Logger.log("d", "Update string : %s", update_string )
+        modi += linkExtruderStacks(update_string)
+        modi += linkContainerStack(Application.getInstance().getGlobalContainerStack(),update_string)
+        # Logger.log("d", "Update for : %s", modi ) 
+        
+        if self.Major == 4 and self.Minor < 11 : 
+            if modi == "" :
+                Message(text = "! Error Nothing to link !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+            else :
+                Message(text = "! Link ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+        else :
+            if modi == "" :
+                Message(text = "! Error Nothing to link !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+            else :
+                Message(text = "! Link ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+
 
     def cleanMachineProfile(self):
         modi = ''
@@ -234,14 +278,14 @@ class ProfilePlus(QObject, Extension):
                 if remove_key in profile_plus_settings:
                     profile_plus_settings.remove(remove_key)           
             
-        visi_string = ''
+        update_string = ''
         for add_key in profile_plus_settings:
-            visi_string += add_key
-            visi_string += ";"      
-        Logger.log("d", "Profile Parameters : %s", visi_string )
+            update_string += add_key
+            update_string += ";"      
+        Logger.log("d", "Profile Parameters : %s", update_string )
 
-        modi += upDateExtruderStacks(visi_string)
-        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),visi_string)
+        modi += upDateExtruderStacks(update_string)
+        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),update_string)
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
@@ -268,8 +312,13 @@ def upDateExtruderStacks(definition_string):
 
 def upDateContainerStack(Cstack, definition_string):
     modi = ''
+    if len(definition_string) < 2 :
+        Logger.log("d", "upDateContainerStack nothing to do : %s", definition_string )
+        return modi
+        
     Logger.log("d", "upDateContainerStack : %s", definition_string )
-    profile_plus_settings = definition_string.split(";")
+    settingsList = definition_string.split(";")
+    
     for container in Cstack.getContainers():
         # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == "quality_changes" :
@@ -279,17 +328,92 @@ def upDateContainerStack(Cstack, definition_string):
                 # Logger.log("d", "key :|%s|", key )
                 # Naive Method :)
                 delRef = True
-                for iList in profile_plus_settings:
+                for iList in settingsList:
                     if (iList == key) :
                         delRef = False
-                        # Logger.log("d", "iList :|%s|", iList )
+                        Logger.log("d", "iList :|%s|", iList )
                         
                 if delRef == True :
+                    Logger.log("d", "delRef :|%s|", key )
                     # The point of no return, will remove the parameter
                     # https://community.ultimaker.com/topic/40968-container-removeinstance-goal-of-the-option-postpone_emit/
                     container.removeInstance(key, postpone_emit=True)
                     modi += key
                     modi += "\n"
+    return modi
+
+def linkExtruderStacks(definition_string):
+    modi = ''
+    # machine = Application.getInstance().getMachineManager().activeMachine
+    # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
+    position=0
+    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+        modi += linkContainerStack(extruder_stack, definition_string)
+        position += 1
+    return modi
+
+def linkContainerStack(Cstack, definition_string):
+    modi = ''
+    if len(definition_string) < 2 :
+        Logger.log("d", "upDateContainerStack nothing to do : %s", definition_string )
+        return modi
+        
+    Logger.log("d", "upDateContainerStack : %s", definition_string )
+    settingsList = definition_string.split(";")
+    
+    for container in Cstack.getContainers():
+        # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
+        if str(container.getMetaDataEntry("type")) == "quality_changes" :
+            keys = list(container.getAllKeys())
+            for key in keys:
+
+                base_value = str(container.getProperty(key, "value"))
+                Logger.log("d", "link key : %s", str(key) )
+                Logger.log("d", "link base_value : %s", str(base_value) )
+                # Naive Method :)
+                delRef = True
+                for iList in settingsList:
+                    if (iList == key) :
+                        delRef = False
+                        Logger.log("d", "iList :|%s|", iList )
+                        
+                if delRef == True :
+                    if not "extruderValueFromContainer" in base_value:
+                        Logger.log("d", "linkRef :|%s|", key )
+                        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+                        if not global_container_stack:
+                            return modi                       
+                        try:
+                            material_container_index = global_container_stack.getContainers().index(global_container_stack.material)
+                        except ValueError:
+                            return modi 
+
+                        settable_per_extruder = global_container_stack.getProperty(key, "settable_per_extruder")
+                        resolve_value = global_container_stack.getProperty(key, "resolve")
+                        Logger.log("d", "link settable_per_extruder : %s", str(settable_per_extruder) )
+                        Logger.log("d", "link resolve_value : %s", str(resolve_value) )
+                
+                        Logger.log("d", "material_container_index %s",str(material_container_index))
+                        
+                        # The point of no return, will fix the parameter with the extruderValueFromContainer function
+                        #if not settable_per_extruder and resolve_value is None:
+                        #    # todo: notify user
+                        #    Logger.log("e", "Setting %s can not be set per material", key)
+                        #    return modi
+
+                        if settable_per_extruder:
+                            value_string = "=extruderValueFromContainer(extruder_nr,\"%s\",%d)" %(key, material_container_index)
+                            Logger.log("d", "settable_per_extruder value_string :|%s|", value_string )
+                            container.setProperty(key, "value", value_string)
+                            modi += key
+                            modi += "\n"                            
+                        else:
+                            active_extruder_index = ExtruderManager.getInstance().activeExtruderIndex
+                            value_string = "=extruderValueFromContainer(%d,\"%s\",%d)" %(active_extruder_index, key, material_container_index)
+                            Logger.log("d", "value_string :|%s|", value_string )
+                            container.setProperty(key, "value", value_string)
+                            modi += key
+                            modi += "\n"
     return modi
     
 def viewAll():
@@ -308,10 +432,10 @@ def viewDefaultMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_materials.html'
     openHtmlPage(HtmlFile, containersOfTypeHtmlPage(False,"Materials","material"))  
     
-def updateDefinition(stack_keys="quality_changes"):
+def updateDefinition(stack_keys="quality_changes", checkCode=False):
     def_str = ""
-    def_str += formatExtruderDefinitionStacks(stack_keys)
-    def_str += formatContainerDefinitionStack(Application.getInstance().getGlobalContainerStack(),stack_keys)
+    def_str += formatExtruderDefinitionStacks(stack_keys,checkCode)
+    def_str += formatContainerDefinitionStack(Application.getInstance().getGlobalContainerStack(),stack_keys,checkCode)
     return def_str
 
 def updateDefaultDefinition(stack_type="material"):
@@ -336,26 +460,39 @@ def updateDefaultDefinition(stack_type="material"):
     # Logger.log("d", "updateDefaultDefinition : %s", def_str )
     return def_str
     
-def formatExtruderDefinitionStacks(stack_keys="quality_changes"):
+def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=False):
     def_str = ''
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        def_str += formatContainerDefinitionStack(extruder_stack,stack_keys)
+        def_str += formatContainerDefinitionStack(extruder_stack,stack_keys, checkCode)
         position += 1
     return def_str
 
-def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes"):
+def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes", checkCode=False):
     def_str = ''
     for container in Cstack.getContainers():
         # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == stack_keys :
             keys = list(container.getAllKeys())
             for key in keys:
-                # def_str += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
-                def_str += key
-                def_str += ";"
+                if checkCode :
+                    settable_per_extruder = container.getProperty(key, "settable_per_extruder")
+                    resolve_value = container.getProperty(key, "resolve")
+                    base_value = str(container.getProperty(key, "value"))
+                    # Logger.log("d", "key : %s", str(key) )
+                    # Logger.log("d", "settable_per_extruder : %s", str(settable_per_extruder) )
+                    # Logger.log("d", "resolve_value : %s", str(resolve_value) )
+                    # Logger.log("d", "base_value : %s", str(base_value) )
+                    if not "extruderValueFromContainer" in base_value:
+                        def_str += key
+                        def_str += ";"
+                    else :
+                        Logger.log("d", "Value type extruderValueFromContainer : %s", str(base_value) )
+                else:
+                    def_str += key
+                    def_str += ";"
     return def_str
 
 
