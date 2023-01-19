@@ -21,7 +21,7 @@ It also  allows you to delete in the active profile some parameters already defi
 #### Manually:
 First, make sure your Cura version is  4.4 or newer.
 
-Download or clone the repository into `[Cura configuration folder]/plugins/ProfilePlus`.
+[Download](https://github.com/5axes/ProfilePlus/archive/refs/heads/main.zip) or clone the repository into `[Cura configuration folder]/plugins/ProfilePlus`.
 
 The configuration folder can be found via **Help** -> **Show Configuration Folder** inside Cura.
 
