@@ -126,16 +126,16 @@ class ProfilePlus(QObject, Extension):
                 pass
                 
         ## Menu
-        self.addMenuItem("Remove Settings present in the material profile", self.cleanProfile)
-        self.addMenuItem("Remove Settings present in the Machine Materials profiles", self.cleanMachineProfile)         
-        self.addMenuItem("Remove Settings", self.showSettingsDialog)
+        self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the material profile"), self.cleanProfile)
+        self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the Machine Materials profiles"), self.cleanMachineProfile)         
+        self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
         self.addMenuItem("", lambda: None)
-        self.addMenuItem("Link Settings present in the material profile", self.linkProfile)
+        self.addMenuItem(catalog.i18nc("@menu", "Link Settings present in the material profile"), self.linkProfile)
         self.addMenuItem(" ", lambda: None)
-        self.addMenuItem("View Custom Parameters", viewProfile)
-        self.addMenuItem("View Active Material", viewMaterial)
-        self.addMenuItem("View Machine Materials", viewDefaultMaterial)
-        self.addMenuItem("View Active Profile", viewAll)
+        self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
+        self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
+        self.addMenuItem(catalog.i18nc("@menu", "View Machine Materials"), viewDefaultMaterial)
+        self.addMenuItem(catalog.i18nc("@menu", "View Active Profile"), viewAll)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
 
@@ -177,14 +177,14 @@ class ProfilePlus(QObject, Extension):
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
             else :
-                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
     
     def cleanProfile(self):
         modi = ''
@@ -218,14 +218,14 @@ class ProfilePlus(QObject, Extension):
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
             else :
-                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
     def linkProfile(self):
         modi = ''
@@ -258,14 +258,14 @@ class ProfilePlus(QObject, Extension):
         
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = "! Error Nothing to link !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
             else :
-                Message(text = "! Link ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = "! Error Nothing to link !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = "! Link ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
 
     def cleanMachineProfile(self):
@@ -300,14 +300,14 @@ class ProfilePlus(QObject, Extension):
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
             else :
-                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = "! Error Nothing to do !", title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = "! Modification ok for : %s" % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
          
         
 def upDateExtruderStacks(definition_string):
