@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 13:40+0000\n"
+"POT-Creation-Date: 2023-03-03 13:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,76 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ProfilePlus.py:129
+msgctxt "@menu"
+msgid "Remove Settings present in the material profile"
+msgstr ""
+
+#: ProfilePlus.py:130
+msgctxt "@menu"
+msgid "Remove Settings present in the Machine Materials profiles"
+msgstr ""
+
+#: ProfilePlus.py:131
+msgctxt "@menu"
+msgid "Remove Settings"
+msgstr ""
+
+#: ProfilePlus.py:133
+msgctxt "@menu"
+msgid "Link Settings present in the material profile"
+msgstr ""
+
+#: ProfilePlus.py:135
+msgctxt "@menu"
+msgid "View Custom Parameters"
+msgstr ""
+
+#: ProfilePlus.py:136
+msgctxt "@menu"
+msgid "View Active Material"
+msgstr ""
+
+#: ProfilePlus.py:137
+msgctxt "@menu"
+msgid "View Machine Materials"
+msgstr ""
+
+#: ProfilePlus.py:138
+msgctxt "@menu"
+msgid "View Active Profile"
+msgstr ""
+
+#: ProfilePlus.py:180 ProfilePlus.py:185 ProfilePlus.py:221 ProfilePlus.py:226
+#: ProfilePlus.py:303 ProfilePlus.py:308
+msgctxt "@info:text"
+msgid "! Error Nothing to do !"
+msgstr ""
+
 #: ProfilePlus.py:180 ProfilePlus.py:182 ProfilePlus.py:185 ProfilePlus.py:187
 #: ProfilePlus.py:221 ProfilePlus.py:223 ProfilePlus.py:226 ProfilePlus.py:228
 #: ProfilePlus.py:261 ProfilePlus.py:263 ProfilePlus.py:266 ProfilePlus.py:268
 #: ProfilePlus.py:303 ProfilePlus.py:305 ProfilePlus.py:308 ProfilePlus.py:310
 msgctxt "@info:title"
 msgid "Profile Plus "
+msgstr ""
+
+#: ProfilePlus.py:182 ProfilePlus.py:187 ProfilePlus.py:223 ProfilePlus.py:228
+#: ProfilePlus.py:305 ProfilePlus.py:310
+#, python-format
+msgctxt "@info:text"
+msgid "! Modification ok for : %s"
+msgstr ""
+
+#: ProfilePlus.py:261 ProfilePlus.py:266
+msgctxt "@info:text"
+msgid "! Error Nothing to link !"
+msgstr ""
+
+#: ProfilePlus.py:263 ProfilePlus.py:268
+#, python-format
+msgctxt "@info:text"
+msgid "! Link ok for : %s"
 msgstr ""
 
 #: ProfilePlus.py:954 ProfilePlus.py:956
