@@ -10,6 +10,7 @@
 # 1.0.2 07-09-2022  Add Function to remove settings already existing in the material profile
 # 1.0.3 08-09-2022  Test and reduce Code Size
 # 1.0.5 08-09-2022  Add function to link with material Profile
+# 1.0.6 04-03-2023  Add French translation
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -67,14 +68,23 @@ from . import ProfilePlusSettingsVisibilityHandler
 from . import ProfilePlusSettingDefinitionsModel
 
 from UM.i18n import i18nCatalog
-catalog = i18nCatalog("cura")
+from UM.Resources import Resources
+
 i18n_cura_catalog = i18nCatalog('cura')
 i18n_catalog = i18nCatalog('fdmprinter.def.json')
 i18n_extrud_catalog = i18nCatalog('fdmextruder.def.json')
 
 encode = html.escape
 
+Resources.addSearchPath(
+    os.path.join(os.path.abspath(os.path.dirname(__file__)))
+)  # Plugin translation file import
 
+catalog = i18nCatalog("profilplus")
+
+if catalog.hasTranslationLoaded():
+    Logger.log("i", "Profil Plus Plugin translation loaded!")
+    
 class ProfilePlus(QObject, Extension):
     #Create an api
     from cura.CuraApplication import CuraApplication

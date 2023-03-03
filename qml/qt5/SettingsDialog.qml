@@ -1,4 +1,4 @@
-// Copyright (c) 2022 5@xes
+// Copyright (c) 2023 5@xes
 // The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
 
 import QtQuick 2.2
@@ -164,6 +164,6 @@ UM.Dialog {
 
     Item
     {
-        UM.I18nCatalog { id: catalog; name: "cura"; }
+        UM.I18nCatalog { id: catalog; name: "profilplus"; }
     }
 }
