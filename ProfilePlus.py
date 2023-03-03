@@ -179,14 +179,14 @@ class ProfilePlus(QObject, Extension):
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
     
     # Remove Settings present in the material profile : Remove from the active profile parameters already existing in the Material definition
     def cleanProfile(self):
@@ -221,14 +221,14 @@ class ProfilePlus(QObject, Extension):
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
 
     # Link Settings present in the material profile : Replace the Settings present in the profile and the material definition by a extruderValueFromContainer instruction
@@ -263,14 +263,14 @@ class ProfilePlus(QObject, Extension):
         
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
     # Remove Settings present in the Machine Materials profiles : Remove from the active profile parameters already existing in every material associated with this machine
     def cleanMachineProfile(self):
@@ -306,14 +306,14 @@ class ProfilePlus(QObject, Extension):
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version)).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
         else :
             if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
          
         
 def upDateExtruderStacks(definition_string):
@@ -965,9 +965,9 @@ def openHtmlPage(page_name, html_contents):
     if not has_browser() :
         Logger.log("d", "openHtmlPage default browser not defined") 
         if self.Major == 4 and self.Minor < 11 :
-            Message(text = catalog.i18nc("@info:text", "Default browser not defined open \n %s") % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus")).show()
+            Message(text = catalog.i18nc("@info:text", "Default browser not defined open \n %s") % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! Profile Plus")).show()
         else :
-            Message(text = catalog.i18nc("@info:text", "Default browser not defined open \n %s") % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus"), message_type = Message.MessageType.WARNING).show()
+            Message(text = catalog.i18nc("@info:text", "Default browser not defined open \n %s") % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! Profile Plus"), message_type = Message.MessageType.WARNING).show()
        
     QDesktopServices.openUrl(QUrl.fromLocalFile(target))
 

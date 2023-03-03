@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 15:13+0000\n"
-"PO-Revision-Date: 2023-03-03 16:14+0200\n"
+"POT-Creation-Date: 2023-03-03 16:09+0000\n"
+"PO-Revision-Date: 2023-03-03 17:52+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -76,7 +76,7 @@ msgstr "! Erreur Rien à faire !"
 #: ProfilePlus.py:305 ProfilePlus.py:307 ProfilePlus.py:310 ProfilePlus.py:312
 msgctxt "@info:title"
 msgid "Profile Plus "
-msgstr "Profile Plus "
+msgstr "Profil Plus "
 
 #: ProfilePlus.py:184 ProfilePlus.py:189 ProfilePlus.py:225 ProfilePlus.py:230
 #: ProfilePlus.py:307 ProfilePlus.py:312
