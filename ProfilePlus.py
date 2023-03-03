@@ -693,25 +693,27 @@ def formatContainerMetaDataRows(def_container):
     html = ''
     try:
         # Logger.log("d", "quality_type : " + safeCall(def_container.getMetaDataEntry('quality_type')))
-        html += formatKeyValueTableRow('type', def_container.getMetaDataEntry('type'), extra_class='metadata') 
+        html += formatKeyValueTableRow(catalog.i18nc("@html:row", "type"), def_container.getMetaDataEntry('type'), extra_class='metadata') 
         # html += formatKeyValueTableRow('<type>', type(def_container), extra_class='metadata')
         # html += formatKeyValueTableRow('<id>', def_container, extra_class='metadata')
-        html += formatKeyValueTableRow('id', safeCall(def_container.getId), extra_class='metadata')
-        html += formatKeyValueTableRow('name', safeCall(def_container.getName), extra_class='metadata')
+        html += formatKeyValueTableRow(catalog.i18nc("@html:row", "id"), safeCall(def_container.getId), extra_class='metadata')
+        html += formatKeyValueTableRow(catalog.i18nc("@html:row", "name"), safeCall(def_container.getName), extra_class='metadata')
  
         MetaData_definition = def_container.getMetaDataEntry('definition')
         if MetaData_definition is not None:
-            html += formatKeyValueTableRow('definition', MetaData_definition, extra_class='metadata')
+            html += formatKeyValueTableRow(catalog.i18nc("@html:row", "definition"), MetaData_definition, extra_class='metadata')
         MetaData_quality_type = def_container.getMetaDataEntry('quality_type')
         if MetaData_quality_type is not None:
-            html += formatKeyValueTableRow('quality_type', MetaData_quality_type, extra_class='metadata')  
+            html += formatKeyValueTableRow(catalog.i18nc("@html:row", "quality_type"), MetaData_quality_type, extra_class='metadata')  
             
         # hasattr() method returns true if an object has the given named attribute and false if it does not
         html += formatKeyValueTableRow('read only', safeCall(def_container.isReadOnly), extra_class='metadata')
         if hasattr(def_container, 'getPath'):
-            html += formatKeyValueTableRowFile('path', safeCall(def_container.getPath), extra_class='metadata')
+            html += formatKeyValueTableRowFile(catalog.i18nc("@html:row", "path"), safeCall(def_container.getPath), extra_class='metadata')
         if hasattr(def_container, 'getType'):
-            html += formatStringTableRow('type', safeCall(def_container.getType), extra_class='metadata')
+            html += formatStringTableRow(catalog.i18nc("@html:row", "type"), safeCall(def_container.getType), extra_class='metadata')
+            if def_container.getType = "material" :
+                html += formatStringTableRow(catalog.i18nc("@html:row", "Detail"), "{}".format(def_container)), extra_class='metadata')
 
     except:
         pass
