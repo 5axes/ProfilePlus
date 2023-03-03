@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 16:53+0000\n"
+"POT-Creation-Date: 2023-03-03 17:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,22 +109,57 @@ msgctxt "@html:subtitle"
 msgid "Container"
 msgstr ""
 
-#: ProfilePlus.py:723
+#: ProfilePlus.py:696 ProfilePlus.py:717
+msgctxt "@html:row"
+msgid "type"
+msgstr ""
+
+#: ProfilePlus.py:699
+msgctxt "@html:row"
+msgid "id"
+msgstr ""
+
+#: ProfilePlus.py:700
+msgctxt "@html:row"
+msgid "name"
+msgstr ""
+
+#: ProfilePlus.py:704
+msgctxt "@html:row"
+msgid "definition"
+msgstr ""
+
+#: ProfilePlus.py:706
+msgctxt "@html:row"
+msgid "Detail"
+msgstr ""
+
+#: ProfilePlus.py:710
+msgctxt "@html:row"
+msgid "quality_type"
+msgstr ""
+
+#: ProfilePlus.py:715
+msgctxt "@html:row"
+msgid "path"
+msgstr ""
+
+#: ProfilePlus.py:727
 msgctxt "@html:title"
 msgid "Extruder Stacks"
 msgstr ""
 
-#: ProfilePlus.py:728 ProfilePlus.py:741
+#: ProfilePlus.py:732 ProfilePlus.py:745
 msgctxt "@html:subtitle"
 msgid "Index"
 msgstr ""
 
-#: ProfilePlus.py:753
+#: ProfilePlus.py:757
 msgctxt "@html:subtitle"
 msgid "Containers"
 msgstr ""
 
-#: ProfilePlus.py:968 ProfilePlus.py:970
+#: ProfilePlus.py:972 ProfilePlus.py:974
 #, python-format
 msgctxt "@info:text"
 msgid ""
@@ -132,7 +167,7 @@ msgid ""
 " %s"
 msgstr ""
 
-#: ProfilePlus.py:968 ProfilePlus.py:970
+#: ProfilePlus.py:972 ProfilePlus.py:974
 #: ProfilePlusSettingsVisibilityHandler.py:35
 msgctxt "@info:title"
 msgid "Warning ! Profile Plus"
