@@ -188,6 +188,7 @@ class ProfilePlus(QObject, Extension):
             else :
                 Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
     
+    # Remove Settings present in the material profile : Remove from the active profile parameters already existing in the Material definition
     def cleanProfile(self):
         modi = ''
         mat_string=updateDefinition("material")
@@ -229,6 +230,8 @@ class ProfilePlus(QObject, Extension):
             else :
                 Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
+
+    # Link Settings present in the material profile : Replace the Settings present in the profile and the material definition by a extruderValueFromContainer instruction
     def linkProfile(self):
         modi = ''
         mat_string=updateDefinition("material")
@@ -269,7 +272,7 @@ class ProfilePlus(QObject, Extension):
             else :
                 Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus ") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
-
+    # Remove Settings present in the Machine Materials profiles : Remove from the active profile parameters already existing in every material associated with this machine
     def cleanMachineProfile(self):
         modi = ''
         mat_string=updateDefaultDefinition("material")
@@ -294,6 +297,7 @@ class ProfilePlus(QObject, Extension):
         for add_key in profile_plus_settings:
             update_string += add_key
             update_string += ";"      
+        
         Logger.log("d", "Profile Parameters : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
@@ -446,13 +450,17 @@ def viewMaterial():
 def viewDefaultMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_materials.html'
     openHtmlPage(HtmlFile, containersOfTypeHtmlPage(False,catalog.i18nc("@html", "Materials"),"material"))  
-    
+
+# For every the container quality_changes
+# Get the list of parameters  present in this container   
 def updateDefinition(stack_keys="quality_changes", checkCode=False):
     def_str = ""
     def_str += formatExtruderDefinitionStacks(stack_keys,checkCode)
     def_str += formatContainerDefinitionStack(Application.getInstance().getGlobalContainerStack(),stack_keys,checkCode)
     return def_str
 
+# For every stack_type="material" associated with the  machine_id
+# Get the list of parameters 
 def updateDefaultDefinition(stack_type="material"):
     def_str = ""
     
