@@ -308,12 +308,12 @@ class ProfilePlus(QObject, Extension):
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
-            if modi == "" :
+            if modi == "" or modi == "\n" :
                 Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
             else :
                 Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
         else :
-            if modi == "" :
+            if modi == "" or modi == "\n" :
                 Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
