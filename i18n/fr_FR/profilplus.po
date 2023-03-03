@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 14:39+0000\n"
-"PO-Revision-Date: 2023-03-03 16:07+0200\n"
+"POT-Creation-Date: 2023-03-03 15:13+0000\n"
+"PO-Revision-Date: 2023-03-03 16:14+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -59,69 +59,74 @@ msgctxt "@menu"
 msgid "View Active Profile"
 msgstr "Voir le profil actif"
 
-#: ProfilePlus.py:180 ProfilePlus.py:185 ProfilePlus.py:221 ProfilePlus.py:226
-#: ProfilePlus.py:303 ProfilePlus.py:308
+#: ProfilePlus.py:140
+msgctxt "@menu"
+msgid "Help"
+msgstr "Aide"
+
+#: ProfilePlus.py:182 ProfilePlus.py:187 ProfilePlus.py:223 ProfilePlus.py:228
+#: ProfilePlus.py:305 ProfilePlus.py:310
 msgctxt "@info:text"
 msgid "! Error Nothing to do !"
 msgstr "! Erreur Rien à faire !"
 
-#: ProfilePlus.py:180 ProfilePlus.py:182 ProfilePlus.py:185 ProfilePlus.py:187
-#: ProfilePlus.py:221 ProfilePlus.py:223 ProfilePlus.py:226 ProfilePlus.py:228
-#: ProfilePlus.py:261 ProfilePlus.py:263 ProfilePlus.py:266 ProfilePlus.py:268
-#: ProfilePlus.py:303 ProfilePlus.py:305 ProfilePlus.py:308 ProfilePlus.py:310
+#: ProfilePlus.py:182 ProfilePlus.py:184 ProfilePlus.py:187 ProfilePlus.py:189
+#: ProfilePlus.py:223 ProfilePlus.py:225 ProfilePlus.py:228 ProfilePlus.py:230
+#: ProfilePlus.py:263 ProfilePlus.py:265 ProfilePlus.py:268 ProfilePlus.py:270
+#: ProfilePlus.py:305 ProfilePlus.py:307 ProfilePlus.py:310 ProfilePlus.py:312
 msgctxt "@info:title"
 msgid "Profile Plus "
 msgstr "Profile Plus "
 
-#: ProfilePlus.py:182 ProfilePlus.py:187 ProfilePlus.py:223 ProfilePlus.py:228
-#: ProfilePlus.py:305 ProfilePlus.py:310
+#: ProfilePlus.py:184 ProfilePlus.py:189 ProfilePlus.py:225 ProfilePlus.py:230
+#: ProfilePlus.py:307 ProfilePlus.py:312
 #, python-format
 msgctxt "@info:text"
 msgid "! Modification ok for : %s"
 msgstr "! Modification ok pour : %s"
 
-#: ProfilePlus.py:261 ProfilePlus.py:266
+#: ProfilePlus.py:263 ProfilePlus.py:268
 msgctxt "@info:text"
 msgid "! Error Nothing to link !"
 msgstr "! Erreur Rien à relier !"
 
-#: ProfilePlus.py:263 ProfilePlus.py:268
+#: ProfilePlus.py:265 ProfilePlus.py:270
 #, python-format
 msgctxt "@info:text"
 msgid "! Link ok for : %s"
 msgstr "! Liaison ok pour : %s"
 
-#: ProfilePlus.py:443
+#: ProfilePlus.py:448
 msgctxt "@html"
 msgid "Materials"
 msgstr "Matériaux"
 
-#: ProfilePlus.py:529 ProfilePlus.py:577
+#: ProfilePlus.py:534 ProfilePlus.py:586
 msgctxt "@html"
 msgid "Filter key"
 msgstr "Filtre"
 
-#: ProfilePlus.py:651
+#: ProfilePlus.py:660
 msgctxt "@html:subtitle"
 msgid "Container"
 msgstr "Conteneur"
 
-#: ProfilePlus.py:706
+#: ProfilePlus.py:715
 msgctxt "@html:title"
 msgid "Extruder Stacks"
 msgstr "Données Extrudeuse"
 
-#: ProfilePlus.py:711 ProfilePlus.py:724
+#: ProfilePlus.py:720 ProfilePlus.py:733
 msgctxt "@html:subtitle"
 msgid "Index"
 msgstr "Index"
 
-#: ProfilePlus.py:736
+#: ProfilePlus.py:745
 msgctxt "@html:subtitle"
 msgid "Containers"
 msgstr "Conteneurs"
 
-#: ProfilePlus.py:951 ProfilePlus.py:953
+#: ProfilePlus.py:960 ProfilePlus.py:962
 #, python-format
 msgctxt "@info:text"
 msgid ""
@@ -131,7 +136,7 @@ msgstr ""
 "Navigateur par défaut non défini ouvrir \n"
 " %s"
 
-#: ProfilePlus.py:951 ProfilePlus.py:953
+#: ProfilePlus.py:960 ProfilePlus.py:962
 msgctxt "@info:title"
 msgid "Warning ! ProfilPlus"
 msgstr "Attention ! Profil Plus"
