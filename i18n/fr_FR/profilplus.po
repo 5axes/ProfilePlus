@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 14:29+0000\n"
-"PO-Revision-Date: 2023-03-03 15:34+0200\n"
+"POT-Creation-Date: 2023-03-03 14:34+0000\n"
+"PO-Revision-Date: 2023-03-03 15:35+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -90,6 +90,11 @@ msgstr "! Erreur Rien à relier !"
 msgctxt "@info:text"
 msgid "! Link ok for : %s"
 msgstr "! Liaison ok pour : %s"
+
+#: ProfilePlus.py:443
+msgctxt "@html"
+msgid "Materials"
+msgstr "Matériaux"
 
 #: ProfilePlus.py:529 ProfilePlus.py:577
 msgctxt "@html"
