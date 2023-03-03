@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 14:17+0000\n"
-"PO-Revision-Date: 2023-03-03 15:21+0200\n"
+"POT-Creation-Date: 2023-03-03 14:29+0000\n"
+"PO-Revision-Date: 2023-03-03 15:34+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -140,6 +140,11 @@ msgstr "Attention ! Profil Plus"
 msgctxt "@title:window"
 msgid "Select settings to Delete"
 msgstr "Sélectionnez les paramètres à supprimer"
+
+#: qml/qt5/SettingsDialog.qml:55 qml/qt6/SettingsDialog.qml:55
+msgctxt "@label"
+msgid "Settings"
+msgstr "Réglages"
 
 #: qml/qt5/SettingsDialog.qml:66 qml/qt6/SettingsDialog.qml:66
 msgctxt "@label:textbox"

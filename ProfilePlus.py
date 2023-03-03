@@ -440,7 +440,7 @@ def viewMaterial():
 
 def viewDefaultMaterial():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_materials.html'
-    openHtmlPage(HtmlFile, containersOfTypeHtmlPage(False,"Materials","material"))  
+    openHtmlPage(HtmlFile, containersOfTypeHtmlPage(False,catalog.i18nc("@html", "Materials"),"material"))  
     
 def updateDefinition(stack_keys="quality_changes", checkCode=False):
     def_str = ""
@@ -555,7 +555,7 @@ def getMachineId():
     
     return machine_id
 
-def containersOfTypeHtmlPage(show_all = False, name="Materials",stack_type="material"):
+def containersOfTypeHtmlPage(show_all = False, name="Materials", stack_type="material"):
     
     machine_id = getMachineId()
 
