@@ -1,7 +1,7 @@
 {
   "name": "Profile Plus",
   "author": "5@xes",
-  "version": "1.0.6",
-  "description": "Edit Profile to remove existeing parameter",
+  "version": "1.0.7",
+  "description": "Edit Profile to remove existing parameters",
   "supported_sdk_versions": [ "7.8.0", "7.9.0", "8.0.0", "8.1.0", "8.2.0", "8.3.0"]
 }

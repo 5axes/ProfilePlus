@@ -10,7 +10,8 @@
 # 1.0.2 07-09-2022  Add Function to remove settings already existing in the material profile
 # 1.0.3 08-09-2022  Test and reduce Code Size
 # 1.0.5 08-09-2022  Add function to link with material Profile
-# 1.0.6 04-03-2023  Add French translation
+# 1.0.6 00-03-2023  Add French translation
+# 1.0.7 04-03-2023  Add Function "Test Settings to remove"
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
