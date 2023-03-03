@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 13:40+0000\n"
-"PO-Revision-Date: 2023-03-03 14:42+0200\n"
+"POT-Creation-Date: 2023-03-03 14:17+0000\n"
+"PO-Revision-Date: 2023-03-03 15:21+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -17,6 +17,54 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Virtaal 0.7.1\n"
 
+#: ProfilePlus.py:129
+msgctxt "@menu"
+msgid "Remove Settings present in the material profile"
+msgstr "Supprimer les paramètres présents dans le profil du matériau"
+
+#: ProfilePlus.py:130
+msgctxt "@menu"
+msgid "Remove Settings present in the Machine Materials profiles"
+msgstr ""
+"Supprimer les paramètres présents dans les profils des matériaux de la "
+"machine"
+
+#: ProfilePlus.py:131
+msgctxt "@menu"
+msgid "Remove Settings"
+msgstr "Supprimer des Réglages"
+
+#: ProfilePlus.py:133
+msgctxt "@menu"
+msgid "Link Settings present in the material profile"
+msgstr "Paramètres de liaison présents dans le profil matière"
+
+#: ProfilePlus.py:135
+msgctxt "@menu"
+msgid "View Custom Parameters"
+msgstr "Afficher les paramètres personnalisés"
+
+#: ProfilePlus.py:136
+msgctxt "@menu"
+msgid "View Active Material"
+msgstr "Voir les réglages Matière actifs"
+
+#: ProfilePlus.py:137
+msgctxt "@menu"
+msgid "View Machine Materials"
+msgstr "Voir les matériaux de la machine"
+
+#: ProfilePlus.py:138
+msgctxt "@menu"
+msgid "View Active Profile"
+msgstr "Voir le profil actif"
+
+#: ProfilePlus.py:180 ProfilePlus.py:185 ProfilePlus.py:221 ProfilePlus.py:226
+#: ProfilePlus.py:303 ProfilePlus.py:308
+msgctxt "@info:text"
+msgid "! Error Nothing to do !"
+msgstr "! Erreur Rien à faire !"
+
 #: ProfilePlus.py:180 ProfilePlus.py:182 ProfilePlus.py:185 ProfilePlus.py:187
 #: ProfilePlus.py:221 ProfilePlus.py:223 ProfilePlus.py:226 ProfilePlus.py:228
 #: ProfilePlus.py:261 ProfilePlus.py:263 ProfilePlus.py:266 ProfilePlus.py:268
@@ -25,7 +73,60 @@ msgctxt "@info:title"
 msgid "Profile Plus "
 msgstr "Profile Plus "
 
-#: ProfilePlus.py:954 ProfilePlus.py:956
+#: ProfilePlus.py:182 ProfilePlus.py:187 ProfilePlus.py:223 ProfilePlus.py:228
+#: ProfilePlus.py:305 ProfilePlus.py:310
+#, python-format
+msgctxt "@info:text"
+msgid "! Modification ok for : %s"
+msgstr "! Modification ok pour : %s"
+
+#: ProfilePlus.py:261 ProfilePlus.py:266
+msgctxt "@info:text"
+msgid "! Error Nothing to link !"
+msgstr "! Erreur Rien à relier !"
+
+#: ProfilePlus.py:263 ProfilePlus.py:268
+#, python-format
+msgctxt "@info:text"
+msgid "! Link ok for : %s"
+msgstr "! Liaison ok pour : %s"
+
+#: ProfilePlus.py:529 ProfilePlus.py:577
+msgctxt "@html"
+msgid "Filter key"
+msgstr "Filtre"
+
+#: ProfilePlus.py:651
+msgctxt "@html:subtitle"
+msgid "Container"
+msgstr "Conteneur"
+
+#: ProfilePlus.py:706
+msgctxt "@html:title"
+msgid "Extruder Stacks"
+msgstr "Données Extrudeuse"
+
+#: ProfilePlus.py:711 ProfilePlus.py:724
+msgctxt "@html:subtitle"
+msgid "Index"
+msgstr "Index"
+
+#: ProfilePlus.py:736
+msgctxt "@html:subtitle"
+msgid "Containers"
+msgstr "Conteneurs"
+
+#: ProfilePlus.py:951 ProfilePlus.py:953
+#, python-format
+msgctxt "@info:text"
+msgid ""
+"Default browser not defined open \n"
+" %s"
+msgstr ""
+"Navigateur par défaut non défini ouvrir \n"
+" %s"
+
+#: ProfilePlus.py:951 ProfilePlus.py:953
 msgctxt "@info:title"
 msgid "Warning ! ProfilPlus"
 msgstr "Attention ! Profil Plus"
@@ -58,76 +159,56 @@ msgstr "Mise à jour des paramètres du profil actuel"
 #: qml/qt5/SettingsDialog.qml:158 qml/qt6/SettingsDialog.qml:158
 msgctxt "@action:button"
 msgid "Close"
-msgstr "FermerMise à jour des paramètres du profil actuel"
+msgstr "Fermer"
 
-msgctxt "@menu"
-msgid "View Profile Analyse"
-msgstr "Analyser les Profils"
+#~ msgctxt "@menu"
+#~ msgid "View Profile Analyse"
+#~ msgstr "Analyser les Profils"
 
-msgctxt "@menu"
-msgid "View Active Configuration"
-msgstr "Voir la configuration active"
+#~ msgctxt "@menu"
+#~ msgid "View Active Configuration"
+#~ msgstr "Voir la configuration active"
 
-msgctxt "@menu"
-msgid "View All Current Printer Profiles"
-msgstr "Voir tous les profils de l'imprimante actuel"
+#~ msgctxt "@menu"
+#~ msgid "View All Current Printer Profiles"
+#~ msgstr "Voir tous les profils de l'imprimante actuel"
 
-msgctxt "@title"
-msgid "Printer Quality Changes"
-msgstr "Liste Profil Imprimante"
+#~ msgctxt "@title"
+#~ msgid "Printer Quality Changes"
+#~ msgstr "Liste Profil Imprimante"
 
-msgctxt "@html:title"
-msgid "Extruder Stacks"
-msgstr "Données Extrudeuse"
+#~ msgctxt "@html:title"
+#~ msgid "Global Stack"
+#~ msgstr "Données Globales"
 
-msgctxt "@html:title"
-msgid "Global Stack"
-msgstr "Données Globales"
+#~ msgctxt "@html:title"
+#~ msgid "Profile List "
+#~ msgstr "Liste des profils "
 
-msgctxt "@html"
-msgid "Filter key"
-msgstr "Filtre"
+#~ msgctxt "@html"
+#~ msgid "Unselect all"
+#~ msgstr "Tout déselectionner"
 
-msgctxt "@html:title"
-msgid "Profile List "
-msgstr "Liste des profils "
+#~ msgctxt "@html"
+#~ msgid "Show only differences"
+#~ msgstr "Voir uniquement les différences"
 
-msgctxt "@html"
-msgid "Unselect all"
-msgstr "Tout déselectionner"
+#~ msgctxt "@html"
+#~ msgid "Show only valued parameters"
+#~ msgstr "Voir les paramètres avec des valeurs"
 
-msgctxt "@html"
-msgid "Show only differences"
-msgstr "Voir uniquement les différences"
+#~ msgctxt "@html:title"
+#~ msgid "Profiles"
+#~ msgstr "Profils"
 
-msgctxt "@html"
-msgid "Show only valued parameters"
-msgstr "Voir les paramètres avec des valeurs"
+#~ msgctxt "@info:title"
+#~ msgid "Warning ! ProfilAnalyser"
+#~ msgstr "Attention ! Profil Analyser"
 
-msgctxt "@html:title"
-msgid "Profiles"
-msgstr "Profils"
+#~ msgctxt "@label"
+#~ msgid "ProfilAnalyser"
+#~ msgstr "Profil Analyseur"
 
-msgctxt "@html:subtitle"
-msgid "Container"
-msgstr "Conteneur"
-
-msgctxt "@html:subtitle"
-msgid "Index"
-msgstr "Index"
-
-msgctxt "@html:subtitle"
-msgid "Containers"
-msgstr "Conteneurs"
-
-msgctxt "@info:title"
-msgid "Warning ! ProfilAnalyser"
-msgstr "Attention ! Profil Analyser"
-
-msgctxt "@label"
-msgid "ProfilAnalyser"
-msgstr "Profil Analyseur"
-
-msgctxt "@info:tooltip"
-msgid "Analyser for Cura Profiles"
-msgstr "Analyseur pour les profils Cura"
+#~ msgctxt "@info:tooltip"
+#~ msgid "Analyser for Cura Profiles"
+#~ msgstr "Analyseur pour les profils Cura"
