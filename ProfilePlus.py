@@ -43,8 +43,6 @@ except ImportError:
     from PyQt5.QtGui import QDesktopServices
     USE_QT5 = True
 
-from cura.CuraApplication import CuraApplication
-
 from UM.Extension import Extension
 
 from UM.PluginRegistry import PluginRegistry
@@ -54,11 +52,12 @@ from UM.Settings.DefinitionContainer import DefinitionContainer
 from UM.Settings.SettingDefinition import SettingDefinition
 from UM.Application import Application
 from UM.Settings.ContainerRegistry import ContainerRegistry
-
-from cura.CuraVersion import CuraVersion  # type: ignore
 from UM.Version import Version
 
+
+from cura.CuraVersion import CuraVersion  # type: ignore
 from cura.CuraApplication import CuraApplication
+
 from cura.Settings.ExtruderManager import ExtruderManager
 
 from UM.Logger import Logger
@@ -87,7 +86,6 @@ if catalog.hasTranslationLoaded():
     
 class ProfilePlus(QObject, Extension):
     #Create an api
-    from cura.CuraApplication import CuraApplication
     api = CuraApplication.getInstance().getCuraAPI()
 
     plugin_version = ""
@@ -126,17 +124,19 @@ class ProfilePlus(QObject, Extension):
                 pass
                 
         ## Menu
+        self.addMenuItem(catalog.i18nc("@menu", "Test Settings to remove"), self.testMachineProfile)
+        self.addMenuItem("", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the material profile"), self.cleanProfile)
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the Machine Materials profiles"), self.cleanMachineProfile)         
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
-        self.addMenuItem("", lambda: None)
-        self.addMenuItem(catalog.i18nc("@menu", "Link Settings present in the material profile"), self.linkProfile)
         self.addMenuItem(" ", lambda: None)
+        self.addMenuItem(catalog.i18nc("@menu", "Link Settings present in the material profile"), self.linkProfile)
+        self.addMenuItem("  ", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Machine Materials"), viewDefaultMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Profile"), viewAll)
-        self.addMenuItem("  ", lambda: None)
+        self.addMenuItem("   ", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "Help"), gotoHelp)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
@@ -164,7 +164,7 @@ class ProfilePlus(QObject, Extension):
             path = os.path.join(os.path.dirname(
             os.path.abspath(__file__)), "qml", "qt6","SettingsDialog.qml")
 
-        self._settings_dialog = CuraApplication.getInstance().createQmlComponent(path, {"manager": self})
+        self._settings_dialog = self._application.createQmlComponent(path, {"manager": self})
         self._settings_dialog.show()
 
 
@@ -174,7 +174,7 @@ class ProfilePlus(QObject, Extension):
         self.definition_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
         Logger.log("d", "Update definition_string : %s", self.definition_string )
         modi += upDateExtruderStacks(self.definition_string)
-        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),self.definition_string)
+        modi += upDateContainerStack(self._application.getGlobalContainerStack(),self.definition_string)
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
@@ -216,7 +216,7 @@ class ProfilePlus(QObject, Extension):
         Logger.log("d", "Profile Parameters : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
-        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),update_string)
+        modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
@@ -258,7 +258,7 @@ class ProfilePlus(QObject, Extension):
             update_string += ";"      
         # Logger.log("d", "Update string : %s", update_string )
         modi += linkExtruderStacks(update_string)
-        modi += linkContainerStack(Application.getInstance().getGlobalContainerStack(),update_string)
+        modi += linkContainerStack(self._application.getGlobalContainerStack(),update_string)
         # Logger.log("d", "Update for : %s", modi ) 
         
         if self.Major == 4 and self.Minor < 11 : 
@@ -271,7 +271,54 @@ class ProfilePlus(QObject, Extension):
                 Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+    
+    def testMachineProfile(self):
+        modi = ''
+        mat_string=updateDefaultDefinition("material")
+        Logger.log("d", "Material Parameters : %s", mat_string )
+        profile_string=updateDefinition("quality_changes")
+        Logger.log("d", "Profile Parameters : %s", profile_string )
+        material_plus_settings = mat_string.split(";")
+        profile_plus_settings = profile_string.split(";")
+        modi_list=[]
+        
+        for remove_key in material_plus_settings:
+            # Logger.log("d", "Remove_key : %s", remove_key )
+            if remove_key in profile_plus_settings:
+                Logger.log("d", "Remove_key in list : %s", remove_key )
+                modi_list.append(remove_key)
+            if "default_" in remove_key:
+                remove_key=remove_key[8:]
+                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                if remove_key in profile_plus_settings:
+                    modi_list.append(remove_key)           
+            
+        update_string = ''
+        for add_key in modi_list:
+            update_string += "\n"
+            update_string += add_key
+                  
+        
+        Logger.log("d", "Profile Parameters : %s", update_string )
+        #if Remove :
+        #    modi += upDateExtruderStacks(update_string)
+        #    modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
+        # else :
+        modi = update_string
+        # 
+        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
+        if self.Major == 4 and self.Minor < 11 : 
+            if modi == "" :
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
+            else :
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
+        else :
+            if modi == "" :
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+            else :
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
 
+    
     # Remove Settings present in the Machine Materials profiles : Remove from the active profile parameters already existing in every material associated with this machine
     def cleanMachineProfile(self):
         modi = ''
@@ -301,7 +348,7 @@ class ProfilePlus(QObject, Extension):
         Logger.log("d", "Profile Parameters : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
-        modi += upDateContainerStack(Application.getInstance().getGlobalContainerStack(),update_string)
+        modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if self.Major == 4 and self.Minor < 11 : 
@@ -321,7 +368,7 @@ def upDateExtruderStacks(definition_string):
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+    for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
         modi += upDateContainerStack(extruder_stack, definition_string)
         position += 1
     return modi
@@ -363,7 +410,7 @@ def linkExtruderStacks(definition_string):
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+    for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
         modi += linkContainerStack(extruder_stack, definition_string)
         position += 1
     return modi
@@ -396,7 +443,7 @@ def linkContainerStack(Cstack, definition_string):
                 if delRef == True :
                     if not "extruderValueFromContainer" in base_value:
                         Logger.log("d", "linkRef :|%s|", key )
-                        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+                        global_container_stack = self._application.getGlobalContainerStack()
                         if not global_container_stack:
                             return modi                       
                         try:
@@ -456,7 +503,7 @@ def viewDefaultMaterial():
 def updateDefinition(stack_keys="quality_changes", checkCode=False):
     def_str = ""
     def_str += formatExtruderDefinitionStacks(stack_keys,checkCode)
-    def_str += formatContainerDefinitionStack(Application.getInstance().getGlobalContainerStack(),stack_keys,checkCode)
+    def_str += formatContainerDefinitionStack(CuraApplication.getInstance().getGlobalContainerStack(),stack_keys,checkCode)
     return def_str
 
 # For every stack_type="material" associated with the  machine_id
@@ -485,10 +532,10 @@ def updateDefaultDefinition(stack_type="material"):
     
 def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=False):
     def_str = ''
-    # machine = Application.getInstance().getMachineManager().activeMachine
+    # machine = CuraApplication.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+    for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
         def_str += formatContainerDefinitionStack(extruder_stack,stack_keys, checkCode)
         position += 1
     return def_str
@@ -532,7 +579,7 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += '</li>\n'
 
     html += '<li><a href="#global_stack">Global Stack</a>'
-    html += formatContainerStackMenu(Application.getInstance().getGlobalContainerStack(),show_all, stack_type)
+    html += formatContainerStackMenu(CuraApplication.getInstance().getGlobalContainerStack(),show_all, stack_type)
     html += '</li>\n'
 
     html += '</ul>\n'
@@ -547,7 +594,7 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += formatExtruderStacks(show_all,stack_type)
      
     html += '<h2 id="global_stack">Global Stack</h2>'
-    html += formatContainerStack(Application.getInstance().getGlobalContainerStack(),True,show_all,stack_type)
+    html += formatContainerStack(CuraApplication.getInstance().getGlobalContainerStack(),True,show_all,stack_type)
     
     html += '</div>'
 
@@ -556,7 +603,7 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
 
 
 def getMachineId():
-    machine_manager = Application.getInstance().getMachineManager()
+    machine_manager = CuraApplication.getInstance().getMachineManager()
     g_stack = machine_manager.activeMachine
     machine_id=str(g_stack.quality.getMetaDataEntry('definition'))
 
@@ -620,7 +667,7 @@ def formatAllContainersOfType(show_all, machine_id , name, type_):
 # Change the 'quality_type' to 'standard' if 'not_supported'
 # Useless Code but who knows .. one day
 def changeToStandardQuality():
-    #stack = Application.getInstance().getGlobalContainerStack()
+    #stack = CuraApplication.getInstance().getGlobalContainerStack()
 
     machine_id = getMachineId()
     
@@ -654,7 +701,7 @@ def changeToStandardQuality():
             break
 
     # Logger.log("d", "New_quality : %s", str(new_quality) )
-    global_stack = Application.getInstance().getGlobalContainerStack()
+    global_stack = CuraApplication.getInstance().getGlobalContainerStack()
     for container in global_stack.getContainers():
         #
         MetaData_quality_type = container.getMetaDataEntry('quality_type')
@@ -727,10 +774,10 @@ def formatContainerMetaDataRows(def_container):
 def formatExtruderStacks(show_all=False,stack_keys="quality_changes"):
     html = ''
     html += '<h2 id="extruder_stacks">' + catalog.i18nc("@html:title", "Extruder Stacks") + '</h2>'
-    # machine = Application.getInstance().getMachineManager().activeMachine
+    # machine = CuraApplication.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+    for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<h3 id="extruder_index_' + str(position) + '">' + catalog.i18nc("@html:subtitle", "Index") + ' ' + str(position) + '</h3>'
         html += formatContainerStack(extruder_stack,True,show_all,stack_keys)
         position += 1
@@ -739,10 +786,10 @@ def formatExtruderStacks(show_all=False,stack_keys="quality_changes"):
 def formatExtruderStacksMenu(show_all=True,stack_keys="quality_changes"):
     html = ''
     html += '<ul>'
-    # machine = Application.getInstance().getMachineManager().activeMachine
+    # machine = CuraApplication.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
-    for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
+    for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<li>'
         html += '<a href="#extruder_index_' + str(position) + '">' + catalog.i18nc("@html:subtitle", "Index") + ' ' + str(position) + '</a>\n'
         html += formatContainerStackMenu(extruder_stack, show_all, stack_keys)
