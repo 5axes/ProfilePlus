@@ -506,6 +506,7 @@ def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes", checkCo
     return def_str
 
 
+
 def htmlPage(show_all=False,stack_type="quality_changes"):
     html = getHtmlHeader(stack_type)
 
@@ -525,7 +526,7 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     
     # Java script filter function
     # if show_all :
-    html += keyFilterWidget()
+    html += keyFilterWidget(catalog.i18nc("@html", "Filter key"))
     html += '</div>'
 
     # Contents creation
@@ -539,6 +540,7 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
 
     html += htmlFooter
     return html
+
 
 def getMachineId():
     machine_manager = Application.getInstance().getMachineManager()
@@ -572,7 +574,7 @@ def containersOfTypeHtmlPage(show_all = False, name="Materials",stack_type="mate
         html += "<li><a href='#"+ str(id(container)) + "'>"+encode(container.getId())+"</a></li>\n"
     html += "</ul>"
 
-    html += keyFilterWidget()
+    html += keyFilterWidget(catalog.i18nc("@html", "Filter key"))
     html += "</div>"
 
     html += "<div class='contents'>"
@@ -645,18 +647,16 @@ def changeToStandardQuality():
                 container.setDirty(True)
                 MetaData_quality_type = container.getMetaDataEntry('quality_type')
                 Logger.log("d", "New MetaData_quality_type : %s for %s", str(MetaData_quality_type), container.getId() )
-
     
-def formatContainer(container, name='Container', short_value_properties=False, show_keys=True):
+def formatContainer(container, name=catalog.i18nc("@html:subtitle", "Container"), short_value_properties=False, show_keys=True):
     html = ''
     html += '<a id="' + str(id(container)) + '" ></a>'
     #
     if safeCall(container.getName) == "empty" :
-        html += tableHeader(name + ': ' + safeCall(container.getId))
+        html += tableHeader(name + ' : ' + safeCall(container.getId))
     else :
-        html += tableHeader(name + ': ' + safeCall(container.getName))
-        
-        
+        html += tableHeader(name + ' : ' + safeCall(container.getName))
+    
     html += formatContainerMetaDataRows(container)
 
     if show_keys:
@@ -670,7 +670,7 @@ def formatContainer(container, name='Container', short_value_properties=False, s
                 html += formatSettingsKeyTableRow(key, formatSettingValue(container, key, key_properties))
 
     html += tableFooter()
-    return html    
+    return html  
 
 def formatContainerMetaDataRows(def_container):
     html = ''
@@ -701,20 +701,18 @@ def formatContainerMetaDataRows(def_container):
 
     return html
     
-
 def formatExtruderStacks(show_all=False,stack_keys="quality_changes"):
     html = ''
-    html += '<h2 id="extruder_stacks">Extruder Stacks</h2>'
+    html += '<h2 id="extruder_stacks">' + catalog.i18nc("@html:title", "Extruder Stacks") + '</h2>'
     # machine = Application.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
-        html += '<h3 id="extruder_index_' + str(position) + '">Index ' + str(position) + '</h3>'
+        html += '<h3 id="extruder_index_' + str(position) + '">' + catalog.i18nc("@html:subtitle", "Index") + ' ' + str(position) + '</h3>'
         html += formatContainerStack(extruder_stack,True,show_all,stack_keys)
         position += 1
     return html
 
-    
 def formatExtruderStacksMenu(show_all=True,stack_keys="quality_changes"):
     html = ''
     html += '<ul>'
@@ -723,20 +721,19 @@ def formatExtruderStacksMenu(show_all=True,stack_keys="quality_changes"):
     position=0
     for extruder_stack in Application.getInstance().getExtruderManager().getActiveExtruderStacks():
         html += '<li>'
-        html += '<a href="#extruder_index_' + str(position) + '">Index ' + str(position) + '</a>\n'
+        html += '<a href="#extruder_index_' + str(position) + '">' + catalog.i18nc("@html:subtitle", "Index") + ' ' + str(position) + '</a>\n'
         html += formatContainerStackMenu(extruder_stack, show_all, stack_keys)
         html += '</li>'
         position += 1
     html += '</ul>'
     return html
     
-    
 def formatContainerStack(Cstack, show_stack_keys=True, show_all=True, stack_keys="quality_changes" ):
     html = '<div class="container_stack">\n'
     if show_all :
         html += formatContainer(Cstack, name='Container Stack', short_value_properties=True)
         html += '<div class="container_stack_containers">\n'
-    html += '<h3>Containers</h3>\n'
+    html += '<h3>' + catalog.i18nc("@html:subtitle", "Containers") + '</h3>\n'
     for container in Cstack.getContainers():
         Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == stack_keys or show_all :
@@ -927,14 +924,14 @@ def keyFilterJS():
     }
     '''
 
-def keyFilterWidget():
+def keyFilterWidget(txt_balise):
     html = '''
     <div class="key_filter">
-    &#x1F50E; filter key: <input type="text" id="key_filter" />
+    &#x1F50E; {balise}: <input type="text" id="key_filter" />
     </div>
     '''
+    html = html.format(balise=txt_balise)
     return html
-   
 
 def has_browser():
     try:
@@ -951,9 +948,9 @@ def openHtmlPage(page_name, html_contents):
     if not has_browser() :
         Logger.log("d", "openHtmlPage default browser not defined") 
         if self.Major == 4 and self.Minor < 11 :
-            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus")).show()
+            Message(text = catalog.i18nc("@info:text", "Default browser not defined open \n %s") % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus")).show()
         else :
-            Message(text = "Default browser not defined open \n %s" % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus"), message_type = Message.MessageType.WARNING).show()
+            Message(text = catalog.i18nc("@info:text", "Default browser not defined open \n %s") % (target), title = i18n_cura_catalog.i18nc("@info:title", "Warning ! ProfilPlus"), message_type = Message.MessageType.WARNING).show()
        
     QDesktopServices.openUrl(QUrl.fromLocalFile(target))
 
