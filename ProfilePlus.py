@@ -248,9 +248,9 @@ class ProfilePlus(QObject, Extension):
                 Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
             if "default_" in remove_key:
-                remove_key=remove_key[8:]              
+                remove_key=remove_key[8:]
+                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )                
                 if remove_key in profile_plus_settings:
-                    Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                     profile_plus_settings.remove(remove_key)           
           
         update_string = ''
@@ -444,7 +444,7 @@ def linkContainerStack(Cstack, definition_string):
                 if delRef == True :
                     if not "extruderValueFromContainer" in base_value:
                         Logger.log("d", "linkRef :|%s|", key )
-                        global_container_stack = self._application.getGlobalContainerStack()
+                        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
                         if not global_container_stack:
                             return modi                       
                         try:
