@@ -570,8 +570,12 @@ def containersOfTypeHtmlPage(show_all = False, name="Materials", stack_type="mat
         containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=stack_type)
         
     containers.sort(key=lambda x: x.getId())
+    
     for container in containers:
-        html += "<li><a href='#"+ str(id(container)) + "'>"+encode(container.getId())+"</a></li>\n"
+        # Logger.log("d", "Container : {}".format(container) )
+        # Logger.log("d", "Name : {}".format(container.getName()) )
+        
+        html += "<li><a href='#"+ str(id(container)) + "'>"+encode(container.getName())+"</a></li>\n"
     html += "</ul>"
 
     html += keyFilterWidget(catalog.i18nc("@html", "Filter key"))
