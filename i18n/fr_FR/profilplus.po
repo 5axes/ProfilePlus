@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 16:09+0000\n"
-"PO-Revision-Date: 2023-03-03 17:52+0200\n"
+"POT-Creation-Date: 2023-03-03 17:14+0000\n"
+"PO-Revision-Date: 2023-03-03 18:21+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -64,69 +64,104 @@ msgctxt "@menu"
 msgid "Help"
 msgstr "Aide"
 
-#: ProfilePlus.py:182 ProfilePlus.py:187 ProfilePlus.py:223 ProfilePlus.py:228
-#: ProfilePlus.py:305 ProfilePlus.py:310
+#: ProfilePlus.py:182 ProfilePlus.py:187 ProfilePlus.py:224 ProfilePlus.py:229
+#: ProfilePlus.py:309 ProfilePlus.py:314
 msgctxt "@info:text"
 msgid "! Error Nothing to do !"
 msgstr "! Erreur Rien à faire !"
 
 #: ProfilePlus.py:182 ProfilePlus.py:184 ProfilePlus.py:187 ProfilePlus.py:189
-#: ProfilePlus.py:223 ProfilePlus.py:225 ProfilePlus.py:228 ProfilePlus.py:230
-#: ProfilePlus.py:263 ProfilePlus.py:265 ProfilePlus.py:268 ProfilePlus.py:270
-#: ProfilePlus.py:305 ProfilePlus.py:307 ProfilePlus.py:310 ProfilePlus.py:312
+#: ProfilePlus.py:224 ProfilePlus.py:226 ProfilePlus.py:229 ProfilePlus.py:231
+#: ProfilePlus.py:266 ProfilePlus.py:268 ProfilePlus.py:271 ProfilePlus.py:273
+#: ProfilePlus.py:309 ProfilePlus.py:311 ProfilePlus.py:314 ProfilePlus.py:316
 msgctxt "@info:title"
-msgid "Profile Plus "
-msgstr "Profil Plus "
+msgid "Profile Plus :"
+msgstr "Profil Plus : "
 
-#: ProfilePlus.py:184 ProfilePlus.py:189 ProfilePlus.py:225 ProfilePlus.py:230
-#: ProfilePlus.py:307 ProfilePlus.py:312
+#: ProfilePlus.py:184 ProfilePlus.py:189 ProfilePlus.py:226 ProfilePlus.py:231
+#: ProfilePlus.py:311 ProfilePlus.py:316
 #, python-format
 msgctxt "@info:text"
 msgid "! Modification ok for : %s"
 msgstr "! Modification ok pour : %s"
 
-#: ProfilePlus.py:263 ProfilePlus.py:268
+#: ProfilePlus.py:266 ProfilePlus.py:271
 msgctxt "@info:text"
 msgid "! Error Nothing to link !"
 msgstr "! Erreur Rien à relier !"
 
-#: ProfilePlus.py:265 ProfilePlus.py:270
+#: ProfilePlus.py:268 ProfilePlus.py:273
 #, python-format
 msgctxt "@info:text"
 msgid "! Link ok for : %s"
 msgstr "! Liaison ok pour : %s"
 
-#: ProfilePlus.py:448
+#: ProfilePlus.py:452
 msgctxt "@html"
 msgid "Materials"
 msgstr "Matériaux"
 
-#: ProfilePlus.py:534 ProfilePlus.py:586
+#: ProfilePlus.py:542 ProfilePlus.py:594
 msgctxt "@html"
 msgid "Filter key"
 msgstr "Filtre"
 
-#: ProfilePlus.py:660
+#: ProfilePlus.py:668
 msgctxt "@html:subtitle"
 msgid "Container"
 msgstr "Conteneur"
 
+#: ProfilePlus.py:696 ProfilePlus.py:717
+msgctxt "@html:row"
+msgid "type"
+msgstr "Type"
+
+#: ProfilePlus.py:699
+msgctxt "@html:row"
+msgid "id"
+msgstr "Id"
+
+#: ProfilePlus.py:700
+msgctxt "@html:row"
+msgid "name"
+msgstr "Nom"
+
+#: ProfilePlus.py:704
+msgctxt "@html:row"
+msgid "definition"
+msgstr "Définition"
+
+#: ProfilePlus.py:706
+msgctxt "@html:row"
+msgid "Detail"
+msgstr "Détail"
+
+#: ProfilePlus.py:710
+msgctxt "@html:row"
+msgid "quality_type"
+msgstr "Type Qualité"
+
 #: ProfilePlus.py:715
+msgctxt "@html:row"
+msgid "path"
+msgstr "Chemin"
+
+#: ProfilePlus.py:727
 msgctxt "@html:title"
 msgid "Extruder Stacks"
 msgstr "Données Extrudeuse"
 
-#: ProfilePlus.py:720 ProfilePlus.py:733
+#: ProfilePlus.py:732 ProfilePlus.py:745
 msgctxt "@html:subtitle"
 msgid "Index"
 msgstr "Index"
 
-#: ProfilePlus.py:745
+#: ProfilePlus.py:757
 msgctxt "@html:subtitle"
 msgid "Containers"
 msgstr "Conteneurs"
 
-#: ProfilePlus.py:960 ProfilePlus.py:962
+#: ProfilePlus.py:972 ProfilePlus.py:974
 #, python-format
 msgctxt "@info:text"
 msgid ""
@@ -136,11 +171,7 @@ msgstr ""
 "Navigateur par défaut non défini ouvrir \n"
 " %s"
 
-#: ProfilePlus.py:960 ProfilePlus.py:962
-msgctxt "@info:title"
-msgid "Warning ! ProfilPlus"
-msgstr "Attention ! Profil Plus"
-
+#: ProfilePlus.py:972 ProfilePlus.py:974
 #: ProfilePlusSettingsVisibilityHandler.py:35
 msgctxt "@info:title"
 msgid "Warning ! Profile Plus"
@@ -175,6 +206,14 @@ msgstr "Mise à jour des paramètres du profil actuel"
 msgctxt "@action:button"
 msgid "Close"
 msgstr "Fermer"
+
+#~ msgctxt "@info:title"
+#~ msgid "Profile Plus "
+#~ msgstr "Profil Plus "
+
+#~ msgctxt "@info:title"
+#~ msgid "Warning ! ProfilPlus"
+#~ msgstr "Attention ! Profil Plus"
 
 #~ msgctxt "@menu"
 #~ msgid "View Profile Analyse"

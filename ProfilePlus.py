@@ -693,6 +693,8 @@ def formatContainerMetaDataRows(def_container):
     html = ''
     try:
         # Logger.log("d", "quality_type : " + safeCall(def_container.getMetaDataEntry('quality_type')))
+        # Logger.log("d", "GetType : {} ".format(safeCall(def_container.getType)))
+        Logger.log("d", "Def_container : {} ".format(def_container))
         html += formatKeyValueTableRow(catalog.i18nc("@html:row", "type"), def_container.getMetaDataEntry('type'), extra_class='metadata') 
         # html += formatKeyValueTableRow('<type>', type(def_container), extra_class='metadata')
         # html += formatKeyValueTableRow('<id>', def_container, extra_class='metadata')
@@ -702,9 +704,10 @@ def formatContainerMetaDataRows(def_container):
         MetaData_definition = def_container.getMetaDataEntry('definition')
         if MetaData_definition is not None:
             html += formatKeyValueTableRow(catalog.i18nc("@html:row", "definition"), MetaData_definition, extra_class='metadata')
-        if safeCall(def_container.getType) == "material" :
-            html += formatStringTableRow(catalog.i18nc("@html:row", "Detail"), "{}".format(def_container), extra_class='metadata')       
-        
+        # if safeCall(def_container.getType) == "material" :
+        s = "{}".format(def_container)
+        html += formatStringTableRow(catalog.i18nc("@html:row", "detail"), s , extra_class='metadata')   
+
         MetaData_quality_type = def_container.getMetaDataEntry('quality_type')
         if MetaData_quality_type is not None:
             html += formatKeyValueTableRow(catalog.i18nc("@html:row", "quality_type"), MetaData_quality_type, extra_class='metadata')  
@@ -715,7 +718,6 @@ def formatContainerMetaDataRows(def_container):
             html += formatKeyValueTableRowFile(catalog.i18nc("@html:row", "path"), safeCall(def_container.getPath), extra_class='metadata')
         if hasattr(def_container, 'getType'):
             html += formatStringTableRow(catalog.i18nc("@html:row", "type"), safeCall(def_container.getType), extra_class='metadata')
-
 
     except:
         pass
