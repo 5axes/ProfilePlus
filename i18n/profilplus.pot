@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 14:22+0000\n"
+"POT-Creation-Date: 2023-03-03 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,6 +135,11 @@ msgstr ""
 #: qml/qt5/SettingsDialog.qml:16 qml/qt6/SettingsDialog.qml:16
 msgctxt "@title:window"
 msgid "Select settings to Delete"
+msgstr ""
+
+#: qml/qt5/SettingsDialog.qml:55 qml/qt6/SettingsDialog.qml:55
+msgctxt "@label"
+msgid "Settings"
 msgstr ""
 
 #: qml/qt5/SettingsDialog.qml:66 qml/qt6/SettingsDialog.qml:66
