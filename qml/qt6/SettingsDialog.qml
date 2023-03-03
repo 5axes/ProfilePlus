@@ -52,7 +52,7 @@ UM.Dialog {
         {
             id: settingLabel
             font.bold: true
-            text: "Settings"
+            text: catalog.i18nc("@label", "Settings")
         }
 
         Row {
