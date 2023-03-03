@@ -136,6 +136,8 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Machine Materials"), viewDefaultMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Profile"), viewAll)
+        self.addMenuItem("  ", lambda: None)
+        self.addMenuItem(catalog.i18nc("@menu", "Help"), gotoHelp)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
 
@@ -425,6 +427,9 @@ def linkContainerStack(Cstack, definition_string):
                             modi += key
                             modi += "\n"
     return modi
+
+def gotoHelp():
+    QDesktopServices.openUrl(QUrl("https://github.com/5axes/ProfilePlus/wiki"))
     
 def viewAll():
     HtmlFile = str(CuraVersion).replace('.','-') + '_cura_profile.html'
