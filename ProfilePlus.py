@@ -387,8 +387,11 @@ class ProfilePlus(QObject, Extension):
         
         for add_key in modi_list:
             definition_key=add_key + " label"
-            untranslated_label=self._application.getGlobalContainerStack().getProperty(key,"label")
-            translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)         
+            untranslated_label=self._application.getGlobalContainerStack().getProperty(add_key,"label")
+            if untranslated_label == None:
+                translated_label = add_key
+            else:    
+                translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)            
             update_string += translated_label
             update_string += "\n"
                   
@@ -399,8 +402,11 @@ class ProfilePlus(QObject, Extension):
             
             for add_key in link_list:
                 definition_key=add_key + " label"
-                untranslated_label=self._application.getGlobalContainerStack().getProperty(key,"label")
-                translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)         
+                untranslated_label=self._application.getGlobalContainerStack().getProperty(add_key,"label")
+                if untranslated_label == None:
+                    translated_label = add_key
+                else:    
+                    translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)                  
                 update_string += translated_label
                 update_string += "\n"        
             
