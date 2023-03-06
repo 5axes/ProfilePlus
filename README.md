@@ -37,7 +37,17 @@ This menu opens the following folder:
 
 First of all you must activate the profile you want to edit.
 
-Then use the function **Remove Settings present in the material profile** to delete every parameters set in your current profile which are also present in the active Material settings.
+Then use the function **Material Settings** to analyse the parameters of your profile then delete every parameters set in your current profile which are also present in the active Material settings.
+
+The list of the  parameters  present in the profile and in your Material Settings will be displayed in this windows :
+
+![Analyse result](./images/test_settings.png)
+
+Then you can use the button :
+
+- Remove Parameters : Delete every parameters set in your current profile which are also present in the active Material settings.
+- Remove Materials Parameters : Delete every parameters set in your current profile which are also present in the material definition associated with this machine.
+- Link Parameters : Link the settings present in the Material definition with your current settings by using the **extruderValueFromContainer** instruction.
 
 The list of the suppressed parameters will be displayed in a Cura message :
 
