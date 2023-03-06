@@ -11,7 +11,8 @@
 # 1.0.3 08-09-2022  Test and reduce Code Size
 # 1.0.5 08-09-2022  Add function to link with material Profile
 # 1.0.6 00-03-2023  Add French translation
-# 1.0.7 04-03-2023  Add Function "Test Settings to remove"
+# 1.0.7 04-03-2023  Add Function to display settings to remove before to Edit parameters
+# 1.0.8 06-03-2023  New Release
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -127,12 +128,8 @@ class ProfilePlus(QObject, Extension):
                 
         ## Menu
         self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)
-        self.addMenuItem("", lambda: None)
-        ## self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the material profile"), self.cleanProfile)
-        ## self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the Machine Materials profiles"), self.cleanMachineProfile)         
+        self.addMenuItem("", lambda: None)      
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
-        ## self.addMenuItem(" ", lambda: None)
-        ## self.addMenuItem(catalog.i18nc("@menu", "Link Settings present in the material profile"), self.linkProfile)
         self.addMenuItem(" ", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
@@ -144,7 +141,6 @@ class ProfilePlus(QObject, Extension):
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
 
         self._application.engineCreatedSignal.connect(self._onEngineCreated)
-
 
     def _onEngineCreated(self):
         qmlRegisterType(
