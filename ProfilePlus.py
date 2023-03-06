@@ -99,6 +99,7 @@ class ProfilePlus(QObject, Extension):
         Extension.__init__(self)
 
         self._application = CuraApplication.getInstance()
+        
 
         ## Load the plugin version
         pluginInfo = json.load(open(os.path.join(os.path.dirname(
@@ -125,19 +126,19 @@ class ProfilePlus(QObject, Extension):
                 pass
                 
         ## Menu
-        self.addMenuItem(catalog.i18nc("@menu", "Test Settings to remove"), self.testMachineProfile)
+        self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)
         self.addMenuItem("", lambda: None)
-        self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the material profile"), self.cleanProfile)
-        self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the Machine Materials profiles"), self.cleanMachineProfile)         
+        ## self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the material profile"), self.cleanProfile)
+        ## self.addMenuItem(catalog.i18nc("@menu", "Remove Settings present in the Machine Materials profiles"), self.cleanMachineProfile)         
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
+        ## self.addMenuItem(" ", lambda: None)
+        ## self.addMenuItem(catalog.i18nc("@menu", "Link Settings present in the material profile"), self.linkProfile)
         self.addMenuItem(" ", lambda: None)
-        self.addMenuItem(catalog.i18nc("@menu", "Link Settings present in the material profile"), self.linkProfile)
-        self.addMenuItem("  ", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Machine Materials"), viewDefaultMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Profile"), viewAll)
-        self.addMenuItem("   ", lambda: None)
+        self.addMenuItem("  ", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "Help"), gotoHelp)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
@@ -168,7 +169,18 @@ class ProfilePlus(QObject, Extension):
         self._settings_dialog = self._application.createQmlComponent(path, {"manager": self})
         self._settings_dialog.show()
 
+    _paramSettingChanged = pyqtSignal()
+    
+    def setParamSetting(self, value)->None:
+        self._paramSettingChanged.emit()
 
+    @pyqtProperty(str, notify=_paramSettingChanged, fset=setParamSetting)
+    def paramSetting(self)->str:
+        # Check for param to change
+        value = self.testMachineProfile()
+
+        return value
+        
     @pyqtProperty(str, notify= userAction)
     def upDate(self)-> None:
         modi = ''
@@ -190,7 +202,8 @@ class ProfilePlus(QObject, Extension):
                 Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
     
     # Remove Settings present in the material profile : Remove from the active profile parameters already existing in the Material definition
-    def cleanProfile(self):
+    @pyqtProperty(str, notify= userAction)
+    def cleanProfile(self)-> None:
         modi = ''
         mat_string=updateDefinition("material")
         Logger.log("d", "Material Parameters : %s", mat_string )
@@ -230,10 +243,57 @@ class ProfilePlus(QObject, Extension):
                 Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+        self._paramSettingChanged.emit()
 
+    # Remove Settings present in the Machine Materials profiles : Remove from the active profile parameters already existing in every material associated with this machine
+    @pyqtProperty(str, notify= userAction)
+    def cleanMachineProfile(self)-> None:
+        modi = ''
+        mat_string=updateDefaultDefinition("material")
+        Logger.log("d", "Material Parameters : %s", mat_string )
+        profile_string=updateDefinition("quality_changes")
+        Logger.log("d", "Profile Parameters : %s", profile_string )
+        material_plus_settings = mat_string.split(";")
+        profile_plus_settings = profile_string.split(";")
+        
+        for remove_key in material_plus_settings:
+            # Logger.log("d", "Remove_key : %s", remove_key )
+            if remove_key in profile_plus_settings:
+                Logger.log("d", "Remove_key in list : %s", remove_key )
+                profile_plus_settings.remove(remove_key)
+            if "default_" in remove_key:
+                remove_key=remove_key[8:]
+                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                if remove_key in profile_plus_settings:
+                    profile_plus_settings.remove(remove_key)           
+            
+        update_string = ''
+        for add_key in profile_plus_settings:
+            update_string += add_key
+            update_string += ";"      
+        
+        Logger.log("d", "Profile Parameters : %s", update_string )
 
+        modi += upDateExtruderStacks(update_string)
+        modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
+        # 
+        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
+        if self.Major == 4 and self.Minor < 11 : 
+            if modi == "" :
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
+            else :
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
+        else :
+            if modi == "" :
+                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
+            else :
+                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+        
+        self._paramSettingChanged.emit() 
+        
     # Link Settings present in the material profile : Replace the Settings present in the profile and the material definition by a extruderValueFromContainer instruction
-    def linkProfile(self):
+    @pyqtProperty(str, notify= userAction)
+    def linkProfile(self)-> None:
         modi = ''
         mat_string=updateDefinition("material")
         Logger.log("d", "Material Parameters link : %s", mat_string )
@@ -272,13 +332,36 @@ class ProfilePlus(QObject, Extension):
                 Message(text = catalog.i18nc("@info:text", "! Error Nothing to link !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
             else :
                 Message(text = catalog.i18nc("@info:text", "! Link ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
-    
-    def testMachineProfile(self):
+        
+        self._paramSettingChanged.emit()
+        
+    def showTestMachineProfile(self):
+        
+        path = None
+        if USE_QT5:
+            path = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), "qml", "qt5", "SettingsPopup.qml")
+        else:
+            path = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), "qml", "qt6", "SettingsPopup.qml")
+
+        self._popup_dialog = self._application.createQmlComponent(path, {"manager": self})
+        self._popup_dialog.show()
+        
+    # List the parameter to modify    
+    def testMachineProfile(self) -> str :
         modi = ''
+        link_list=[]
+        # For every stack_type="material" associated with the  machine_id
+        # Get the list of parameters 
         mat_string=updateDefaultDefinition("material")
-        Logger.log("d", "Material Parameters : %s", mat_string )
+        Logger.log("d", "Test Profile Material Parameters : %s", mat_string )
+        # For every the container quality_changes
+        # Get the list of parameters  present in this container 
         profile_string=updateDefinition("quality_changes")
-        Logger.log("d", "Profile Parameters : %s", profile_string )
+        link_string=updateLinkDefinition("quality_changes")
+        # Logger.log("d", "Link_string : %s", link_string )
+        # Logger.log("d", "Test Profile Profile Parameters : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         modi_list=[]
@@ -295,12 +378,22 @@ class ProfilePlus(QObject, Extension):
                     modi_list.append(remove_key)           
             
         update_string = ''
-        for add_key in modi_list:
-            update_string += "\n"
-            update_string += add_key
-                  
         
+        for add_key in modi_list:
+            update_string += add_key
+            update_string += "\n"
+                  
+        if len(link_string) :
+            update_string += "\n"
+            update_string = catalog.i18nc("@info:text", "Parameters with Linked definition :\n\n")
+            link_list=link_string.split(";")
+            
+            for add_key in link_list:
+                update_string += add_key
+                update_string += "\n"        
+            
         Logger.log("d", "Profile Parameters : %s", update_string )
+        
         #if Remove :
         #    modi += upDateExtruderStacks(update_string)
         #    modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
@@ -308,61 +401,10 @@ class ProfilePlus(QObject, Extension):
         modi = update_string
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
-        if self.Major == 4 and self.Minor < 11 : 
-            if modi == "" or modi == "\n" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
-            else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
-        else :
-            if modi == "" or modi == "\n" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
-            else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
-
-    
-    # Remove Settings present in the Machine Materials profiles : Remove from the active profile parameters already existing in every material associated with this machine
-    def cleanMachineProfile(self):
-        modi = ''
-        mat_string=updateDefaultDefinition("material")
-        Logger.log("d", "Material Parameters : %s", mat_string )
-        profile_string=updateDefinition("quality_changes")
-        Logger.log("d", "Profile Parameters : %s", profile_string )
-        material_plus_settings = mat_string.split(";")
-        profile_plus_settings = profile_string.split(";")
+        if modi == "" or modi == "\n" :
+            update_string = catalog.i18nc("@info:text", "! Error Nothing to do ! \n Your Profile is already clean")
         
-        for remove_key in material_plus_settings:
-            # Logger.log("d", "Remove_key : %s", remove_key )
-            if remove_key in profile_plus_settings:
-                Logger.log("d", "Remove_key in list : %s", remove_key )
-                profile_plus_settings.remove(remove_key)
-            if "default_" in remove_key:
-                remove_key=remove_key[8:]
-                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
-                if remove_key in profile_plus_settings:
-                    profile_plus_settings.remove(remove_key)           
-            
-        update_string = ''
-        for add_key in profile_plus_settings:
-            update_string += add_key
-            update_string += ";"      
-        
-        Logger.log("d", "Profile Parameters : %s", update_string )
-
-        modi += upDateExtruderStacks(update_string)
-        modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
-        # 
-        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
-        if self.Major == 4 and self.Minor < 11 : 
-            if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()
-            else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
-        else :
-            if modi == "" :
-                Message(text = catalog.i18nc("@info:text", "! Error Nothing to do !"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()
-            else :
-                Message(text = catalog.i18nc("@info:text", "! Modification ok for : %s") % (modi), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
-         
+        return update_string
         
 def upDateExtruderStacks(definition_string):
     modi = ''
@@ -501,10 +543,20 @@ def viewDefaultMaterial():
 
 # For every the container quality_changes
 # Get the list of parameters  present in this container   
-def updateDefinition(stack_keys="quality_changes", checkCode=False):
+def updateDefinition(stack_keys="quality_changes", checkCode=0):
+    # Logger.log("d", "In updateDefinition")
     def_str = ""
     def_str += formatExtruderDefinitionStacks(stack_keys,checkCode)
     def_str += formatContainerDefinitionStack(CuraApplication.getInstance().getGlobalContainerStack(),stack_keys,checkCode)
+    return def_str
+
+# For every the container quality_changes
+# Get the list of parameters  present in this container   
+def updateLinkDefinition(stack_keys="quality_changes", checkCode=2):
+    # Logger.log("d", "In updateLinkDefinition")
+    def_str = ""
+    def_str += formatExtruderDefinitionStacks(stack_keys,2)
+    def_str += formatContainerDefinitionStack(CuraApplication.getInstance().getGlobalContainerStack(),stack_keys,2)
     return def_str
 
 # For every stack_type="material" associated with the  machine_id
@@ -531,7 +583,7 @@ def updateDefaultDefinition(stack_type="material"):
     # Logger.log("d", "updateDefaultDefinition : %s", def_str )
     return def_str
     
-def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=False):
+def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=0):
     def_str = ''
     # machine = CuraApplication.getInstance().getMachineManager().activeMachine
     # for position, extruder_stack in sorted([(int(p), es) for p, es in machine.extruders.items()]):
@@ -541,29 +593,36 @@ def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=False
         position += 1
     return def_str
 
-def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes", checkCode=False):
+# checkCode check if Value defined with extruderValueFromContainer
+def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes", checkCode=0):
     def_str = ''
     for container in Cstack.getContainers():
         # Logger.log("d", "type : %s", str(container.getMetaDataEntry("type")) )
         if str(container.getMetaDataEntry("type")) == stack_keys :
             keys = list(container.getAllKeys())
             for key in keys:
-                if checkCode :
+                if checkCode >= 1 :
                     settable_per_extruder = container.getProperty(key, "settable_per_extruder")
                     resolve_value = container.getProperty(key, "resolve")
                     base_value = str(container.getProperty(key, "value"))
-                    # Logger.log("d", "key : %s", str(key) )
-                    # Logger.log("d", "settable_per_extruder : %s", str(settable_per_extruder) )
-                    # Logger.log("d", "resolve_value : %s", str(resolve_value) )
-                    # Logger.log("d", "base_value : %s", str(base_value) )
-                    if not "extruderValueFromContainer" in base_value:
+                    # if checkCode >= 2 :
+                    #    Logger.log("d", "key : %s", str(key) )
+                    #    Logger.log("d", "settable_per_extruder : %s", str(settable_per_extruder) )
+                    #    Logger.log("d", "resolve_value : %s", str(resolve_value) )
+                    #    Logger.log("d", "base_value : %s", str(base_value) )
+                    if not "extruderValueFromContainer" in base_value and checkCode < 2 :                  
                         def_str += key
                         def_str += ";"
                     else :
-                        Logger.log("d", "Value type extruderValueFromContainer : %s", str(base_value) )
+                        if "extruderValueFromContainer" in base_value and checkCode >= 2 :
+                            def_str += key
+                            def_str += ";"
+                        else :                    
+                            Logger.log("d", "Value type extruderValueFromContainer : %s", str(base_value) )
                 else:
                     def_str += key
                     def_str += ";"
+                    
     return def_str
 
 
