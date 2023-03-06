@@ -357,7 +357,7 @@ class ProfilePlus(QObject, Extension):
         # For every stack_type="material" associated with the  machine_id
         # Get the list of parameters 
         mat_string=updateDefaultDefinition("material")
-        Logger.log("d", "Test Profile Material Parameters : %s", mat_string )
+        # Logger.log("d", "Test Profile Material Parameters : %s", mat_string )
         # For every the container quality_changes
         # Get the list of parameters  present in this container 
         profile_string=updateDefinition("quality_changes")
@@ -371,11 +371,11 @@ class ProfilePlus(QObject, Extension):
         for remove_key in material_plus_settings:
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
-                Logger.log("d", "Remove_key in list : %s", remove_key )
+                # Logger.log("d", "Remove_key in list : %s", remove_key )
                 modi_list.append(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
-                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                # Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                 if remove_key in profile_plus_settings:
                     modi_list.append(remove_key)           
             
@@ -416,7 +416,7 @@ class ProfilePlus(QObject, Extension):
         # 
         # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if modi == "" or modi == "\n" :
-            update_string = catalog.i18nc("@info:text", "! Error Nothing to do ! \n Your Profile is already clean")
+            update_string = catalog.i18nc("@info:text", "! Nothing to do ! \n Your profile is already cleaned")
         
         return update_string
         
