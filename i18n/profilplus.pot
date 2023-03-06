@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-06 12:43+0000\n"
+"POT-Creation-Date: 2023-03-06 16:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,118 +52,118 @@ msgctxt "@menu"
 msgid "Help"
 msgstr ""
 
-#: ProfilePlus.py:195 ProfilePlus.py:200 ProfilePlus.py:238 ProfilePlus.py:243
-#: ProfilePlus.py:283 ProfilePlus.py:288
+#: ProfilePlus.py:195 ProfilePlus.py:200 ProfilePlus.py:240 ProfilePlus.py:245
+#: ProfilePlus.py:287 ProfilePlus.py:292
 msgctxt "@info:text"
 msgid "! Error Nothing to do !"
 msgstr ""
 
 #: ProfilePlus.py:195 ProfilePlus.py:197 ProfilePlus.py:200 ProfilePlus.py:202
-#: ProfilePlus.py:238 ProfilePlus.py:240 ProfilePlus.py:243 ProfilePlus.py:245
-#: ProfilePlus.py:283 ProfilePlus.py:285 ProfilePlus.py:288 ProfilePlus.py:290
-#: ProfilePlus.py:327 ProfilePlus.py:329 ProfilePlus.py:332 ProfilePlus.py:334
+#: ProfilePlus.py:240 ProfilePlus.py:242 ProfilePlus.py:245 ProfilePlus.py:247
+#: ProfilePlus.py:287 ProfilePlus.py:289 ProfilePlus.py:292 ProfilePlus.py:294
+#: ProfilePlus.py:333 ProfilePlus.py:335 ProfilePlus.py:338 ProfilePlus.py:340
 msgctxt "@info:title"
 msgid "Profile Plus :"
 msgstr ""
 
-#: ProfilePlus.py:197 ProfilePlus.py:202 ProfilePlus.py:240 ProfilePlus.py:245
-#: ProfilePlus.py:285 ProfilePlus.py:290
+#: ProfilePlus.py:197 ProfilePlus.py:202 ProfilePlus.py:242 ProfilePlus.py:247
+#: ProfilePlus.py:289 ProfilePlus.py:294
 #, python-format
 msgctxt "@info:text"
 msgid "! Modification ok for : %s"
 msgstr ""
 
-#: ProfilePlus.py:327 ProfilePlus.py:332
+#: ProfilePlus.py:333 ProfilePlus.py:338
 msgctxt "@info:text"
 msgid "! Error Nothing to link !"
 msgstr ""
 
-#: ProfilePlus.py:329 ProfilePlus.py:334
+#: ProfilePlus.py:335 ProfilePlus.py:340
 #, python-format
 msgctxt "@info:text"
 msgid "! Link ok for : %s"
 msgstr ""
 
-#: ProfilePlus.py:388
+#: ProfilePlus.py:397
 msgctxt "@info:text"
 msgid ""
 "Parameters with Linked definition :\n"
 "\n"
 msgstr ""
 
-#: ProfilePlus.py:405
+#: ProfilePlus.py:417
 msgctxt "@info:text"
 msgid ""
 "! Error Nothing to do ! \n"
 " Your Profile is already clean"
 msgstr ""
 
-#: ProfilePlus.py:542
+#: ProfilePlus.py:554
 msgctxt "@html"
 msgid "Materials"
 msgstr ""
 
-#: ProfilePlus.py:649 ProfilePlus.py:701
+#: ProfilePlus.py:657 ProfilePlus.py:709
 msgctxt "@html"
 msgid "Filter key"
 msgstr ""
 
-#: ProfilePlus.py:775
+#: ProfilePlus.py:783
 msgctxt "@html:subtitle"
 msgid "Container"
 msgstr ""
 
-#: ProfilePlus.py:805 ProfilePlus.py:827
+#: ProfilePlus.py:813 ProfilePlus.py:835
 msgctxt "@html:row"
 msgid "type"
 msgstr ""
 
-#: ProfilePlus.py:808
+#: ProfilePlus.py:816
 msgctxt "@html:row"
 msgid "id"
 msgstr ""
 
-#: ProfilePlus.py:809
+#: ProfilePlus.py:817
 msgctxt "@html:row"
 msgid "name"
 msgstr ""
 
-#: ProfilePlus.py:813
+#: ProfilePlus.py:821
 msgctxt "@html:row"
 msgid "definition"
 msgstr ""
 
-#: ProfilePlus.py:816
+#: ProfilePlus.py:824
 msgctxt "@html:row"
 msgid "detail"
 msgstr ""
 
-#: ProfilePlus.py:820
+#: ProfilePlus.py:828
 msgctxt "@html:row"
 msgid "quality_type"
 msgstr ""
 
-#: ProfilePlus.py:825
+#: ProfilePlus.py:833
 msgctxt "@html:row"
 msgid "path"
 msgstr ""
 
-#: ProfilePlus.py:836
+#: ProfilePlus.py:844
 msgctxt "@html:title"
 msgid "Extruder Stacks"
 msgstr ""
 
-#: ProfilePlus.py:841 ProfilePlus.py:854
+#: ProfilePlus.py:849 ProfilePlus.py:862
 msgctxt "@html:subtitle"
 msgid "Index"
 msgstr ""
 
-#: ProfilePlus.py:866
+#: ProfilePlus.py:874
 msgctxt "@html:subtitle"
 msgid "Containers"
 msgstr ""
 
-#: ProfilePlus.py:1081 ProfilePlus.py:1083
+#: ProfilePlus.py:1089 ProfilePlus.py:1091
 #, python-format
 msgctxt "@info:text"
 msgid ""
@@ -171,7 +171,7 @@ msgid ""
 " %s"
 msgstr ""
 
-#: ProfilePlus.py:1081 ProfilePlus.py:1083
+#: ProfilePlus.py:1089 ProfilePlus.py:1091
 #: ProfilePlusSettingsVisibilityHandler.py:35
 msgctxt "@info:title"
 msgid "Warning ! Profile Plus"
@@ -182,28 +182,28 @@ msgctxt "@title:window"
 msgid "Select settings to Delete"
 msgstr ""
 
-#: qml/qt5/SettingsDialog.qml:55 qml/qt6/SettingsDialog.qml:55
+#: qml/qt5/SettingsDialog.qml:47 qml/qt6/SettingsDialog.qml:47
 msgctxt "@label"
 msgid "Settings"
 msgstr ""
 
-#: qml/qt5/SettingsDialog.qml:66 qml/qt6/SettingsDialog.qml:66
+#: qml/qt5/SettingsDialog.qml:58 qml/qt6/SettingsDialog.qml:58
 msgctxt "@label:textbox"
 msgid "Filter..."
 msgstr ""
 
-#: qml/qt5/SettingsDialog.qml:83 qml/qt6/SettingsDialog.qml:83
+#: qml/qt5/SettingsDialog.qml:75 qml/qt6/SettingsDialog.qml:73
 msgctxt "@label:checkbox"
 msgid "Show all"
 msgstr ""
 
-#: qml/qt5/SettingsDialog.qml:144 qml/qt6/SettingsDialog.qml:144
+#: qml/qt5/SettingsDialog.qml:136 qml/qt6/SettingsDialog.qml:135
 msgctxt "@action:button"
 msgid "Update current Profile Parameters"
 msgstr ""
 
-#: qml/qt5/SettingsDialog.qml:158 qml/qt5/SettingsPopup.qml:88
-#: qml/qt6/SettingsDialog.qml:158 qml/qt6/SettingsPopup.qml:98
+#: qml/qt5/SettingsDialog.qml:150 qml/qt5/SettingsPopup.qml:88
+#: qml/qt6/SettingsDialog.qml:149 qml/qt6/SettingsPopup.qml:98
 msgctxt "@action:button"
 msgid "Close"
 msgstr ""
