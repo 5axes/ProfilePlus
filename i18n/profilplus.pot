@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-06 16:43+0000\n"
+"POT-Creation-Date: 2023-03-06 17:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,86 +84,86 @@ msgctxt "@info:text"
 msgid "! Link ok for : %s"
 msgstr ""
 
-#: ProfilePlus.py:397
+#: ProfilePlus.py:400
 msgctxt "@info:text"
 msgid ""
 "Parameters with Linked definition :\n"
 "\n"
 msgstr ""
 
-#: ProfilePlus.py:417
+#: ProfilePlus.py:423
 msgctxt "@info:text"
 msgid ""
 "! Error Nothing to do ! \n"
 " Your Profile is already clean"
 msgstr ""
 
-#: ProfilePlus.py:554
+#: ProfilePlus.py:560
 msgctxt "@html"
 msgid "Materials"
 msgstr ""
 
-#: ProfilePlus.py:657 ProfilePlus.py:709
+#: ProfilePlus.py:663 ProfilePlus.py:715
 msgctxt "@html"
 msgid "Filter key"
 msgstr ""
 
-#: ProfilePlus.py:783
+#: ProfilePlus.py:789
 msgctxt "@html:subtitle"
 msgid "Container"
 msgstr ""
 
-#: ProfilePlus.py:813 ProfilePlus.py:835
+#: ProfilePlus.py:819 ProfilePlus.py:841
 msgctxt "@html:row"
 msgid "type"
 msgstr ""
 
-#: ProfilePlus.py:816
+#: ProfilePlus.py:822
 msgctxt "@html:row"
 msgid "id"
 msgstr ""
 
-#: ProfilePlus.py:817
+#: ProfilePlus.py:823
 msgctxt "@html:row"
 msgid "name"
 msgstr ""
 
-#: ProfilePlus.py:821
+#: ProfilePlus.py:827
 msgctxt "@html:row"
 msgid "definition"
 msgstr ""
 
-#: ProfilePlus.py:824
+#: ProfilePlus.py:830
 msgctxt "@html:row"
 msgid "detail"
 msgstr ""
 
-#: ProfilePlus.py:828
+#: ProfilePlus.py:834
 msgctxt "@html:row"
 msgid "quality_type"
 msgstr ""
 
-#: ProfilePlus.py:833
+#: ProfilePlus.py:839
 msgctxt "@html:row"
 msgid "path"
 msgstr ""
 
-#: ProfilePlus.py:844
+#: ProfilePlus.py:850
 msgctxt "@html:title"
 msgid "Extruder Stacks"
 msgstr ""
 
-#: ProfilePlus.py:849 ProfilePlus.py:862
+#: ProfilePlus.py:855 ProfilePlus.py:868
 msgctxt "@html:subtitle"
 msgid "Index"
 msgstr ""
 
-#: ProfilePlus.py:874
+#: ProfilePlus.py:880
 msgctxt "@html:subtitle"
 msgid "Containers"
 msgstr ""
 
-#: ProfilePlus.py:1089 ProfilePlus.py:1091
+#: ProfilePlus.py:1095 ProfilePlus.py:1097
 #, python-format
 msgctxt "@info:text"
 msgid ""
@@ -171,7 +171,7 @@ msgid ""
 " %s"
 msgstr ""
 
-#: ProfilePlus.py:1089 ProfilePlus.py:1091
+#: ProfilePlus.py:1095 ProfilePlus.py:1097
 #: ProfilePlusSettingsVisibilityHandler.py:35
 msgctxt "@info:title"
 msgid "Warning ! Profile Plus"
