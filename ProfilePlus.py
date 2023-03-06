@@ -146,7 +146,6 @@ class ProfilePlus(QObject, Extension):
         self._application.engineCreatedSignal.connect(self._onEngineCreated)
 
 
-
     def _onEngineCreated(self):
         qmlRegisterType(
             ProfilePlusSettingsVisibilityHandler.ProfilePlusSettingsVisibilityHandler,
@@ -186,6 +185,7 @@ class ProfilePlus(QObject, Extension):
         modi = ''
         self.definition_string=self._application.getPreferences().getValue("profile_plus/profile_settings")
         Logger.log("d", "Update definition_string : %s", self.definition_string )
+        
         modi += upDateExtruderStacks(self.definition_string)
         modi += upDateContainerStack(self._application.getGlobalContainerStack(),self.definition_string)
         # 
@@ -207,8 +207,10 @@ class ProfilePlus(QObject, Extension):
         modi = ''
         mat_string=updateDefinition("material")
         Logger.log("d", "Material Parameters : %s", mat_string )
+        
         profile_string=updateDefinition("quality_changes")
         Logger.log("d", "Profile Parameters : %s", profile_string )
+        
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         
@@ -251,8 +253,10 @@ class ProfilePlus(QObject, Extension):
         modi = ''
         mat_string=updateDefaultDefinition("material")
         Logger.log("d", "Material Parameters : %s", mat_string )
+        
         profile_string=updateDefinition("quality_changes")
         Logger.log("d", "Profile Parameters : %s", profile_string )
+        
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         
@@ -307,20 +311,22 @@ class ProfilePlus(QObject, Extension):
             if remove_key in profile_plus_settings and len(remove_key) > 1 :
                 Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
+                Logger.log("d", "Profile_plus_settings : {}".format(profile_plus_settings) )
             if "default_" in remove_key:
-                remove_key=remove_key[8:]
-                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )                
+                Logger.log("d", "Remove_key with default_ in list : %s", remove_key )
+                remove_key=remove_key[8:]                               
                 if remove_key in profile_plus_settings:
+                    Logger.log("d", "Remove_key without default_ in list : %s", remove_key )                
                     profile_plus_settings.remove(remove_key)           
           
         update_string = ''
         for add_key in profile_plus_settings:
             update_string += add_key
             update_string += ";"      
-        # Logger.log("d", "Update string : %s", update_string )
+        Logger.log("d", "Update string : %s", update_string )
         modi += linkExtruderStacks(update_string)
         modi += linkContainerStack(self._application.getGlobalContainerStack(),update_string)
-        # Logger.log("d", "Update for : %s", modi ) 
+        Logger.log("d", "Update for : %s", modi ) 
         
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
@@ -380,7 +386,10 @@ class ProfilePlus(QObject, Extension):
         update_string = ''
         
         for add_key in modi_list:
-            update_string += add_key
+            definition_key=add_key + " label"
+            untranslated_label=stack.getProperty(key,"label")
+            translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)         
+            update_string += translated_label
             update_string += "\n"
                   
         if len(link_string) :
@@ -389,7 +398,10 @@ class ProfilePlus(QObject, Extension):
             link_list=link_string.split(";")
             
             for add_key in link_list:
-                update_string += add_key
+                definition_key=add_key + " label"
+                untranslated_label=stack.getProperty(key,"label")
+                translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)         
+                update_string += translated_label
                 update_string += "\n"        
             
         Logger.log("d", "Profile Parameters : %s", update_string )
@@ -418,9 +430,9 @@ def upDateExtruderStacks(definition_string):
 
 def upDateContainerStack(Cstack, definition_string):
     modi = ''
-    if len(definition_string) < 2 :
-        Logger.log("d", "upDateContainerStack nothing to do : %s", definition_string )
-        return modi
+    #if len(definition_string) < 2 :
+    #    Logger.log("d", "upDateContainerStack nothing to do : %s", definition_string )
+    #    return modi
         
     Logger.log("d", "upDateContainerStack : %s", definition_string )
     settingsList = definition_string.split(";")
@@ -460,11 +472,11 @@ def linkExtruderStacks(definition_string):
 
 def linkContainerStack(Cstack, definition_string):
     modi = ''
-    if len(definition_string) < 2 :
-        Logger.log("d", "upDateContainerStack nothing to do : %s", definition_string )
-        return modi
+    #if len(definition_string) < 2 :
+    #    Logger.log("d", "linkContainerStack nothing to do : %s", definition_string )
+    #    return modi
         
-    Logger.log("d", "upDateContainerStack : %s", definition_string )
+    Logger.log("d", "linkContainerStack : %s", definition_string )
     settingsList = definition_string.split(";")
     
     for container in Cstack.getContainers():
@@ -565,10 +577,6 @@ def updateDefaultDefinition(stack_type="material"):
     def_str = ""
     
     machine_id = getMachineId()
-
-    # if machine_id == '' or machine_id == 'None':
-    #    machine_quality_changes = machine_manager.activeMachine.qualityChanges
-    #    machine_id=str(machine_quality_changes.getMetaDataEntry('definition'))
     Logger.log("d", "Machine_id : %s", machine_id )
     
     containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=stack_type)

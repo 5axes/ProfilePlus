@@ -11,7 +11,7 @@ import ".."
 Cura.CategoryButton
 {
     id: base;
-
+	
     categoryIcon: definition ? UM.Theme.getIcon(definition.icon) : ""
     labelText: definition ? definition.label : ""
     expanded: definition ? definition.expanded : false

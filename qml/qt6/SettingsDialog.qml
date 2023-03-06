@@ -40,15 +40,7 @@ UM.Dialog {
     {
         anchors.fill: parent
 
-
-        Item
-        {
-            //: Spacer
-            height: UM.Theme.getSize("default_margin").height
-            width: UM.Theme.getSize("default_margin").width
-        }
-
-        Label
+        UM.Label
         {
             id: settingLabel
             font.bold: true
@@ -59,7 +51,7 @@ UM.Dialog {
             id: settingSearchRow
             Layout.fillWidth: true
 
-            TextField {
+            Cura.TextField {
 
                 id: filterInput
                 width: settingSearchRow.width - searchSpacer.width - toggleShowAll.width
@@ -71,15 +63,13 @@ UM.Dialog {
             Item
             {
                 id: searchSpacer
-                //: Spacer
                 height: UM.Theme.getSize("default_margin").height
                 width: UM.Theme.getSize("default_margin").width
             }
 
-            CheckBox
+            UM.CheckBox
             {
-                id: toggleShowAll
-                
+                id: toggleShowAll            
                 text: catalog.i18nc("@label:checkbox", "Show all")
                 checked: listview.model.showAll
                 onClicked:
@@ -112,7 +102,8 @@ UM.Dialog {
                 {
                     id: loader
 
-                    width: UM.Theme.getSize("setting_control").width
+                    // width: UM.Theme.getSize("setting_control").width
+					width: parent.width
                     height: model.type != undefined ? UM.Theme.getSize("section").height : 0;
 
                     property var definition: model
@@ -136,7 +127,7 @@ UM.Dialog {
     }
     
     rightButtons: [
-        Button {
+        Cura.PrimaryButton {
             anchors {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
@@ -154,7 +145,7 @@ UM.Dialog {
             height: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("default_margin").width
         },
-        Button {
+        Cura.PrimaryButton {
             text: catalog.i18nc("@action:button", "Close");
             onClicked: {
                 settingsDialog.visible = false;

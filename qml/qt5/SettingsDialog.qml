@@ -40,14 +40,6 @@ UM.Dialog {
     {
         anchors.fill: parent
 
-
-        Item
-        {
-            //: Spacer
-            height: UM.Theme.getSize("default_margin").height
-            width: UM.Theme.getSize("default_margin").width
-        }
-
         Label
         {
             id: settingLabel
