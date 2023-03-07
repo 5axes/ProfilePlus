@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-06 18:03+0000\n"
-"PO-Revision-Date: 2023-03-06 19:04+0200\n"
+"POT-Creation-Date: 2023-03-07 12:04+0000\n"
+"PO-Revision-Date: 2023-03-07 13:05+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -52,46 +52,46 @@ msgctxt "@menu"
 msgid "Help"
 msgstr "Aide"
 
-#: ProfilePlus.py:191 ProfilePlus.py:196 ProfilePlus.py:236 ProfilePlus.py:241
-#: ProfilePlus.py:283 ProfilePlus.py:288
+#: ProfilePlus.py:207 ProfilePlus.py:212 ProfilePlus.py:252 ProfilePlus.py:257
+#: ProfilePlus.py:299 ProfilePlus.py:304
 msgctxt "@info:text"
 msgid "! Error Nothing to do !"
 msgstr "! Erreur Rien à faire !"
 
-#: ProfilePlus.py:191 ProfilePlus.py:193 ProfilePlus.py:196 ProfilePlus.py:198
-#: ProfilePlus.py:236 ProfilePlus.py:238 ProfilePlus.py:241 ProfilePlus.py:243
-#: ProfilePlus.py:283 ProfilePlus.py:285 ProfilePlus.py:288 ProfilePlus.py:290
-#: ProfilePlus.py:329 ProfilePlus.py:331 ProfilePlus.py:334 ProfilePlus.py:336
+#: ProfilePlus.py:207 ProfilePlus.py:209 ProfilePlus.py:212 ProfilePlus.py:214
+#: ProfilePlus.py:252 ProfilePlus.py:254 ProfilePlus.py:257 ProfilePlus.py:259
+#: ProfilePlus.py:299 ProfilePlus.py:301 ProfilePlus.py:304 ProfilePlus.py:306
+#: ProfilePlus.py:345 ProfilePlus.py:347 ProfilePlus.py:350 ProfilePlus.py:352
 msgctxt "@info:title"
 msgid "Profile Plus :"
 msgstr "Profil Plus : "
 
-#: ProfilePlus.py:193 ProfilePlus.py:198 ProfilePlus.py:238 ProfilePlus.py:243
-#: ProfilePlus.py:285 ProfilePlus.py:290
+#: ProfilePlus.py:209 ProfilePlus.py:214 ProfilePlus.py:254 ProfilePlus.py:259
+#: ProfilePlus.py:301 ProfilePlus.py:306
 #, python-format
 msgctxt "@info:text"
 msgid "! Modification ok for : %s"
 msgstr "! Modification ok pour : %s"
 
-#: ProfilePlus.py:329 ProfilePlus.py:334
+#: ProfilePlus.py:345 ProfilePlus.py:350
 msgctxt "@info:text"
 msgid "! Error Nothing to link !"
 msgstr "! Erreur Rien à relier !"
 
-#: ProfilePlus.py:331 ProfilePlus.py:336
+#: ProfilePlus.py:347 ProfilePlus.py:352
 #, python-format
 msgctxt "@info:text"
 msgid "! Link ok for : %s"
 msgstr "! Liaison ok pour : %s"
 
-#: ProfilePlus.py:396
+#: ProfilePlus.py:412
 msgctxt "@info:text"
 msgid ""
 "Parameters with Linked definition :\n"
 "\n"
 msgstr "Paramètres avec définition liée :\n"
 
-#: ProfilePlus.py:419
+#: ProfilePlus.py:435
 msgctxt "@info:text"
 msgid ""
 "! Nothing to do ! \n"
@@ -100,72 +100,72 @@ msgstr ""
 "! Rien à faire ! \n"
 " Votre profil est déjà nettoyé"
 
-#: ProfilePlus.py:556
+#: ProfilePlus.py:572
 msgctxt "@html"
 msgid "Materials"
 msgstr "Matériaux"
 
-#: ProfilePlus.py:659 ProfilePlus.py:711
+#: ProfilePlus.py:675 ProfilePlus.py:727
 msgctxt "@html"
 msgid "Filter key"
 msgstr "Filtre"
 
-#: ProfilePlus.py:785
+#: ProfilePlus.py:801
 msgctxt "@html:subtitle"
 msgid "Container"
 msgstr "Conteneur"
 
-#: ProfilePlus.py:815 ProfilePlus.py:837
+#: ProfilePlus.py:831 ProfilePlus.py:853
 msgctxt "@html:row"
 msgid "type"
 msgstr "Type"
 
-#: ProfilePlus.py:818
+#: ProfilePlus.py:834
 msgctxt "@html:row"
 msgid "id"
 msgstr "Id"
 
-#: ProfilePlus.py:819
+#: ProfilePlus.py:835
 msgctxt "@html:row"
 msgid "name"
 msgstr "Nom"
 
-#: ProfilePlus.py:823
+#: ProfilePlus.py:839
 msgctxt "@html:row"
 msgid "definition"
 msgstr "Définition"
 
-#: ProfilePlus.py:826
+#: ProfilePlus.py:842
 msgctxt "@html:row"
 msgid "detail"
 msgstr "Détail"
 
-#: ProfilePlus.py:830
+#: ProfilePlus.py:846
 msgctxt "@html:row"
 msgid "quality_type"
 msgstr "Type Qualité"
 
-#: ProfilePlus.py:835
+#: ProfilePlus.py:851
 msgctxt "@html:row"
 msgid "path"
 msgstr "Chemin"
 
-#: ProfilePlus.py:846
+#: ProfilePlus.py:862
 msgctxt "@html:title"
 msgid "Extruder Stacks"
 msgstr "Données Extrudeuse"
 
-#: ProfilePlus.py:851 ProfilePlus.py:864
+#: ProfilePlus.py:867 ProfilePlus.py:880
 msgctxt "@html:subtitle"
 msgid "Index"
 msgstr "Index"
 
-#: ProfilePlus.py:876
+#: ProfilePlus.py:892
 msgctxt "@html:subtitle"
 msgid "Containers"
 msgstr "Conteneurs"
 
-#: ProfilePlus.py:1091 ProfilePlus.py:1093
+#: ProfilePlus.py:1107 ProfilePlus.py:1109
 #, python-format
 msgctxt "@info:text"
 msgid ""
@@ -175,7 +175,7 @@ msgstr ""
 "Navigateur par défaut non défini ouvrir \n"
 " %s"
 
-#: ProfilePlus.py:1091 ProfilePlus.py:1093
+#: ProfilePlus.py:1107 ProfilePlus.py:1109
 #: ProfilePlusSettingsVisibilityHandler.py:35
 msgctxt "@info:title"
 msgid "Warning ! Profile Plus"
@@ -183,8 +183,8 @@ msgstr "Attention ! Profil Plus"
 
 #: qml/qt5/SettingsDialog.qml:16 qml/qt6/SettingsDialog.qml:16
 msgctxt "@title:window"
-msgid "Select settings to Delete"
-msgstr "Sélectionnez les paramètres à supprimer"
+msgid "Select settings to delete from : "
+msgstr "Sélectionnez les paramètres à supprimer dans : "
 
 #: qml/qt5/SettingsDialog.qml:47 qml/qt6/SettingsDialog.qml:47
 msgctxt "@label"
@@ -214,8 +214,8 @@ msgstr "Fermer"
 
 #: qml/qt5/SettingsPopup.qml:20 qml/qt6/SettingsPopup.qml:30
 msgctxt "@title"
-msgid "Profile Plus"
-msgstr "Profil Plus"
+msgid "Profile Plus Current Profile : "
+msgstr "Profil Plus profil actuel : "
 
 #: qml/qt5/SettingsPopup.qml:44 qml/qt6/SettingsPopup.qml:54
 msgctxt "@action:button"
@@ -231,6 +231,14 @@ msgstr "Enlever les paramètres Matière"
 msgctxt "@action:button"
 msgid "Link Parameters"
 msgstr "Lier les paramètre"
+
+#~ msgctxt "@title:window"
+#~ msgid "Select settings to Delete"
+#~ msgstr "Sélectionnez les paramètres à supprimer"
+
+#~ msgctxt "@title"
+#~ msgid "Profile Plus"
+#~ msgstr "Profil Plus"
 
 #~ msgctxt "@info:text"
 #~ msgid ""
