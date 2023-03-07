@@ -648,8 +648,8 @@ def updateDefaultDefinition(stack_type="material", advancedLogin = False ):
         if advancedLogin :
             _brand = container.getMetaDataEntry("brand", "")
             _name = container.getName()
-            _label = _brand + " / " + _name
-            Logger.log("d", "updateDefaultDefinition : {} {}".format(_label,def_str) )
+            _label = _brand + " / " + _name 
+            Logger.log("d", "UpdateDefaultDefinition : {} ( {} )".format(_label,def_str) )
     return def_str
     
 def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=0):
