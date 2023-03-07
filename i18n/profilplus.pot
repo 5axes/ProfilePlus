@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-07 18:11+0000\n"
+"POT-Creation-Date: 2023-03-07 18:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ProfilePlusSettingsVisibilityHandler.py:35 ProfilePlus.py:1149
-#: ProfilePlus.py:1151
-msgctxt "@info:title"
-msgid "Warning ! Profile Plus"
-msgstr ""
 
 #: ProfilePlus.py:137
 msgctxt "@menu"
@@ -187,63 +181,69 @@ msgid ""
 " %s"
 msgstr ""
 
-#: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:29
-msgctxt "@title"
-msgid "Profile Plus plugin settings"
+#: ProfilePlus.py:1149 ProfilePlus.py:1151
+#: ProfilePlusSettingsVisibilityHandler.py:35
+msgctxt "@info:title"
+msgid "Warning ! Profile Plus"
 msgstr ""
 
-#: qml/qt6/SettingsPopup.qml:37 qml/qt5/SettingsPopup.qml:36
-msgctxt "@label"
-msgid "Advanced Login (restart Cura to apply change)"
-msgstr ""
-
-#: qml/qt6/SettingsDialog.qml:16 qml/qt5/SettingsDialog.qml:16
-msgctxt "@title:window"
-msgid "Select settings to delete from : "
-msgstr ""
-
-#: qml/qt6/SettingsDialog.qml:47 qml/qt5/SettingsDialog.qml:47
-msgctxt "@label"
-msgid "Settings"
-msgstr ""
-
-#: qml/qt6/SettingsDialog.qml:58 qml/qt5/SettingsDialog.qml:58
-msgctxt "@label:textbox"
-msgid "Filter..."
-msgstr ""
-
-#: qml/qt6/SettingsDialog.qml:73 qml/qt5/SettingsDialog.qml:75
-msgctxt "@label:checkbox"
-msgid "Show all"
-msgstr ""
-
-#: qml/qt6/SettingsDialog.qml:135 qml/qt5/SettingsDialog.qml:136
-msgctxt "@action:button"
-msgid "Update current Profile Parameters"
-msgstr ""
-
-#: qml/qt6/SettingsDialog.qml:149 qml/qt6/AnalysePopup.qml:97
-#: qml/qt5/SettingsDialog.qml:150 qml/qt5/AnalysePopup.qml:88
-msgctxt "@action:button"
-msgid "Close"
-msgstr ""
-
-#: qml/qt6/AnalysePopup.qml:29 qml/qt5/AnalysePopup.qml:20
+#: qml/qt5/AnalysePopup.qml:20 qml/qt6/AnalysePopup.qml:29
 msgctxt "@title"
 msgid "Profile Plus Current Profile : "
 msgstr ""
 
-#: qml/qt6/AnalysePopup.qml:53 qml/qt5/AnalysePopup.qml:44
+#: qml/qt5/AnalysePopup.qml:44 qml/qt6/AnalysePopup.qml:53
 msgctxt "@action:button"
 msgid "Remove Parameters"
 msgstr ""
 
-#: qml/qt6/AnalysePopup.qml:69 qml/qt5/AnalysePopup.qml:60
+#: qml/qt5/AnalysePopup.qml:60 qml/qt6/AnalysePopup.qml:69
 msgctxt "@action:button"
 msgid "Remove Materials Parameters"
 msgstr ""
 
-#: qml/qt6/AnalysePopup.qml:85 qml/qt5/AnalysePopup.qml:76
+#: qml/qt5/AnalysePopup.qml:76 qml/qt6/AnalysePopup.qml:85
 msgctxt "@action:button"
 msgid "Link Parameters"
+msgstr ""
+
+#: qml/qt5/AnalysePopup.qml:88 qml/qt5/SettingsDialog.qml:150
+#: qml/qt6/AnalysePopup.qml:97 qml/qt6/SettingsDialog.qml:149
+msgctxt "@action:button"
+msgid "Close"
+msgstr ""
+
+#: qml/qt5/SettingsDialog.qml:16 qml/qt6/SettingsDialog.qml:16
+msgctxt "@title:window"
+msgid "Select settings to delete from : "
+msgstr ""
+
+#: qml/qt5/SettingsDialog.qml:47 qml/qt6/SettingsDialog.qml:47
+msgctxt "@label"
+msgid "Settings"
+msgstr ""
+
+#: qml/qt5/SettingsDialog.qml:58 qml/qt6/SettingsDialog.qml:58
+msgctxt "@label:textbox"
+msgid "Filter..."
+msgstr ""
+
+#: qml/qt5/SettingsDialog.qml:75 qml/qt6/SettingsDialog.qml:73
+msgctxt "@label:checkbox"
+msgid "Show all"
+msgstr ""
+
+#: qml/qt5/SettingsDialog.qml:136 qml/qt6/SettingsDialog.qml:135
+msgctxt "@action:button"
+msgid "Update current Profile Parameters"
+msgstr ""
+
+#: qml/qt5/SettingsPopup.qml:29 qml/qt6/SettingsPopup.qml:30
+msgctxt "@title"
+msgid "Profile Plus plugin settings"
+msgstr ""
+
+#: qml/qt5/SettingsPopup.qml:36 qml/qt6/SettingsPopup.qml:37
+msgctxt "@label"
+msgid "Advanced Login (restart Cura to apply change)"
 msgstr ""
