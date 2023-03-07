@@ -13,6 +13,7 @@
 # 1.0.6 00-03-2023  Add French translation
 # 1.0.7 04-03-2023  Add Function to display settings to remove before to Edit parameters
 # 1.0.8 06-03-2023  New Release
+# 1.0.9 07-03-2023  Add Option for Advanced Log
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -100,7 +101,7 @@ class ProfilePlus(QObject, Extension):
         Extension.__init__(self)
 
         self._application = CuraApplication.getInstance()
-        
+        self._AdvancedLogin = True
 
         ## Load the plugin version
         pluginInfo = json.load(open(os.path.join(os.path.dirname(
@@ -125,7 +126,13 @@ class ProfilePlus(QObject, Extension):
                 self.Minor = int(CuraVersion.split(".")[1])
             except:
                 pass
-                
+        
+        ## Preference
+        self._preferences = self._application.getPreferences()
+        self._preferences.addPreference("profile_plus/advanced_login", False)
+        self._AdvancedLogin = bool(self._preferences.getValue("profile_plus/advanced_login"))
+        
+        
         ## Menu
         self.setMenuName(catalog.i18nc("@menu", "Profile Plus"))
         self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)
@@ -137,6 +144,7 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem(catalog.i18nc("@menu", "View Machine Materials"), viewDefaultMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Profile"), viewAll)
         self.addMenuItem("  ", lambda: None)
+        self.addMenuItem(catalog.i18nc("@menu", "Settings"), self.showPluginSettings)
         self.addMenuItem(catalog.i18nc("@menu", "Help"), gotoHelp)
 
         self._application.getPreferences().addPreference("profile_plus/profile_settings",";")
@@ -149,6 +157,19 @@ class ProfilePlus(QObject, Extension):
             "Cura", 1, 0, "ProfilePlusSettingsVisibilityHandler"
         )
 
+    def showPluginSettings(self):       
+        path = None
+        if USE_QT5:
+            path = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), "qml", "qt5", "SettingsPopup.qml")
+        else:
+            path = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), "qml", "qt6","SettingsPopup.qml")
+
+        self._settings_popup = self._application.createQmlComponent(path, {"manager": self})
+        self._settings_popup.show()
+
+    
     def showSettingsDialog(self):
         self.definition_string=updateDefinition()
         Logger.log("d", "showSettingsDialog Profile definition_string : %s", self.definition_string )  
@@ -219,10 +240,12 @@ class ProfilePlus(QObject, Extension):
     def cleanProfile(self)-> None:
         modi = ''
         mat_string=updateDefinition("material")
-        Logger.log("d", "Material Parameters : %s", mat_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Material Parameters : %s", mat_string )
         
         profile_string=updateDefinition("quality_changes")
-        Logger.log("d", "Profile Parameters : %s", profile_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Profile Parameters : %s", profile_string )
         
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
@@ -230,19 +253,23 @@ class ProfilePlus(QObject, Extension):
         for remove_key in material_plus_settings:
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
-                Logger.log("d", "Remove_key in list : %s", remove_key )
+                if self._AdvancedLogin :
+                    Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
-                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                if self._AdvancedLogin :                
+                    Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                 if remove_key in profile_plus_settings:
                     profile_plus_settings.remove(remove_key)           
             
         update_string = ''
         for add_key in profile_plus_settings:
             update_string += add_key
-            update_string += ";"      
-        Logger.log("d", "Profile Parameters : %s", update_string )
+            update_string += ";"
+            
+        if self._AdvancedLogin :            
+            Logger.log("d", "Profile Parameters : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
         modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
@@ -265,10 +292,12 @@ class ProfilePlus(QObject, Extension):
     def cleanMachineProfile(self)-> None:
         modi = ''
         mat_string=updateDefaultDefinition("material")
-        Logger.log("d", "Material Parameters : %s", mat_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Material Parameters : %s", mat_string )
         
         profile_string=updateDefinition("quality_changes")
-        Logger.log("d", "Profile Parameters : %s", profile_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Profile Parameters : %s", profile_string )
         
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
@@ -276,12 +305,14 @@ class ProfilePlus(QObject, Extension):
         for remove_key in material_plus_settings:
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
-                Logger.log("d", "Remove_key in list : %s", remove_key )
+                if self._AdvancedLogin :
+                    Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
-                Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                 if remove_key in profile_plus_settings:
+                    if self._AdvancedLogin :
+                        Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                     profile_plus_settings.remove(remove_key)           
             
         update_string = ''
@@ -289,7 +320,8 @@ class ProfilePlus(QObject, Extension):
             update_string += add_key
             update_string += ";"      
         
-        Logger.log("d", "Profile Parameters : %s", update_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Profile Parameters : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
         modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
@@ -313,33 +345,38 @@ class ProfilePlus(QObject, Extension):
     def linkProfile(self)-> None:
         modi = ''
         mat_string=updateDefinition("material")
-        Logger.log("d", "Material Parameters link : %s", mat_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Material Parameters link : %s", mat_string )
         profile_string=updateDefinition("quality_changes",True)
-        Logger.log("d", "Profile Parameters link : %s", profile_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Profile Parameters link : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         
         for remove_key in material_plus_settings:
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings and len(remove_key) > 1 :
-                Logger.log("d", "Remove_key in list : %s", remove_key )
+                if self._AdvancedLogin :
+                    Logger.log("d", "Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
-                Logger.log("d", "Profile_plus_settings : {}".format(profile_plus_settings) )
             if "default_" in remove_key:
-                Logger.log("d", "Remove_key with default_ in list : %s", remove_key )
                 remove_key=remove_key[8:]                               
                 if remove_key in profile_plus_settings:
-                    Logger.log("d", "Remove_key without default_ in list : %s", remove_key )                
+                    if self._AdvancedLogin :
+                        Logger.log("d", "Remove_key without default_ in list : %s", remove_key )                
                     profile_plus_settings.remove(remove_key)           
           
         update_string = ''
         for add_key in profile_plus_settings:
             update_string += add_key
             update_string += ";"      
-        Logger.log("d", "Update string : %s", update_string )
+        
+        if self._AdvancedLogin :
+            Logger.log("d", "Update string : %s", update_string )
         modi += linkExtruderStacks(update_string)
         modi += linkContainerStack(self._application.getGlobalContainerStack(),update_string)
-        Logger.log("d", "Update for : %s", modi ) 
+        if self._AdvancedLogin :
+            Logger.log("d", "Update for : %s", modi ) 
         
         if self.Major == 4 and self.Minor < 11 : 
             if modi == "" :
@@ -359,10 +396,10 @@ class ProfilePlus(QObject, Extension):
         path = None
         if USE_QT5:
             path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), "qml", "qt5", "SettingsPopup.qml")
+            os.path.abspath(__file__)), "qml", "qt5", "AnalysePopup.qml")
         else:
             path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), "qml", "qt6", "SettingsPopup.qml")
+            os.path.abspath(__file__)), "qml", "qt6", "AnalysePopup.qml")
 
         self._popup_dialog = self._application.createQmlComponent(path, {"manager": self})
         self._popup_dialog.show()
@@ -374,13 +411,15 @@ class ProfilePlus(QObject, Extension):
         # For every stack_type="material" associated with the  machine_id
         # Get the list of parameters 
         mat_string=updateDefaultDefinition("material")
-        # Logger.log("d", "Test Profile Material Parameters : %s", mat_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Material_string    : %s", mat_string )
         # For every the container quality_changes
         # Get the list of parameters  present in this container 
         profile_string=updateDefinition("quality_changes")
         link_string=updateLinkDefinition("quality_changes")
-        # Logger.log("d", "Link_string : %s", link_string )
-        # Logger.log("d", "Test Profile Profile Parameters : %s", profile_string )
+        if self._AdvancedLogin :
+            Logger.log("d", "Link_string    : %s", link_string )
+            Logger.log("d", "profile_string : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         modi_list=[]
@@ -388,12 +427,14 @@ class ProfilePlus(QObject, Extension):
         for remove_key in material_plus_settings:
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
-                # Logger.log("d", "Remove_key in list : %s", remove_key )
+                if self._AdvancedLogin :
+                    Logger.log("d", "Remove_key in list : %s", remove_key )
                 modi_list.append(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
-                # Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                 if remove_key in profile_plus_settings:
+                    if self._AdvancedLogin :
+                        Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
                     modi_list.append(remove_key)           
             
         update_string = ''
@@ -407,7 +448,10 @@ class ProfilePlus(QObject, Extension):
                 translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)            
             update_string += translated_label
             update_string += "\n"
-                  
+
+            if self._AdvancedLogin :        
+                Logger.log("d", "Update_string : %s", update_string )
+            
         if len(link_string) :
             update_string += "\n"
             update_string = catalog.i18nc("@info:text", "Parameters with Linked definition :\n\n")
@@ -422,16 +466,11 @@ class ProfilePlus(QObject, Extension):
                     translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)                  
                 update_string += translated_label
                 update_string += "\n"        
-            
-        Logger.log("d", "Profile Parameters : %s", update_string )
         
-        #if Remove :
-        #    modi += upDateExtruderStacks(update_string)
-        #    modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
-        # else :
+        if self._AdvancedLogin :        
+            Logger.log("d", "Profile Parameters : %s", update_string )
         modi = update_string
         # 
-        # Logger.log("d", "Update definition_string : %s", self.definition_string ) 
         if modi == "" or modi == "\n" :
             update_string = catalog.i18nc("@info:text", "! Nothing to do ! \n Your profile is already cleaned")
         
@@ -596,8 +635,7 @@ def updateDefaultDefinition(stack_type="material"):
     def_str = ""
     
     machine_id = getMachineId()
-    Logger.log("d", "Machine_id : %s", machine_id )
-    
+    # Logger.log("d", "Machine_id : %s", machine_id )
     containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id,type=stack_type)
     
     for container in containers:
@@ -644,8 +682,8 @@ def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes", checkCo
                         if "extruderValueFromContainer" in base_value and checkCode >= 2 :
                             def_str += key
                             def_str += ";"
-                        else :                    
-                            Logger.log("d", "Value type extruderValueFromContainer : %s", str(base_value) )
+                        # else :                    
+                        #    Logger.log("d", "Value not type extruderValueFromContainer : %s", str(base_value) )
                 else:
                     def_str += key
                     def_str += ";"
@@ -688,7 +726,6 @@ def htmlPage(show_all=False,stack_type="quality_changes"):
     html += htmlFooter
     return html
 
-
 def getMachineId():
     machine_manager = CuraApplication.getInstance().getMachineManager()
     g_stack = machine_manager.activeMachine
@@ -698,7 +735,7 @@ def getMachineId():
         machine_quality_changes = machine_manager.activeMachine.qualityChanges
         machine_id=str(machine_quality_changes.getMetaDataEntry('definition'))
     
-    Logger.log("d", "Machine_id : %s", machine_id )
+    # Logger.log("d", "Machine_id : %s", machine_id )
     
     return machine_id
 
