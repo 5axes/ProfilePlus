@@ -291,7 +291,7 @@ class ProfilePlus(QObject, Extension):
     @pyqtProperty(str, notify= userAction)
     def cleanMachineProfile(self)-> None:
         modi = ''
-        mat_string=updateDefaultDefinition("material")
+        mat_string=updateDefaultDefinition("material", self._AdvancedLogin)
         if self._AdvancedLogin :
             Logger.log("d", "CleanMachineProfile Material_string : %s", mat_string )
         
@@ -410,7 +410,7 @@ class ProfilePlus(QObject, Extension):
         link_list=[]
         # For every stack_type="material" associated with the  machine_id
         # Get the list of parameters 
-        mat_string=updateDefaultDefinition("material")
+        mat_string=updateDefaultDefinition("material", self._AdvancedLogin)
         if self._AdvancedLogin :
             Logger.log("d", "TestMachineProfile Material_string : %s", mat_string )
         # For every the container quality_changes
@@ -468,7 +468,8 @@ class ProfilePlus(QObject, Extension):
                 update_string += "\n"        
         
         if self._AdvancedLogin :        
-            Logger.log("d", "Profile Parameters : %s", update_string )
+            Logger.log("d", "TestMachineProfile Update_string : %s", update_string )
+        
         modi = update_string
         # 
         if modi == "" or modi == "\n" :
@@ -631,7 +632,7 @@ def updateLinkDefinition(stack_keys="quality_changes", checkCode=2):
 
 # For every stack_type="material" associated with the  machine_id
 # Get the list of parameters 
-def updateDefaultDefinition(stack_type="material"):
+def updateDefaultDefinition(stack_type="material", advancedLogin = False ):
     def_str = ""
     
     machine_id = getMachineId()
@@ -644,8 +645,11 @@ def updateDefaultDefinition(stack_type="material"):
             if not key in def_str:
                 def_str += key
                 def_str += ";"
-            
-    # Logger.log("d", "updateDefaultDefinition : %s", def_str )
+        if advancedLogin :
+            _brand = container_node.getMetaDataEntry("brand", "")
+            _name = container.getName()
+            _label = _brand + " / " _name
+            Logger.log("d", "updateDefaultDefinition : {} {}".format(_label,def_str) )
     return def_str
     
 def formatExtruderDefinitionStacks(stack_keys="quality_changes", checkCode=0):
