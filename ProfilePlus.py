@@ -241,11 +241,11 @@ class ProfilePlus(QObject, Extension):
         modi = ''
         mat_string=updateDefinition("material")
         if self._AdvancedLogin :
-            Logger.log("d", "Material Parameters : %s", mat_string )
+            Logger.log("d", "CleanProfile Material String : %s", mat_string )
         
         profile_string=updateDefinition("quality_changes")
         if self._AdvancedLogin :
-            Logger.log("d", "Profile Parameters : %s", profile_string )
+            Logger.log("d", "CleanProfile Profile String  : %s", profile_string )
         
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
@@ -254,12 +254,12 @@ class ProfilePlus(QObject, Extension):
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
                 if self._AdvancedLogin :
-                    Logger.log("d", "Remove_key in list : %s", remove_key )
+                    Logger.log("d", "CleanProfile Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
                 if self._AdvancedLogin :                
-                    Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                    Logger.log("d", "CleanProfile Remove_key with default_ in list : %s", remove_key )
                 if remove_key in profile_plus_settings:
                     profile_plus_settings.remove(remove_key)           
             
@@ -269,7 +269,7 @@ class ProfilePlus(QObject, Extension):
             update_string += ";"
             
         if self._AdvancedLogin :            
-            Logger.log("d", "Profile Parameters : %s", update_string )
+            Logger.log("d", "CleanProfile Update_string : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
         modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
@@ -293,11 +293,11 @@ class ProfilePlus(QObject, Extension):
         modi = ''
         mat_string=updateDefaultDefinition("material")
         if self._AdvancedLogin :
-            Logger.log("d", "Material Parameters : %s", mat_string )
+            Logger.log("d", "CleanMachineProfile Material_string : %s", mat_string )
         
         profile_string=updateDefinition("quality_changes")
         if self._AdvancedLogin :
-            Logger.log("d", "Profile Parameters : %s", profile_string )
+            Logger.log("d", "CleanMachineProfile Profile_string : %s", profile_string )
         
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
@@ -306,13 +306,13 @@ class ProfilePlus(QObject, Extension):
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
                 if self._AdvancedLogin :
-                    Logger.log("d", "Remove_key in list : %s", remove_key )
+                    Logger.log("d", "CleanMachineProfile Remove_key in list : %s", remove_key )
                 profile_plus_settings.remove(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
                 if remove_key in profile_plus_settings:
                     if self._AdvancedLogin :
-                        Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                        Logger.log("d", "CleanMachineProfile Remove_key with default_ in list : %s", remove_key )
                     profile_plus_settings.remove(remove_key)           
             
         update_string = ''
@@ -321,7 +321,7 @@ class ProfilePlus(QObject, Extension):
             update_string += ";"      
         
         if self._AdvancedLogin :
-            Logger.log("d", "Profile Parameters : %s", update_string )
+            Logger.log("d", "CleanMachineProfile Update_string : %s", update_string )
 
         modi += upDateExtruderStacks(update_string)
         modi += upDateContainerStack(self._application.getGlobalContainerStack(),update_string)
@@ -363,7 +363,7 @@ class ProfilePlus(QObject, Extension):
                 remove_key=remove_key[8:]                               
                 if remove_key in profile_plus_settings:
                     if self._AdvancedLogin :
-                        Logger.log("d", "Remove_key without default_ in list : %s", remove_key )                
+                        Logger.log("d", "Remove_key with default_ in list : %s", remove_key )                
                     profile_plus_settings.remove(remove_key)           
           
         update_string = ''
@@ -412,14 +412,14 @@ class ProfilePlus(QObject, Extension):
         # Get the list of parameters 
         mat_string=updateDefaultDefinition("material")
         if self._AdvancedLogin :
-            Logger.log("d", "Material_string    : %s", mat_string )
+            Logger.log("d", "TestMachineProfile Material_string : %s", mat_string )
         # For every the container quality_changes
         # Get the list of parameters  present in this container 
         profile_string=updateDefinition("quality_changes")
         link_string=updateLinkDefinition("quality_changes")
         if self._AdvancedLogin :
-            Logger.log("d", "Link_string    : %s", link_string )
-            Logger.log("d", "profile_string : %s", profile_string )
+            Logger.log("d", "TestMachineProfile Link_string     : %s", link_string )
+            Logger.log("d", "TestMachineProfile Profile_string  : %s", profile_string )
         material_plus_settings = mat_string.split(";")
         profile_plus_settings = profile_string.split(";")
         modi_list=[]
@@ -428,13 +428,13 @@ class ProfilePlus(QObject, Extension):
             # Logger.log("d", "Remove_key : %s", remove_key )
             if remove_key in profile_plus_settings:
                 if self._AdvancedLogin :
-                    Logger.log("d", "Remove_key in list : %s", remove_key )
+                    Logger.log("d", "TestMachineProfile Remove_key in list    : %s", remove_key )
                 modi_list.append(remove_key)
             if "default_" in remove_key:
                 remove_key=remove_key[8:]
                 if remove_key in profile_plus_settings:
                     if self._AdvancedLogin :
-                        Logger.log("d", "Remove_key without default_ in list : %s", remove_key )
+                        Logger.log("d", "TestMachineProfile Remove_key with default_ in list : %s", remove_key )
                     modi_list.append(remove_key)           
             
         update_string = ''
@@ -449,8 +449,8 @@ class ProfilePlus(QObject, Extension):
             update_string += translated_label
             update_string += "\n"
 
-            if self._AdvancedLogin :        
-                Logger.log("d", "Update_string : %s", update_string )
+        if self._AdvancedLogin :        
+            Logger.log("d", "TestMachineProfile Update_string : %s", update_string )
             
         if len(link_string) :
             update_string += "\n"
