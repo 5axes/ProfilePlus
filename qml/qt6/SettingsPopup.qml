@@ -27,7 +27,7 @@ UM.Dialog
 		return url
 	}
 	
-    title: i18n_catalog.i18nc("@title", "Profile Plus")
+    title: i18n_catalog.i18nc("@title", "Profile Plus Current Profile : ") + manager.profileName
 
 	Cura.ScrollableTextArea {
 		id: inputfg

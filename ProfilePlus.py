@@ -164,6 +164,22 @@ class ProfilePlus(QObject, Extension):
         self._settings_dialog = self._application.createQmlComponent(path, {"manager": self})
         self._settings_dialog.show()
 
+    _profileChanged = pyqtSignal()
+    
+    def setProfileName(self, value)->None:
+        self._profileChanged.emit()
+
+    @pyqtProperty(str, notify=_profileChanged , fset=setProfileName)
+    def profileName(self)->str:
+        # Check for Profile Name
+        value = ''
+        for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
+            for container in extruder_stack.getContainers():
+                Logger.log("d", "Extruder_stack Type : %s", container.getMetaDataEntry("type") )
+                if str(container.getMetaDataEntry("type")) == "quality_changes" :
+                    value = container.getName()
+        return value
+        
     _paramSettingChanged = pyqtSignal()
     
     def setParamSetting(self, value)->None:

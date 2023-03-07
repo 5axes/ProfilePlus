@@ -17,7 +17,7 @@ UM.Dialog
 
     property variant i18n_catalog: UM.I18nCatalog { name: "profileplus" }
 	
-    title: i18n_catalog.i18nc("@title", "Profile Plus")
+    title: i18n_catalog.i18nc("@title", "Profile Plus Current Profile : ") + manager.profileName
 
 	TextArea {
 		id: inputfg

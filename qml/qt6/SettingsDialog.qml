@@ -13,7 +13,7 @@ import ProfilePlus  as ProfilePlus
 UM.Dialog {
     id: settingsDialog
 
-    title: catalog.i18nc("@title:window", "Select settings to Delete")
+    title: catalog.i18nc("@title:window", "Select settings to delete from : ") + manager.profileName
     width: screenScaleFactor * 360
 
     onVisibilityChanged:
