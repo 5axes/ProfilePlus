@@ -646,7 +646,7 @@ def updateDefaultDefinition(stack_type="material", advancedLogin = False ):
                 def_str += key
                 def_str += ";"
         if advancedLogin :
-            _brand = container_node.getMetaDataEntry("brand", "")
+            _brand = container.getMetaDataEntry("brand", "")
             _name = container.getName()
             _label = _brand + " / " _name
             Logger.log("d", "updateDefaultDefinition : {} {}".format(_label,def_str) )
