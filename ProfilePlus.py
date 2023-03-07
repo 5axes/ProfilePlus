@@ -127,6 +127,7 @@ class ProfilePlus(QObject, Extension):
                 pass
                 
         ## Menu
+        self.setMenuName(catalog.i18nc("@menu", "Profile Plus"))
         self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)
         self.addMenuItem("", lambda: None)      
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
