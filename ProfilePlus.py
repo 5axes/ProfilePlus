@@ -448,9 +448,6 @@ class ProfilePlus(QObject, Extension):
                 translated_label=i18n_catalog.i18nc(definition_key, untranslated_label)            
             update_string += translated_label
             update_string += "\n"
-
-        if self._AdvancedLogin :        
-            Logger.log("d", "TestMachineProfile Update_string : %s", update_string )
             
         if len(link_string) :
             update_string += "\n"
@@ -493,7 +490,7 @@ def upDateContainerStack(Cstack, definition_string):
     #    Logger.log("d", "upDateContainerStack nothing to do : %s", definition_string )
     #    return modi
         
-    Logger.log("d", "upDateContainerStack : %s", definition_string )
+    # Logger.log("d", "upDateContainerStack : %s", definition_string )
     settingsList = definition_string.split(";")
     
     for container in Cstack.getContainers():
@@ -508,7 +505,7 @@ def upDateContainerStack(Cstack, definition_string):
                 for iList in settingsList:
                     if (iList == key) :
                         delRef = False
-                        Logger.log("d", "iList :|%s|", iList )
+                        # Logger.log("d", "iList :|%s|", iList )
                         
                 if delRef == True :
                     Logger.log("d", "delRef :|%s|", key )
