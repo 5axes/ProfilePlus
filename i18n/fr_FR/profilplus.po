@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 16:04+0000\n"
-"PO-Revision-Date: 2023-03-09 17:18+0200\n"
+"POT-Creation-Date: 2023-03-09 17:57+0000\n"
+"PO-Revision-Date: 2023-03-09 19:00+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -25,13 +25,13 @@ msgstr "Attention ! Profil Plus"
 
 #: ProfilePlus.py:136
 msgctxt "@settings"
-msgid "master profile template"
+msgid "Master profile template"
 msgstr "Modèle de profil maître"
 
 #: ProfilePlus.py:137
 msgctxt "@settings:description"
 msgid "master profile template added by the plugin ProfilePlus"
-msgstr "Modèle de profil principal ajouté par le plugin Profil+"
+msgstr "Modèle de profil maitre ajouté par le plugin Profil+"
 
 #: ProfilePlus.py:153
 msgctxt "@menu"
@@ -106,8 +106,8 @@ msgstr "! Le modèle de profil principal n'est pas défini"
 
 #: ProfilePlus.py:332
 msgctxt "@info:status"
-msgid "Successfully updated for profile {}."
-msgstr "Mise à jour réussie pour le profil {}."
+msgid "Successfully updated from profile {}."
+msgstr "Mise à jour réussie depuis le profil {}."
 
 #: ProfilePlus.py:391 ProfilePlus.py:396 ProfilePlus.py:442 ProfilePlus.py:447
 #: ProfilePlus.py:494 ProfilePlus.py:499
@@ -284,6 +284,14 @@ msgstr "Enlever les paramètres Matière"
 msgctxt "@action:button"
 msgid "Link Parameters"
 msgstr "Lier les paramètre"
+
+#~ msgctxt "@settings"
+#~ msgid "master profile template"
+#~ msgstr "Modèle de profil maître"
+
+#~ msgctxt "@info:status"
+#~ msgid "Successfully updated for profile {}."
+#~ msgstr "Mise à jour réussie pour le profil {}."
 
 #~ msgctxt "@settings:description"
 #~ msgid "master profile template"
