@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 16:54+0000\n"
+"POT-Creation-Date: 2023-03-09 17:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: ProfilePlus.py:332
 msgctxt "@info:status"
-msgid "Successfully updated for profile {}."
+msgid "Successfully updated from profile {}."
 msgstr ""
 
 #: ProfilePlus.py:391 ProfilePlus.py:396 ProfilePlus.py:442 ProfilePlus.py:447
