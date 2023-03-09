@@ -1,20 +1,19 @@
 // Copyright (c) 2023 5@xes
 // The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
 
-import QtQuick 
-import QtQuick.Controls
-import QtQuick.Window 
-import QtQuick.Layouts 
+import QtQuick 6.0
+import QtQuick.Controls 6.0
+import QtQuick.Layouts 6.0
 
-import UM  as UM
-import Cura  as Cura
-import ProfilePlus  as ProfilePlus
+import UM 1.6 as UM
+import Cura 1.7 as Cura
+import ProfilePlus as ProfilePlus
 
 UM.Dialog {
     id: settingsDialog
 
     title: catalog.i18nc("@title:window", "Select settings to delete from : ") + manager.profileName
-    width: screenScaleFactor * 360
+    // width: screenScaleFactor * 360
 
     onVisibilityChanged:
     {

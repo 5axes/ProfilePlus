@@ -4,7 +4,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 2.1
 
-import UM 1.5 as UM
+import UM 1.6 as UM
 
 UM.TooltipArea
 {
