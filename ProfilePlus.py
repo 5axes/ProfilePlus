@@ -14,6 +14,7 @@
 # 1.0.7 04-03-2023  Add Function to display settings to remove before to Edit parameters
 # 1.0.8 06-03-2023  New Release
 # 1.0.9 07-03-2023  Add Option for Advanced Log
+# 1.1.0 09-03-2023  Add "master profile templates" https://github.com/Ultimaker/Cura/issues/12401
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -34,6 +35,7 @@ import html
 import json
 import re
 import webbrowser
+from collections import OrderedDict
   
 USE_QT5 = False
 try:
@@ -102,6 +104,7 @@ class ProfilePlus(QObject, Extension):
 
         self._application = CuraApplication.getInstance()
         self._AdvancedLogin = True
+        self._i18n_catalog = None
 
         ## Load the plugin version
         pluginInfo = json.load(open(os.path.join(os.path.dirname(
@@ -126,7 +129,20 @@ class ProfilePlus(QObject, Extension):
                 self.Minor = int(CuraVersion.split(".")[1])
             except:
                 pass
-        
+
+
+        self._settings_dict = OrderedDict()
+        self._settings_dict["master_profile_template"] = {
+            "label": catalog.i18nc("@settings", "master profile template"),
+            "description": catalog.i18nc("@settings:description", "master profile template"),
+            "type": "str",
+            "default_value": "",
+            "settable_per_mesh": False,
+            "settable_per_extruder": False,
+            "settable_per_meshgroup": False
+        }
+        ContainerRegistry.getInstance().containerLoadComplete.connect(self._onContainerLoadComplete)
+                
         ## Preference
         self._preferences = self._application.getPreferences()
         self._preferences.addPreference("profile_plus/advanced_login", False)
@@ -135,15 +151,15 @@ class ProfilePlus(QObject, Extension):
         
         ## Menu
         self.setMenuName(catalog.i18nc("@menu", "Profile Plus"))
-        self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)
-        self.addMenuItem("", lambda: None)      
+        self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)      
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
-        self.addMenuItem(" ", lambda: None)
+        self.addMenuItem(catalog.i18nc("@menu", "Update from master profile template"), self.masterProfileTemplates)
+        self.addMenuItem("", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Machine Materials"), viewDefaultMaterial)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Profile"), viewAll)
-        self.addMenuItem("  ", lambda: None)
+        self.addMenuItem(" ", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "Settings"), self.showPluginSettings)
         self.addMenuItem(catalog.i18nc("@menu", "Help"), gotoHelp)
 
@@ -151,6 +167,40 @@ class ProfilePlus(QObject, Extension):
 
         self._application.engineCreatedSignal.connect(self._onEngineCreated)
 
+    def _onContainerLoadComplete(self, container_id):
+        if not ContainerRegistry.getInstance().isLoaded(container_id):
+            # skip containers that could not be loaded, or subsequent findContainers() will cause an infinite loop
+            return
+
+        try:
+            container = ContainerRegistry.getInstance().findContainers(id = container_id)[0]
+
+        except IndexError:
+            # the container no longer exists
+            return
+
+        if not isinstance(container, DefinitionContainer):
+            # skip containers that are not definitions
+            return
+        if container.getMetaDataEntry("type") == "extruder":
+            # skip extruder definitions
+            return
+
+        experimental_category = container.findDefinitions(key="experimental")
+        master_profile_template = container.findDefinitions(key=list(self._settings_dict.keys())[0])
+        
+        if experimental_category :            
+            experimental_category = experimental_category[0]
+            for setting_key, setting_dict in self._settings_dict.items():
+
+                definition = SettingDefinition(setting_key, container, experimental_category, self._i18n_catalog)
+                definition.deserialize(setting_dict)
+
+                # add the setting to the already existing platform adhesion setting definition
+                experimental_category._children.append(definition)
+                container._definition_cache[setting_key] = definition
+                container._updateRelations(definition)
+                
     def _onEngineCreated(self):
         qmlRegisterType(
             ProfilePlusSettingsVisibilityHandler.ProfilePlusSettingsVisibilityHandler,
@@ -169,7 +219,119 @@ class ProfilePlus(QObject, Extension):
         self._settings_popup = self._application.createQmlComponent(path, {"manager": self})
         self._settings_popup.show()
 
-    
+    def masterProfileTemplates(self):
+         
+        # Get the master_profile_template
+        global_container_stack = self._application.getGlobalContainerStack()
+        extruder = global_container_stack.extruderList[0]
+        _masterProfileTemplates = extruder.getProperty("master_profile_template", "value")        
+        
+        ret = {"status": "warning", "message": catalog.i18nc("@info:status", "Profile {0} doesn't exist", _masterProfileTemplates)}  
+        
+        if len(_masterProfileTemplates) :
+            Logger.log("d", "MasterProfileTemplates Update for {}".format(_masterProfileTemplates) )
+            # Search for this Profile
+            machine_manager = Application.getInstance().getMachineManager()
+            global_stack = machine_manager.activeMachine
+            machine_id=global_stack.quality.getMetaData().get('definition', '')            
+            ret = self.containersOfType('quality_changes', machine_id,_masterProfileTemplates)
+
+            if self.Major == 4 and self.Minor < 11 : 
+                if ret["status"] == "ok" :
+                    Message(text = ret["message"], title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
+                else :
+                    Message(text = ret["message"], title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
+            else :
+                if ret["status"] == "ok" :
+                    Message(text = ret["message"], title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.POSITIVE).show()        
+                else:
+                    Message(text = ret["message"], title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()        
+                    
+        else :    
+            
+            if self.Major == 4 and self.Minor < 11 : 
+                Message(text = catalog.i18nc("@info:text", "! Master profile template not defined"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version)).show()        
+            else :
+                Message(text = catalog.i18nc("@info:text", "! Master profile template not defined"), title = catalog.i18nc("@info:title", "Profile Plus :") + str(self.plugin_version), message_type = Message.MessageType.ERROR).show()        
+
+    # name header et Type
+    def containersOfType(self, type_ ,machine_id_,_FindName):  
+        result_status = "warning"
+        success_message = ""
+        result = {"status": "warning", "message": catalog.i18nc("@info:status", "Profile {0} doesn't exist", _FindName)}
+        # find Instance Containers according to type=type_  (quality_changes)  and definition
+        containers = ContainerRegistry.getInstance().findInstanceContainers(definition = machine_id_, type=type_)
+                        
+        # Sort containers Order
+        containers.sort(key=lambda x: x.getId())
+        containers.reverse()
+        containers.sort(key=lambda x: x.getName())
+        
+        notFind=True
+        
+        for container in containers:
+            #
+            # type to detect Extruder or Global container analyse getMetaDataEntry('position')
+            # 
+            if container.getName() == "empty" :
+                _ref=container.getId()
+            else :
+                _ref=container.getName()
+                
+            if _FindName == _ref :
+                notFind=False
+                extruder_position = container.getMetaDataEntry('position')
+                # Logger.log("d", "Extruder_position: {}".format(extruder_position) )
+                # Logger.log("d", "Container: {}".format(container) )
+
+                if extruder_position :
+                    result = self.updateExtruderDefinitionStacks(container,"quality_changes")
+                    success_message += result["message"]
+                else :
+                    result = self.updateContainerDefinitionStack(self._application.getGlobalContainerStack(),container,"quality_changes")
+                    success_message += result["message"]                    
+                
+        result_status = result["status"]
+        if notFind :
+            result_status = "warning"
+            catalog.i18nc("@info:status", "Profile {0} doesn't exist", _FindName)
+        success_message = result["message"]
+        
+        return {"status": result_status, "message": success_message}
+ 
+    # 
+    def updateExtruderDefinitionStacks(self, container_ref, stack_keys="quality_changes"):
+        result_status = "warning"
+        success_message = ""
+        extruder_position_ref = container_ref.getMetaDataEntry('position')
+        # Logger.log("d", "updateExtruderDefinitionStacks extruder_position_ref: {}".format(extruder_position_ref) )
+
+        for extruder_stack in self._application.getExtruderManager().getActiveExtruderStacks():
+            extruder_position = extruder_stack.getMetaDataEntry('position')
+            # Logger.log("d", "updateExtruderDefinitionStacks extruder_position: {}".format(extruder_position) )
+            if extruder_position_ref == extruder_position :
+                result = self.updateContainerDefinitionStack(extruder_stack,container_ref,stack_keys)
+        
+        result_status = result["status"]
+        success_message = result["message"]
+        return {"status": result_status, "message": success_message}
+        
+    # 
+    def updateContainerDefinitionStack(self, Cstack, container_ref, stack_keys="quality_changes"):
+        result_status = "warning"
+        success_message = ""
+        for container in Cstack.getContainers():
+            if str(container.getMetaDataEntry("type")) == stack_keys :
+                keys = list(container_ref.getAllKeys())
+                for key in keys:
+                    # Logger.log("d", "Key: {}".format(key) )
+                    _value = container_ref.getProperty(key, "value")
+                    container.setProperty(key, "value", _value)
+        
+        result_status = "ok"
+        success_message = catalog.i18nc("@info:status", "Successfully updated for profile {}.", container_ref.getName())
+        return {"status": result_status, "message": success_message}
+ 
     def showSettingsDialog(self):
         self.definition_string=updateDefinition()
         Logger.log("d", "showSettingsDialog Profile definition_string : %s", self.definition_string )  
@@ -195,7 +357,7 @@ class ProfilePlus(QObject, Extension):
     def profileName(self)->str:
         # Check for Profile Name
         value = ''
-        for extruder_stack in CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks():
+        for extruder_stack in self._application.getExtruderManager().getActiveExtruderStacks():
             for container in extruder_stack.getContainers():
                 Logger.log("d", "Extruder_stack Type : %s", container.getMetaDataEntry("type") )
                 if str(container.getMetaDataEntry("type")) == "quality_changes" :
@@ -532,7 +694,7 @@ def linkContainerStack(Cstack, definition_string):
     #    Logger.log("d", "linkContainerStack nothing to do : %s", definition_string )
     #    return modi
         
-    Logger.log("d", "linkContainerStack : %s", definition_string )
+    # Logger.log("d", "linkContainerStack : %s", definition_string )
     settingsList = definition_string.split(";")
     
     for container in Cstack.getContainers():
@@ -549,7 +711,7 @@ def linkContainerStack(Cstack, definition_string):
                 for iList in settingsList:
                     if (iList == key) :
                         delRef = False
-                        Logger.log("d", "iList :|%s|", iList )
+                        # Logger.log("d", "iList :|%s|", iList )
                         
                 if delRef == True :
                     if not "extruderValueFromContainer" in base_value:
@@ -564,10 +726,10 @@ def linkContainerStack(Cstack, definition_string):
 
                         settable_per_extruder = global_container_stack.getProperty(key, "settable_per_extruder")
                         resolve_value = global_container_stack.getProperty(key, "resolve")
-                        Logger.log("d", "link settable_per_extruder : %s", str(settable_per_extruder) )
-                        Logger.log("d", "link resolve_value : %s", str(resolve_value) )
+                        # Logger.log("d", "link settable_per_extruder : %s", str(settable_per_extruder) )
+                        # Logger.log("d", "link resolve_value : %s", str(resolve_value) )
                 
-                        Logger.log("d", "material_container_index %s",str(material_container_index))
+                        # Logger.log("d", "material_container_index %s",str(material_container_index))
                         
                         # The point of no return, will fix the parameter with the extruderValueFromContainer function
                         #if not settable_per_extruder and resolve_value is None:
@@ -577,14 +739,14 @@ def linkContainerStack(Cstack, definition_string):
 
                         if settable_per_extruder:
                             value_string = "=extruderValueFromContainer(extruder_nr,\"%s\",%d)" %(key, material_container_index)
-                            Logger.log("d", "settable_per_extruder value_string :|%s|", value_string )
+                            # Logger.log("d", "settable_per_extruder value_string :|%s|", value_string )
                             container.setProperty(key, "value", value_string)
                             modi += key
                             modi += "\n"                            
                         else:
                             active_extruder_index = ExtruderManager.getInstance().activeExtruderIndex
                             value_string = "=extruderValueFromContainer(%d,\"%s\",%d)" %(active_extruder_index, key, material_container_index)
-                            Logger.log("d", "value_string :|%s|", value_string )
+                            # Logger.log("d", "value_string :|%s|", value_string )
                             container.setProperty(key, "value", value_string)
                             modi += key
                             modi += "\n"
@@ -690,8 +852,6 @@ def formatContainerDefinitionStack(Cstack, stack_keys="quality_changes", checkCo
                     def_str += ";"
                     
     return def_str
-
-
 
 def htmlPage(show_all=False,stack_type="quality_changes"):
     html = getHtmlHeader(stack_type)
