@@ -134,7 +134,7 @@ class ProfilePlus(QObject, Extension):
         self._settings_dict = OrderedDict()
         self._settings_dict["master_profile_template"] = {
             "label": catalog.i18nc("@settings", "master profile template"),
-            "description": catalog.i18nc("@settings:description", "master profile template"),
+            "description": catalog.i18nc("@settings:description", "master profile template added by the plugin ProfilePlus"),
             "type": "str",
             "default_value": "",
             "settable_per_mesh": False,

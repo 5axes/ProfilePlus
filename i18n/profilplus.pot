@@ -30,7 +30,7 @@ msgstr ""
 
 #: ProfilePlus.py:137
 msgctxt "@settings:description"
-msgid "master profile template"
+msgid "master profile template added by the plugin ProfilePlus"
 msgstr ""
 
 #: ProfilePlus.py:153
