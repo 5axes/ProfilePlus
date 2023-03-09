@@ -329,7 +329,7 @@ class ProfilePlus(QObject, Extension):
                     container.setProperty(key, "value", _value)
         
         result_status = "ok"
-        success_message = catalog.i18nc("@info:status", "Successfully updated for profile {}.", container_ref.getName())
+        success_message = catalog.i18nc("@info:status", "Successfully updated from profile {}.", container_ref.getName())
         return {"status": result_status, "message": success_message}
  
     def showSettingsDialog(self):
