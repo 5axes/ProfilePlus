@@ -19,7 +19,7 @@ It also  allows you to delete in the active profile some parameters already defi
 ## Installation
 
 #### Manually:
-First, make sure your Cura version is  4.4 or newer.
+First, make sure your Cura version is  4.8 or newer.
 
 [Download](https://github.com/5axes/ProfilePlus/archive/refs/heads/main.zip) or clone the repository into `[Cura configuration folder]/plugins/ProfilePlus`.
 
@@ -69,6 +69,12 @@ Just uncheck the parameters you want to delete from the Profile and press the Bu
 The list of the suppressed parameters will be displayed in a Cura message :
 
 ![Message](./images/message.png)
+
+### Update from master profile template
+
+Update the settings of your profile according to the parameters set in a Master Profile.  This Master Profile is defined in the parameter **Master Profile Template** in the **Experimental** section. of Cura.
+
+![Master profile template](./images/master_profile_template.png)
 
 ### Analyse functions
 
