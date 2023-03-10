@@ -156,7 +156,7 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
         self.addMenuItem(catalog.i18nc("@menu", "Update from master profile template"), self.masterProfileTemplates)
         #Just for Test must be change or remove in the futur
-        if self.Major >= 5 and self.Minor >= 3 :
+        if self.Major > 5 or ( self.Major == 5 and self.Minor >= 2 ) :
             self.addMenuItem(catalog.i18nc("@menu", "Discard or Keep Changes"), self.showDiscardDialog)
         self.addMenuItem("", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
