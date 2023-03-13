@@ -16,6 +16,7 @@
 # 1.0.9 07-03-2023  Add Option for Advanced Log
 # 1.1.0 09-03-2023  Add "master profile templates" https://github.com/Ultimaker/Cura/issues/12401
 # 1.2.0 10-03-2023  DiscardOrKeepProfileChanges
+# 1.2.1 13-03-2023  Change location Translation files
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
