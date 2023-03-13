@@ -9,6 +9,7 @@ UM.Dialog
 {
     minimumWidth: 400
     minimumHeight: 60
+	
     function boolCheck(value) //Hack to ensure a good match between python and qml.
     {
         if(value == "True")
