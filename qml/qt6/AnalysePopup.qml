@@ -1,9 +1,9 @@
 // Copyright (c) 2023 5@xes
 // The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
 
-import QtQuick 6.0
-import QtQuick.Controls 6.0
-import QtQuick.Layouts 6.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 import UM 1.6 as UM
 import Cura 1.7 as Cura

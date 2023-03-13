@@ -15,6 +15,8 @@
 # 1.0.8 06-03-2023  New Release
 # 1.0.9 07-03-2023  Add Option for Advanced Log
 # 1.1.0 09-03-2023  Add "master profile templates" https://github.com/Ultimaker/Cura/issues/12401
+# 1.2.0 10-03-2023  DiscardOrKeepProfileChanges
+# 1.2.1 13-03-2023  Change location Translation files
 #------------------------------------------------------------------------------------------------------------------
 #
 # Contanier Type in Cura Stacked Profile System
@@ -81,7 +83,7 @@ i18n_extrud_catalog = i18nCatalog('fdmextruder.def.json')
 encode = html.escape
 
 Resources.addSearchPath(
-    os.path.join(os.path.abspath(os.path.dirname(__file__)))
+    os.path.join(os.path.abspath(os.path.dirname(__file__)),'resources')
 )  # Plugin translation file import
 
 catalog = i18nCatalog("profilplus")
@@ -154,6 +156,9 @@ class ProfilePlus(QObject, Extension):
         self.addMenuItem(catalog.i18nc("@menu", "Material Settings"), self.showTestMachineProfile)      
         self.addMenuItem(catalog.i18nc("@menu", "Remove Settings"), self.showSettingsDialog)
         self.addMenuItem(catalog.i18nc("@menu", "Update from master profile template"), self.masterProfileTemplates)
+        #Just for Test must be change or remove in the futur
+        if self.Major > 5 or ( self.Major == 5 and self.Minor >= 2 ) :
+            self.addMenuItem(catalog.i18nc("@menu", "Discard or Keep Changes"), self.showDiscardDialog)
         self.addMenuItem("", lambda: None)
         self.addMenuItem(catalog.i18nc("@menu", "View Custom Parameters"), viewProfile)
         self.addMenuItem(catalog.i18nc("@menu", "View Active Material"), viewMaterial)
@@ -347,6 +352,13 @@ class ProfilePlus(QObject, Extension):
 
         self._settings_dialog = self._application.createQmlComponent(path, {"manager": self})
         self._settings_dialog.show()
+
+    def showDiscardDialog(self):        
+        path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "qml", "qt6","DiscardOrKeepProfileChangesDialog.qml")
+
+        self._DiscardOrKeepProfileChanges_dialog = self._application.createQmlComponent(path, {"manager": self})
+        self._DiscardOrKeepProfileChanges_dialog.show()
 
     _profileChanged = pyqtSignal()
     

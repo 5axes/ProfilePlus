@@ -1,12 +1,11 @@
 // Copyright (c) 2022 5@xes
 // The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
 
-import QtQuick 2.2
-import QtQuick.Controls 2.1
+import QtQuick
+import QtQuick.Controls
 
 import Cura 1.5 as Cura
 import UM 1.5 as UM
-import ".."
 
 Cura.CategoryButton
 {

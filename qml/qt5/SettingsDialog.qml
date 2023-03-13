@@ -2,7 +2,7 @@
 // The ProfilePlus Plugin is released under the terms of the AGPLv3 or higher.
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.1
 

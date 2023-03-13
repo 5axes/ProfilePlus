@@ -1,7 +1,7 @@
 // Copyright (c) 2023 5@xes
 
 import QtQuick 2.2
-import QtQuick.Controls 2.0
+import QtQuick.Controls 1.4
 
 import UM 1.2 as UM
 
