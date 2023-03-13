@@ -353,17 +353,11 @@ class ProfilePlus(QObject, Extension):
         self._settings_dialog.show()
 
     def showDiscardDialog(self):        
-        path = None
-        if USE_QT5:
-            path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), "qml", "qt5", "DiscardOrKeepProfileChangesDialog.qml")
-        else:
-            path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), "qml", "qt6","DiscardOrKeepProfileChangesDialog.qml")
+        path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "qml", "qt6","DiscardOrKeepProfileChangesDialog.qml")
 
         self._DiscardOrKeepProfileChanges_dialog = self._application.createQmlComponent(path, {"manager": self})
         self._DiscardOrKeepProfileChanges_dialog.show()
-
 
     _profileChanged = pyqtSignal()
     
