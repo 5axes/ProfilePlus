@@ -1,10 +1,9 @@
 // Copyright (c) 2023 5@xes
 
-import QtQuick 6.0
-import QtQuick.Controls 6.0
+import QtQuick
+import QtQuick.Controls
 
 import UM 1.6 as UM
-
 
 UM.Dialog
 {
