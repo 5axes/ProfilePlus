@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-14 00:39+0000\n"
+"POT-Creation-Date: 2023-03-14 00:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,12 +225,12 @@ msgid ""
 " %s"
 msgstr ""
 
-#: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:29
+#: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:30
 msgctxt "@title"
 msgid "Profile Plus plugin settings"
 msgstr ""
 
-#: qml/qt6/SettingsPopup.qml:37 qml/qt5/SettingsPopup.qml:36
+#: qml/qt6/SettingsPopup.qml:37 qml/qt5/SettingsPopup.qml:37
 msgctxt "@label"
 msgid "Advanced Login (restart Cura to apply change)"
 msgstr ""
