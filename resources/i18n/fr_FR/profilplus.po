@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 21:11+0000\n"
-"PO-Revision-Date: 2023-03-13 22:14+0200\n"
+"POT-Creation-Date: 2023-03-13 21:19+0000\n"
+"PO-Revision-Date: 2023-03-14 01:37+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -229,12 +229,12 @@ msgstr ""
 "Navigateur par défaut non défini ouvrir \n"
 " %s"
 
-#: qml/qt6/SettingsPopup.qml:29 qml/qt5/SettingsPopup.qml:29
+#: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:29
 msgctxt "@title"
 msgid "Profile Plus plugin settings"
 msgstr "Paramètres du plugin Profil Plus"
 
-#: qml/qt6/SettingsPopup.qml:36 qml/qt5/SettingsPopup.qml:36
+#: qml/qt6/SettingsPopup.qml:37 qml/qt5/SettingsPopup.qml:36
 msgctxt "@label"
 msgid "Advanced Login (restart Cura to apply change)"
 msgstr "Login avancé (redémarrer Cura pour appliquer les changements)"
@@ -338,112 +338,3 @@ msgctxt "@action:button"
 msgid "Save changes"
 msgstr "Enregistrer les modifications"
 
-#~ msgctxt "@settings"
-#~ msgid "master profile template"
-#~ msgstr "Modèle de profil maître"
-
-#~ msgctxt "@info:status"
-#~ msgid "Successfully updated for profile {}."
-#~ msgstr "Mise à jour réussie pour le profil {}."
-
-#~ msgctxt "@settings:description"
-#~ msgid "master profile template"
-#~ msgstr "modèle de profil maître paramètre du plugin Profil Plus."
-
-#~ msgctxt "@title:window"
-#~ msgid "Select settings to Delete"
-#~ msgstr "Sélectionnez les paramètres à supprimer"
-
-#~ msgctxt "@title"
-#~ msgid "Profile Plus"
-#~ msgstr "Profil Plus"
-
-#~ msgctxt "@info:text"
-#~ msgid ""
-#~ "! Error Nothing to do ! \n"
-#~ " Your Profile is already clean"
-#~ msgstr ""
-#~ "! Erreur Rien à faire ! \n"
-#~ " Votre profil est déjà propre"
-
-#~ msgctxt "@menu"
-#~ msgid "Test Settings to remove"
-#~ msgstr "Tester les paramètres à Supprimer"
-
-#~ msgctxt "@menu"
-#~ msgid "Remove Settings present in the material profile"
-#~ msgstr "Supprimer les paramètres présents dans le profil du matériau"
-
-#~ msgctxt "@menu"
-#~ msgid "Remove Settings present in the Machine Materials profiles"
-#~ msgstr ""
-#~ "Supprimer les paramètres présents dans les profils des matériaux de la "
-#~ "machine"
-
-#~ msgctxt "@menu"
-#~ msgid "Link Settings present in the material profile"
-#~ msgstr "Paramètres de liaison présents dans le profil matière"
-
-#~ msgctxt "@html:row"
-#~ msgid "Detail"
-#~ msgstr "Détail"
-
-#~ msgctxt "@info:title"
-#~ msgid "Profile Plus "
-#~ msgstr "Profil Plus "
-
-#~ msgctxt "@info:title"
-#~ msgid "Warning ! ProfilPlus"
-#~ msgstr "Attention ! Profil Plus"
-
-#~ msgctxt "@menu"
-#~ msgid "View Profile Analyse"
-#~ msgstr "Analyser les Profils"
-
-#~ msgctxt "@menu"
-#~ msgid "View Active Configuration"
-#~ msgstr "Voir la configuration active"
-
-#~ msgctxt "@menu"
-#~ msgid "View All Current Printer Profiles"
-#~ msgstr "Voir tous les profils de l'imprimante actuel"
-
-#~ msgctxt "@title"
-#~ msgid "Printer Quality Changes"
-#~ msgstr "Liste Profil Imprimante"
-
-#~ msgctxt "@html:title"
-#~ msgid "Global Stack"
-#~ msgstr "Données Globales"
-
-#~ msgctxt "@html:title"
-#~ msgid "Profile List "
-#~ msgstr "Liste des profils "
-
-#~ msgctxt "@html"
-#~ msgid "Unselect all"
-#~ msgstr "Tout déselectionner"
-
-#~ msgctxt "@html"
-#~ msgid "Show only differences"
-#~ msgstr "Voir uniquement les différences"
-
-#~ msgctxt "@html"
-#~ msgid "Show only valued parameters"
-#~ msgstr "Voir les paramètres avec des valeurs"
-
-#~ msgctxt "@html:title"
-#~ msgid "Profiles"
-#~ msgstr "Profils"
-
-#~ msgctxt "@info:title"
-#~ msgid "Warning ! ProfilAnalyser"
-#~ msgstr "Attention ! Profil Analyser"
-
-#~ msgctxt "@label"
-#~ msgid "ProfilAnalyser"
-#~ msgstr "Profil Analyseur"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Analyser for Cura Profiles"
-#~ msgstr "Analyseur pour les profils Cura"
