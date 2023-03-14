@@ -14,7 +14,7 @@ UM.Dialog
     minimumWidth: 650
     minimumHeight: 250
 
-    property variant i18n_catalog: UM.I18nCatalog { name: "profileplus" }
+    property variant i18n_catalog: UM.I18nCatalog { name: "profilplus" }
 	
 	function getValue()
 	{

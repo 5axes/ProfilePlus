@@ -15,7 +15,7 @@ UM.Dialog
     minimumWidth: 650
     minimumHeight: 250
 
-    property variant i18n_catalog: UM.I18nCatalog { name: "profileplus" }
+	property variant i18n_catalog: UM.I18nCatalog { name: "profilplus" }
 	
     title: i18n_catalog.i18nc("@title", "Profile Plus Current Profile : ") + manager.profileName
 

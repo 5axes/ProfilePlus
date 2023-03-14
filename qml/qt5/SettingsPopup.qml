@@ -9,6 +9,9 @@ UM.Dialog
 {
     minimumWidth: 400
     minimumHeight: 60
+	
+	property variant i18n_catalog: UM.I18nCatalog { name: "profilplus" }
+	
     function boolCheck(value) //Hack to ensure a good match between python and qml.
     {
         if(value == "True")
@@ -23,8 +26,6 @@ UM.Dialog
             return value
         }
     }
-
-    property variant i18n_catalog: UM.I18nCatalog { name: "profileplus" }
 	
     title: i18n_catalog.i18nc("@title", "Profile Plus plugin settings")
 
