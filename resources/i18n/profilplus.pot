@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-14 00:49+0000\n"
+"POT-Creation-Date: 2023-09-15 15:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ProfilePlusSettingsVisibilityHandler.py:35 ProfilePlus.py:1318
-#: ProfilePlus.py:1320
-msgctxt "@info:title"
-msgid "Warning ! Profile Plus"
-msgstr ""
 
 #: ProfilePlus.py:138
 msgctxt "@settings"
@@ -225,6 +219,55 @@ msgid ""
 " %s"
 msgstr ""
 
+#: ProfilePlus.py:1318 ProfilePlus.py:1320
+#: ProfilePlusSettingsVisibilityHandler.py:35
+msgctxt "@info:title"
+msgid "Warning ! Profile Plus"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:13
+msgctxt "@title:window"
+msgid "Discard or Keep changes"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:64
+msgctxt "@text:window, %1 is a profile name"
+msgid ""
+"You have customized some profile settings. Would you like to Keep these "
+"changed settings after switching profiles? Alternatively, you can discard "
+"the changes to load the defaults from '%1'."
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:90
+msgctxt "@title:column"
+msgid "Profile settings"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:92
+msgctxt "@title:column"
+msgid "Current changes"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:111
+msgctxt "@action:button"
+msgid "Discard changes"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:118
+msgctxt "@action:button"
+msgid "Keep changes"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:125
+msgctxt "@action:button"
+msgid "Save as new custom profile"
+msgstr ""
+
+#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:132
+msgctxt "@action:button"
+msgid "Save changes"
+msgstr ""
+
 #: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:30
 msgctxt "@title"
 msgid "Profile Plus plugin settings"
@@ -284,47 +327,4 @@ msgstr ""
 #: qml/qt6/AnalysePopup.qml:83 qml/qt5/AnalysePopup.qml:76
 msgctxt "@action:button"
 msgid "Link Parameters"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:13
-msgctxt "@title:window"
-msgid "Discard or Keep changes"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:64
-msgctxt "@text:window, %1 is a profile name"
-msgid ""
-"You have customized some profile settings. Would you like to Keep these "
-"changed settings after switching profiles? Alternatively, you can discard "
-"the changes to load the defaults from '%1'."
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:90
-msgctxt "@title:column"
-msgid "Profile settings"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:92
-msgctxt "@title:column"
-msgid "Current changes"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:111
-msgctxt "@action:button"
-msgid "Discard changes"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:118
-msgctxt "@action:button"
-msgid "Keep changes"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:125
-msgctxt "@action:button"
-msgid "Save as new custom profile"
-msgstr ""
-
-#: qml/qt6/DiscardOrKeepProfileChangesDialog.qml:132
-msgctxt "@action:button"
-msgid "Save changes"
 msgstr ""
