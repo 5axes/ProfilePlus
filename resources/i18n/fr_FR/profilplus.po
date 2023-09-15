@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 21:19+0000\n"
-"PO-Revision-Date: 2023-03-14 01:37+0200\n"
+"POT-Creation-Date: 2023-03-14 00:49+0000\n"
+"PO-Revision-Date: 2023-03-14 01:50+0200\n"
 "Last-Translator: 5axes <5axes@free.fr>\n"
 "Language-Team: 5axes\n"
 "Language: fr\n"
@@ -107,7 +107,7 @@ msgstr "Profil Plus : "
 #: ProfilePlus.py:258 ProfilePlus.py:260
 msgctxt "@info:text"
 msgid "! Master profile template not defined"
-msgstr "! Le modèle de profil principal n'est pas défini"
+msgstr "! Le modèle de profil principal n'est pas défini !"
 
 #: ProfilePlus.py:337
 msgctxt "@info:status"
@@ -229,12 +229,12 @@ msgstr ""
 "Navigateur par défaut non défini ouvrir \n"
 " %s"
 
-#: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:29
+#: qml/qt6/SettingsPopup.qml:30 qml/qt5/SettingsPopup.qml:30
 msgctxt "@title"
 msgid "Profile Plus plugin settings"
 msgstr "Paramètres du plugin Profil Plus"
 
-#: qml/qt6/SettingsPopup.qml:37 qml/qt5/SettingsPopup.qml:36
+#: qml/qt6/SettingsPopup.qml:37 qml/qt5/SettingsPopup.qml:37
 msgctxt "@label"
 msgid "Advanced Login (restart Cura to apply change)"
 msgstr "Login avancé (redémarrer Cura pour appliquer les changements)"
@@ -337,4 +337,3 @@ msgstr "Enregistrer comme nouveau profil"
 msgctxt "@action:button"
 msgid "Save changes"
 msgstr "Enregistrer les modifications"
-
