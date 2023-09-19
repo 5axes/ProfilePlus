@@ -45,9 +45,9 @@ The list of the  parameters  present in the profile and in your Material Setting
 
 Then you can use the button :
 
-- Remove Parameters : Delete every parameters set in your current profile which are also present in the active Material settings.
-- Remove Materials Parameters : Delete every parameters set in your current profile which are also present in every material definitions associated with this machine.
-- Link Parameters : Link the settings present in the Material definition with your current settings by using the **extruderValueFromContainer** instruction.
+- **Remove Parameters** : Delete every parameters set in your current profile which are also present in the active Material settings.
+- **Remove Materials Parameters** : Delete every parameters set in your current profile which are also present in the generic Machine Materials Profiles associated with the current machine.
+- **Link Parameters** : Link the settings present in the Material definition with your current settings by using the **extruderValueFromContainer** instruction.
 
 The list of the suppressed parameters will be displayed in a Cura message :
 
