@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Profil Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-19 17:16+0000\n"
+"POT-Creation-Date: 2023-09-19 17:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,7 +341,8 @@ msgstr ""
 #: qml/qt6/AnalysePopup.qml:84
 msgctxt "@tooltip:button"
 msgid ""
-"Link the settings present in the Material definition with your current settings"
+"Link the settings present in the Material definition with your current "
+"settings"
 msgstr ""
 
 #: qml/qt6/AnalysePopup.qml:85 qml/qt5/AnalysePopup.qml:76
