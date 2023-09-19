@@ -81,7 +81,7 @@ UM.Dialog
             anchors {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
-            tooltip: i18n_catalog.i18nc("@tooltip:button", "Link the settings present in the Material definition with your current settings.")
+            tooltip: i18n_catalog.i18nc("@tooltip:button", "Link the settings present in the Material definition with your current settings")
             text: i18n_catalog.i18nc("@action:button", "Link Parameters")
             onClicked: {
                 manager.linkProfile

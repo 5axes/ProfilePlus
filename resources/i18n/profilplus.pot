@@ -341,8 +341,7 @@ msgstr ""
 #: qml/qt6/AnalysePopup.qml:84
 msgctxt "@tooltip:button"
 msgid ""
-"Link the settings present in the Material definition with your current "
-"settings."
+"Link the settings present in the Material definition with your current settings"
 msgstr ""
 
 #: qml/qt6/AnalysePopup.qml:85 qml/qt5/AnalysePopup.qml:76
