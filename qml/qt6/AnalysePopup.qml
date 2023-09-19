@@ -47,7 +47,8 @@ UM.Dialog
             anchors {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
-            
+			
+            tooltip: i18n_catalog.i18nc("@tooltip:button", "Delete every parameters set in your current profile which are also present in the active Material settings")
             text: i18n_catalog.i18nc("@action:button", "Remove Parameters")
             onClicked: {
                 manager.cleanProfile
@@ -63,7 +64,8 @@ UM.Dialog
             anchors {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
-            
+			
+            tooltip: i18n_catalog.i18nc("@tooltip:button", "Delete every parameters set in your current profile which are also present in every material definitions associated with this machine")
             text: i18n_catalog.i18nc("@action:button", "Remove Materials Parameters")
             onClicked: {
                 manager.cleanMachineProfile
@@ -79,7 +81,7 @@ UM.Dialog
             anchors {
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
-            
+            tooltip: i18n_catalog.i18nc("@tooltip:button", "Link the settings present in the Material definition with your current settings.")
             text: i18n_catalog.i18nc("@action:button", "Link Parameters")
             onClicked: {
                 manager.linkProfile
@@ -92,6 +94,7 @@ UM.Dialog
             width: UM.Theme.getSize("default_margin").width
         },		
         Cura.PrimaryButton {
+			tooltip: i18n_catalog.i18nc("@tooltip:button", "Close this windows")
             text: i18n_catalog.i18nc("@action:button", "Close");
             onClicked: {
                 popupDialog.visible = false;
