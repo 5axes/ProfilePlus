@@ -65,7 +65,7 @@ UM.Dialog
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
 			
-            tooltip: i18n_catalog.i18nc("@tooltip:button", "Delete every parameters set in your current profile which are also present in every material definitions associated with this machine")
+            tooltip: i18n_catalog.i18nc("@tooltip:button", "Delete every parameters set in your current profile which are also present  in the generic Machine Materials Profiles associated with this machine")
             text: i18n_catalog.i18nc("@action:button", "Remove Materials Parameters")
             onClicked: {
                 manager.cleanMachineProfile
